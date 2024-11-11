@@ -1,19 +1,58 @@
 {
   "name": "@glare-labs/mdk",
-  "version": "0.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "version": "0.0.1",
+  "type": "module",
+  "keywords": [
+    "material design",
+    "material",
+    "design-kit",
+    "styles"
+  ],
+  "author": "bre97-web",
+  "license": "MIT",
   "description": "",
   "workspaces": [
     "src",
     "dev-app"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./build/bundle.js",
+  "module": "./build/bundle.js",
+  "types": "./build/index.d.ts",
+  "exports": {
+    ".": {
+      "default": "./build/bundle.js",
+      "import": "./build/bundle.js",
+      "require": "./build/bundle.js",
+      "types": "./build/index.d.ts"
+    },
+    "./color.css": {
+      "default": "./styles/color.css",
+      "import": "./styles/color.css",
+      "require": "./styles/color.css"
+    },
+    "./palette.css": {
+      "default": "./styles/palette.css",
+      "import": "./styles/palette.css",
+      "require": "./styles/palette.css"
+    },
+    "./palette-atom.css": {
+      "default": "./styles/palette-atom.css",
+      "import": "./styles/palette-atom.css",
+      "require": "./styles/palette-atom.css"
+    }
+  },
+  "files": [
+    "./build/**/*",
+    "./styles/**/*"
+  ],
+  "scripts": {
+    "compile": "npx rollup --config"
+  },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^12.1.1",
     "rollup": "^4.25.0",
     "tslib": "^2.8.1",
     "typescript": "^5.6.3"
