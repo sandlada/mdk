@@ -6,11 +6,10 @@
     "baseUrl": "./",
     "paths": {},
     "declaration": true,
-    "declarationMap": true,
+    "declarationDir": "./build",
     "emitDeclarationOnly": true,
     "noEmit": true,
     "importHelpers": true,
-    "inlineSources": true,
     "newLine": "lf",
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
@@ -26,6 +25,12 @@
     "strictBuiltinIteratorReturn": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules/**/*"
+  ]
 }
