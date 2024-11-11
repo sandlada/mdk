@@ -1,5 +1,5 @@
 
-export const ElevationDps = {
+export const ElevationLevels = {
     Level0: 0,
     Level1: 1,
     Level2: 3,

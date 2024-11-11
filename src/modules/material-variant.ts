@@ -1,6 +1,6 @@
 export type TMaterialVariant = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
 
-export const EMaterialVariants = {
+export const MaterialVariants = {
     Monochrome: 0,
     Neutral: 1,
     TonalSpot: 2,
