@@ -1,4 +1,4 @@
-export abstract class Shapes {
+export abstract class Shape {
     public static readonly None                = `var(--md-sys-shape-corner-none, 0px)`
     public static readonly ExtraSmall          = `var(--md-sys-shape-corner-extra-small, 4px)`
     public static readonly Small               = `var(--md-sys-shape-corner-small, 8px)`
