@@ -1,4 +1,4 @@
-export abstract class MaterialVariant {
+export abstract class Variant {
     public static readonly Monochrome = 0
     public static readonly Neutral    = 1
     public static readonly TonalSpot  = 2

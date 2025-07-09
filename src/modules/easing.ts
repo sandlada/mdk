@@ -1,5 +1,5 @@
 
-export abstract class MotionEasing {
+export abstract class Easing {
     public static readonly Standard             = 'cubic-bezier(0.20, 0.00, 0.0, 1.00)'
     public static readonly StandardAccelerate   = 'cubic-bezier(0.30, 0.00, 1.0, 1.00)'
     public static readonly StandardDecelerate   = 'cubic-bezier(0.00, 0.00, 0.0, 1.00)'

@@ -1,4 +1,4 @@
-export abstract class MotionDuration {
+export abstract class Duration {
     public static readonly Short1     = '50ms'
     public static readonly Short2     = '100ms'
     public static readonly Short3     = '150ms'
