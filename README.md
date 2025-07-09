@@ -1,73 +1,60 @@
-# @glare-labs/mdk
+# @sandlada/mdk
 
-@glare-labs/mdk, Material Design Kit, mdk is a JavaScript constant library based on Material Design 3, providing constant data such as color, shape, shadow level, etc:
+`@sandlada/mdk`, Material Design Kit, a JavaScript library based on Material Design 3, providing data such as color, shape, shadow level, etc:
 
-+ Palettes
-+ DefaultDarkColors
-+ DefaultLightColors
-+ MaterialVariants
-+ ElevationBoxShaodws
-+ ElevationLevels
-+ MaterialContrastLevels
-+ MotionDurations
-+ MotionEasings
++ Palette
++ DefaultDarkColor
++ DefaultLightColor
++ Variants
++ ElevationBoxShaodw
++ ElevationLevel
++ ContrastLevel
++ Durations
++ Easings
 + Shapes
-+ md
-
-mdk also provides a default style sheet:
-
-+ color.css
-+ palette-atom.css
-+ palette.css
 
 ## Installation
 
 ```shell
-npm i @glare-labs/mdk
+npm i @sandlada/mdk
 ```
 
 ## Usage
 
-### Use colors
+### Use Color
 
 ```typescript
-import { md } from '@glare-labs/mdk'
+import { Color } from '@sandlada/mdk'
 
-const surface = md.sys.color.surface
+const surface = Color.Surface
 
 /**
  * @output
  * ```
- * light-dark(var(--md-sys-palette-neutral-98, #fef7ff), var(--md-sys-palette-neutral-6, #141218))
+ * var(--md-sys-palette-neutral-6, #141218)
  * ```
  */
 console.log(surface)
 
-const yourDiv = document.querySelector('body') as HTMLElement
+const yourDiv = document.querySelector('body')
 yourDiv.style.setProperty('background-color', surface)
 ```
 
-### Use shapes
+### Use Shape
 
 ```typescript
-const shapeLarge = md.sys.shape.large
+import { Shape } from '@sandlada/mdk'
+
+const shapeLarge = Shape.Large
 
 /**
  * @output
  * ```
- * 16px
+ * var(--md-sys-shape-corner-large, 16px)
  * ```
  */
 console.log(shapeLarge)
 
-const myBox = document.querySelector('#my-box') as HTMLElement
+const myBox = document.querySelector('#my-box')
 myBox.style.setProperty('border-radius', shapeLarge)
-```
-
-### Import styles
-
-```typescript
-import '@glare-labs/mdk/styles/color.css'
-import '@glare-labs/mdk/styles/palette.css'
-import '@glare-labs/mdk/styles/palette-atom.css'
 ```
