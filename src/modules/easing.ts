@@ -1,27 +1,26 @@
 
 export abstract class Easing {
-    public static readonly Standard             = 'cubic-bezier(0.20, 0.00, 0.0, 1.00)'
-    public static readonly StandardAccelerate   = 'cubic-bezier(0.30, 0.00, 1.0, 1.00)'
-    public static readonly StandardDecelerate   = 'cubic-bezier(0.00, 0.00, 0.0, 1.00)'
-    public static readonly Emphasized           = 'cubic-bezier(0.20, 0.00, 0.0, 1.00)'
-    public static readonly EmphasizedAccelerate = 'cubic-bezier(0.30, 0.00, 0.8, 0.15)'
-    public static readonly EmphasizedDecelerate = 'cubic-bezier(0.05, 0.70, 0.1, 1.00)'
-    public static readonly Legacy               = 'cubic-bezier(0.40, 0.00, 0.2, 1.00)'
-    public static readonly LegacyAccelerate     = 'cubic-bezier(0.40, 0.00, 1.0, 1.00)'
-    public static readonly LegacyDecelerate     = 'cubic-bezier(0.00, 0.00, 0.2, 1.00)'
-    public static readonly Linear               = 'cubic-bezier(0.00, 0.00, 1.0, 1.00)'
-
-    public static readonly ExpressiveFastSpatial   : `cubic-bezier(0.42, 1.67, 0.21, 0.90)`
-    public static readonly ExpressiveDefaultSpatial: `cubic-bezier(0.38, 1.21, 0.22, 1.00)`
-    public static readonly ExpressiveSlowSpatial   : `cubic-bezier(0.39, 1.29, 0.35, 0.98)`
-    public static readonly ExpressiveFastEffects   : `cubic-bezier(0.31, 0.94, 0.34, 1.00)`
-    public static readonly ExpressiveDefaultEffects: `cubic-bezier(0.34, 0.80, 0.34, 1.00)`
-    public static readonly ExpressiveSlowEffects   : `cubic-bezier(0.34, 0.88, 0.34, 1.00)`
-    public static readonly StandardFastSpatial     : `cubic-bezier(0.27, 1.06, 0.18, 1.00)`
-    public static readonly StandardDefaultSpatial  : `cubic-bezier(0.27, 1.06, 0.18, 1.00)`
-    public static readonly StandardSlowSpatial     : `cubic-bezier(0.27, 1.06, 0.18, 1.00)`
-    public static readonly StandardFastEffects     : `cubic-bezier(0.31, 0.94, 0.34, 1.00)`
-    public static readonly StandardDefaultEffects  : `cubic-bezier(0.34, 0.80, 0.34, 1.00)`
-    public static readonly StandardSlowEffects     : `cubic-bezier(0.34, 0.88, 0.34, 1.00)`
+    public static readonly Standard                 = 'cubic-bezier(0.20, 0.00, 0.0, 1.00)'
+    public static readonly StandardAccelerate       = 'cubic-bezier(0.30, 0.00, 1.0, 1.00)'
+    public static readonly StandardDecelerate       = 'cubic-bezier(0.00, 0.00, 0.0, 1.00)'
+    public static readonly Emphasized               = 'cubic-bezier(0.20, 0.00, 0.0, 1.00)'
+    public static readonly EmphasizedAccelerate     = 'cubic-bezier(0.30, 0.00, 0.8, 0.15)'
+    public static readonly EmphasizedDecelerate     = 'cubic-bezier(0.05, 0.70, 0.1, 1.00)'
+    public static readonly Legacy                   = 'cubic-bezier(0.40, 0.00, 0.2, 1.00)'
+    public static readonly LegacyAccelerate         = 'cubic-bezier(0.40, 0.00, 1.0, 1.00)'
+    public static readonly LegacyDecelerate         = 'cubic-bezier(0.00, 0.00, 0.2, 1.00)'
+    public static readonly Linear                   = 'cubic-bezier(0.00, 0.00, 1.0, 1.00)'
+    public static readonly ExpressiveFastSpatial    = 'cubic-bezier(0.42, 1.67, 0.21, 0.90)'
+    public static readonly ExpressiveDefaultSpatial = 'cubic-bezier(0.38, 1.21, 0.22, 1.00)'
+    public static readonly ExpressiveSlowSpatial    = 'cubic-bezier(0.39, 1.29, 0.35, 0.98)'
+    public static readonly ExpressiveFastEffects    = 'cubic-bezier(0.31, 0.94, 0.34, 1.00)'
+    public static readonly ExpressiveDefaultEffects = 'cubic-bezier(0.34, 0.80, 0.34, 1.00)'
+    public static readonly ExpressiveSlowEffects    = 'cubic-bezier(0.34, 0.88, 0.34, 1.00)'
+    public static readonly StandardFastSpatial      = 'cubic-bezier(0.27, 1.06, 0.18, 1.00)'
+    public static readonly StandardDefaultSpatial   = 'cubic-bezier(0.27, 1.06, 0.18, 1.00)'
+    public static readonly StandardSlowSpatial      = 'cubic-bezier(0.27, 1.06, 0.18, 1.00)'
+    public static readonly StandardFastEffects      = 'cubic-bezier(0.31, 0.94, 0.34, 1.00)'
+    public static readonly StandardDefaultEffects   = 'cubic-bezier(0.34, 0.80, 0.34, 1.00)'
+    public static readonly StandardSlowEffects      = 'cubic-bezier(0.34, 0.88, 0.34, 1.00)'
 }
 
