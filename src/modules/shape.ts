@@ -9,4 +9,17 @@ export abstract class Shape {
     public static readonly ExtraLargeIncreased = `var(--md-sys-shape-corner-extra-large-increased, 32px)`
     public static readonly ExtraExtraLarge     = `var(--md-sys-shape-corner-extra-extra-large, 48px)`
     public static readonly Full                = `var(--md-sys-shape-corner-full, calc(infinity * 1px))`
+
+    public static readonly Number = class {
+        public static readonly None                = 0
+        public static readonly ExtraSmall          = 4
+        public static readonly Small               = 8
+        public static readonly Medium              = 12
+        public static readonly Large               = 16
+        public static readonly LargeIncreased      = 20
+        public static readonly ExtraLarge          = 28
+        public static readonly ExtraLargeIncreased = 32
+        public static readonly ExtraExtraLarge     = 48
+    }
+    
 }

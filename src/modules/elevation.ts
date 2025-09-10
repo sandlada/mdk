@@ -6,6 +6,15 @@ export abstract class ElevationLevel {
     public static readonly Level3 = `var(--md-sys-elevation-level-3, 6)`
     public static readonly Level4 = `var(--md-sys-elevation-level-4, 8)`
     public static readonly Level5 = `var(--md-sys-elevation-level-5, 12)`
+
+    public static readonly Number = class {
+        public static readonly Level0 = 0
+        public static readonly Level1 = 1
+        public static readonly Level2 = 2
+        public static readonly Level3 = 3
+        public static readonly Level4 = 4
+        public static readonly Level5 = 5
+    }
 }
 
 export abstract class ElevationBoxShaodw {
