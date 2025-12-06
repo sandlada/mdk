@@ -3,15 +3,13 @@
 `@sandlada/mdk`, Material Design Kit, a JavaScript library based on Material Design 3, providing data such as color, shape, shadow level, etc:
 
 + Palette
-+ DefaultDarkColor
-+ DefaultLightColor
-+ Variants
-+ ElevationBoxShaodw
++ Color
++ Variant
 + ElevationLevel
 + ContrastLevel
-+ Durations
-+ Easings
-+ Shapes
++ Duration
++ Easing
++ Shape
 
 ## Installation
 
@@ -50,11 +48,77 @@ const shapeLarge = Shape.Large
 /**
  * @output
  * ```
+ * large
+ * ```
+ */
+console.log(shapeLarge.key)
+
+/**
+ * @output
+ * ```
+ * 16
+ * ```
+ */
+console.log(shapeLarge.value)
+
+/**
+ * @output
+ * ```
+ * px
+ * ```
+ */
+console.log(shapeLarge.unit)
+
+/**
+ * @output
+ * ```
  * var(--md-sys-shape-corner-large, 16px)
  * ```
  */
-console.log(shapeLarge)
+console.log(shapeLarge.toCSSValue())
 
 const myBox = document.querySelector('#my-box')
-myBox.style.setProperty('border-radius', shapeLarge)
+myBox.style.setProperty('border-radius', shapeLarge.toCSSValue())
+```
+
+### Use Typescale
+
+```typescript
+import { Typescale } from '@sandlada/mdk'
+
+const displayLarge = Typescale.DisplayLarge
+
+const fontSize = displayLarge.fontSize
+
+/**
+ * @output
+ * ```
+ * display-large-font-size
+ * ```
+ */
+console.log(fontSize.key)
+
+/**
+ * @output
+ * ```
+ * 57
+ * ```
+ */
+console.log(fontSize.value)
+
+/**
+ * @output
+ * ```
+ * px
+ * ```
+ */
+console.log(fontSize.unit)
+
+/**
+ * @output
+ * ```
+ * var(--md-sys-typescale-display-large-font-size, 57px)
+ * ```
+ */
+console.log(fontSize.toCSSValue())
 ```

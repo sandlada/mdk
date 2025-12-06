@@ -4,12 +4,8 @@
     "module": "ESNext",
     "moduleResolution": "Node",
 
-    "baseUrl": "./",
-    "rootDir": "./src",
     "outDir": "./build",
     "declarationDir": "./build",
-    "paths": {},
-
     "declaration": true,
     "importHelpers": true,
     "newLine": "lf",
