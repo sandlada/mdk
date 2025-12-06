@@ -1,35 +1,42 @@
 {
-  "name": "@sandlada/mdk",
-  "version": "1.1.0-20250909.a",
-  "type": "module",
-  "keywords": [
-    "material-design",
-    "material",
-    "design-kit",
-    "styles"
-  ],
-  "author": "Kai-Orion & Sandlada",
-  "license": "MIT",
-  "description": "A JavaScript library based on Material Design 3, providing data such as color, shape, shadow level, etc.",
-  "publishConfig": {
-    "access": "public"
-  },
-  "main": "./build/index.js",
-  "module": "./build/index.js",
-  "types": "./build/index.d.ts",
-  "exports": {
-    ".": {
-      "default": "./build/index.js",
-      "import": "./build/index.js",
-      "require": "./build/index.js",
-      "types": "./build/index.d.ts"
+    "name": "@sandlada/mdk",
+    "version": "2.0.0-20251206.a",
+    "type": "module",
+    "keywords": [
+        "material-design",
+        "material",
+        "design-kit",
+        "styles"
+    ],
+    "author": "Kai-Orion & Sandlada",
+    "license": "MIT",
+    "description": "A JavaScript library based on Material Design 3, providing data such as color, shape, shadow level, etc.",
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "./build/index.js",
+    "module": "./build/index.js",
+    "types": "./build/index.d.ts",
+    "exports": {
+        ".": {
+            "default": "./build/index.js",
+            "import": "./build/index.js",
+            "require": "./build/index.js",
+            "types": "./build/index.d.ts"
+        }
+    },
+    "scripts": {
+        "test": "vitest",
+        "test:ui": "vitest --ui",
+        "test:run": "vitest run"
+    },
+    "files": [
+        "./build/**/*"
+    ],
+    "devDependencies": {
+        "tslib": "^2.8.1",
+        "typescript": "^5.8.3",
+        "vite": "^7.2.6",
+        "vitest": "^4.0.15"
     }
-  },
-  "files": [
-    "./build/**/*"
-  ],
-  "devDependencies": {
-    "tslib": "^2.8.1",
-    "typescript": "^5.8.3"
-  }
 }
