@@ -29,13 +29,29 @@ const surface = Color.Surface
 /**
  * @output
  * ```
- * var(--md-sys-palette-neutral-6, #141218)
+ * --md-sys-color-surface
  * ```
  */
-console.log(surface)
+console.log(surface.key)
+
+/**
+ * @output
+ * ```
+ * ["var(--md-sys-palette-neutral-98, #fef7ff)", "var(--md-sys-palette-neutral-6, #141218)"]
+ * ```
+ */
+console.log(surface.value)
+
+/**
+ * @output
+ * ```
+ * var(--md-sys-color-surface, light-dark(var(--md-sys-palette-neutral-98, #fef7ff), var(--md-sys-palette-neutral-6, #141218)))
+ * ```
+ */
+console.log(surface.toCSSValue())
 
 const yourDiv = document.querySelector('body')
-yourDiv.style.setProperty('background-color', surface)
+yourDiv.style.setProperty('background-color', surface.toCSSValue())
 ```
 
 ### Use Shape

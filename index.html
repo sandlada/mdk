@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="typography"></div>
+    <div id="shape" style="display: flex; flex-wrap: wrap; gap: 8px;"></div>
+
+    <script type="module">
+        import { Typescale } from './src/domain/typescale.ts'
+        import { Shape } from './src/domain/shape.ts'
+
+        const createTypography = () => {
+            const typography = document.getElementById('typography')
+    
+            const createTypographyComponent = (font, fontSize, fontWeight, lineHeight, tracking) => {
+                const span = document.createElement('span')
+                span.setAttribute('style', `display: block; font-family: ${font}; font-size: ${fontSize}; font-weight: ${fontWeight}; line-height: ${lineHeight}; letter-spacing: ${tracking};`)
+                return span
+            }
+    
+            for(const [key, value] of Object.entries(Typescale)) {
+                const { Font, FontSize, FontWeight, LineHeight, Tracking } = value
+                const e = Typescale[value]
+                const span = createTypographyComponent(Font, FontSize, FontWeight, LineHeight, Tracking)
+                span.textContent = key
+                typography.appendChild(span)
+            }
+        }
+
+        const createShape = () => {
+            const shape = document.getElementById('shape')
+    
+            const createShapeComponent = (shape) => {
+                const span = document.createElement('span')
+                span.setAttribute('style', `display: block; background: blue; height: 96px; width: 96px; border-radius: ${shape};`)
+                return span
+            }
+
+            for(const [key, value] of Object.entries(Shape)) {
+                const box = createShapeComponent(value.toCSSValue())
+                shape.appendChild(box)
+            }
+        }   
+
+        createTypography()
+        createShape()
+
+        
+    </script>
+
+    <!-- <script type="module">
+import { Shape } from '@sandlada/mdk'
+
+const shapeLarge = Shape.Large
+
+/**
+ * @output
+ * ```
+ * large
+ * ```
+ */
+console.log(shapeLarge.key)
+
+/**
+ * @output
+ * ```
+ * 16
+ * ```
+ */
+console.log(shapeLarge.value)
+
+/**
+ * @output
+ * ```
+ * px
+ * ```
+ */
+console.log(shapeLarge.unit)
+
+/**
+ * @output
+ * ```
+ * var(--md-sys-shape-corner-large, 16px)
+ * ```
+ */
+console.log(shapeLarge.toCSSValue())
+    </script> -->
+</body>
+</html>
