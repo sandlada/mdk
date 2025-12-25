@@ -2,11 +2,15 @@ import type { ICSSValue } from '../primitives/ICSSValue'
 import { Typeface } from './typeface'
 
 class FontCSSValue<K extends string, V extends number, U extends string> implements ICSSValue {
-    private constructor(
-        public readonly key: K, 
-        public readonly value: V,
-        public readonly unit: U
-    ) {}
+    public readonly key: K
+    public readonly value: V
+    public readonly unit: U
+
+    private constructor(key: K, value: V, unit: U) {
+        this.key = key
+        this.value = value
+        this.unit = unit
+    }
 
     public static of<K extends string, V extends number, U extends string>(key: K, value: V, unit: U) {
         return new FontCSSValue(key, value, unit)
@@ -26,13 +30,25 @@ class FontCSSValue<K extends string, V extends number, U extends string> impleme
 }
 
 export class Typescale<F, S, T, L, W> {
+    public readonly font      : F
+    public readonly fontSize  : S
+    public readonly tracking  : T
+    public readonly lineHeight: L
+    public readonly fontWeight: W
+
     private constructor(
-        public readonly Font: F,
-        public readonly FontSize: S,
-        public readonly Tracking: T,
-        public readonly LineHeight: L,
-        public readonly FontWeight: W
-    ) {}
+        font: F,
+        fontSize: S,
+        tracking: T,
+        lineHeight: L,
+        fontWeight: W
+    ) {
+        this.font = font
+        this.fontSize = fontSize
+        this.tracking = tracking
+        this.lineHeight = lineHeight
+        this.fontWeight = fontWeight
+    }
 
     private static of<F, S, T, L, W>(
         font: F,

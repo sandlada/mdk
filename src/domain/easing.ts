@@ -2,9 +2,11 @@ import type { ICSSValue } from "../primitives/ICSSValue"
 import type { IValueObject } from "../primitives/IValueObject"
 
 export class Easing<T extends Readonly<[number, number, number, number]>> implements IValueObject<T>, ICSSValue {
-    private constructor(
-        public readonly value: T
-    ) { }
+    public readonly value: T
+
+    private constructor(value: T) {
+        this.value = value
+    }
 
     private static of<V extends Readonly<[number, number, number, number]>>(value: V): Easing<V> { 
         return new Easing<V>(value)

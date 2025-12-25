@@ -2,9 +2,11 @@ import type { ICSSValue } from "../primitives/ICSSValue"
 import type { IValueObject } from "../primitives/IValueObject"
 
 export class Duration<T extends number> implements ICSSValue, IValueObject<T> {
-    private constructor(
-        public readonly value: T
-    ) {}
+    public readonly value: T
+
+    private constructor(value: T) {
+        this.value = value
+    }
 
     private static of<T extends number>(ms: T): Duration<T> {
         return new Duration(ms)

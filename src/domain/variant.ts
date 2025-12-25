@@ -1,10 +1,13 @@
 import type { IValueObject } from "../primitives/IValueObject"
 
 export class Variant<K extends string, V extends number> implements IValueObject<V> {
-    private constructor(
-        public readonly key: K,
-        public readonly value: V
-    ) {}
+    public readonly key  : K
+    public readonly value: V
+
+    private constructor(key: K, value: V) {
+        this.key   = key
+        this.value = value
+    }
 
     private static of<K extends string, V extends number>(key: K, value: V) {
         return new Variant(key, value)

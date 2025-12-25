@@ -2,11 +2,15 @@ import type { ICSSValue } from "../primitives/ICSSValue"
 import type { IValueObject } from "../primitives/IValueObject"
 
 export class State<K extends string, V extends number, U extends string> implements ICSSValue, IValueObject<V> {
-    private constructor(
-        public readonly key: K,
-        public readonly value: V,
-        public readonly unit: U
-    ) {}
+    public readonly key  : K
+    public readonly value: V
+    public readonly unit : U
+
+    private constructor(key: K, value: V, unit: U) {
+        this.key   = key
+        this.value = value
+        this.unit  = unit
+    }
 
     private static of<K extends string, V extends number, U extends string>(key: K, value: V, unit: U): State<K, V, U> {
         return new State<K, V, U>(key, value, unit)
