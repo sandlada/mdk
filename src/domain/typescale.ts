@@ -30,11 +30,11 @@ class FontCSSValue<K extends string, V extends number, U extends string> impleme
 }
 
 export class Typescale<F, S, T, L, W> {
-    public readonly font      : F
-    public readonly fontSize  : S
-    public readonly tracking  : T
-    public readonly lineHeight: L
-    public readonly fontWeight: W
+    public readonly Font      : F
+    public readonly FontSize  : S
+    public readonly Tracking  : T
+    public readonly LineHeight: L
+    public readonly FontWeight: W
 
     private constructor(
         font: F,
@@ -43,11 +43,11 @@ export class Typescale<F, S, T, L, W> {
         lineHeight: L,
         fontWeight: W
     ) {
-        this.font = font
-        this.fontSize = fontSize
-        this.tracking = tracking
-        this.lineHeight = lineHeight
-        this.fontWeight = fontWeight
+        this.Font = font
+        this.FontSize = fontSize
+        this.Tracking = tracking
+        this.LineHeight = lineHeight
+        this.FontWeight = fontWeight
     }
 
     private static of<F, S, T, L, W>(
