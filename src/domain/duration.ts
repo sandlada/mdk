@@ -49,4 +49,29 @@ export class Duration<T extends number> implements ICSSValue, IValueObject<T> {
     public toString() {
         return this.toCSSValue()
     }
+
+    public static readonly AllEnums = {
+        Short1: this.Short1, Short2: this.Short2, Short3: this.Short3, Short4: this.Short4,
+        Medium1: this.Medium1, Medium2: this.Medium2, Medium3: this.Medium3, Medium4: this.Medium4,
+        Long1: this.Long1, Long2: this.Long2, Long3: this.Long3, Long4: this.Long4,
+        ExtraLong1: this.ExtraLong1, ExtraLong2: this.ExtraLong2, ExtraLong3: this.ExtraLong3, ExtraLong4: this.ExtraLong4,
+        ExpressiveFastSpatial: this.ExpressiveFastSpatial, ExpressiveDefaultSpatial: this.ExpressiveDefaultSpatial, ExpressiveSlowSpatial: this.ExpressiveSlowSpatial,
+        ExpressiveFastEffects: this.ExpressiveFastEffects, ExpressiveDefaultEffects: this.ExpressiveDefaultEffects, ExpressiveSlowEffects: this.ExpressiveSlowEffects,
+        StandardFastSpatial: this.StandardFastSpatial, StandardDefaultSpatial: this.StandardDefaultSpatial, StandardSlowSpatial: this.StandardSlowSpatial,
+        StandardFastEffects: this.StandardFastEffects, StandardDefaultEffects: this.StandardDefaultEffects, StandardSlowEffects: this.StandardSlowEffects,
+    } as const
+
+    public static readonly AllValues = [
+        this.Short1, this.Short2, this.Short3, this.Short4,
+        this.Medium1, this.Medium2, this.Medium3, this.Medium4,
+        this.Long1, this.Long2, this.Long3, this.Long4,
+        this.ExtraLong1, this.ExtraLong2, this.ExtraLong3, this.ExtraLong4,
+        this.ExpressiveFastSpatial, this.ExpressiveDefaultSpatial, this.ExpressiveSlowSpatial,
+        this.ExpressiveFastEffects, this.ExpressiveDefaultEffects, this.ExpressiveSlowEffects,
+        this.StandardFastSpatial, this.StandardDefaultSpatial, this.StandardSlowSpatial,
+        this.StandardFastEffects, this.StandardDefaultEffects, this.StandardSlowEffects,
+     ] as const
+
+    public static readonly AllKeys = Duration.AllValues.map((duration) => duration.value)
+
 }

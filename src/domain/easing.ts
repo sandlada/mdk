@@ -8,7 +8,7 @@ export class Easing<T extends Readonly<[number, number, number, number]>> implem
         this.value = value
     }
 
-    private static of<V extends Readonly<[number, number, number, number]>>(value: V): Easing<V> { 
+    private static of<V extends Readonly<[number, number, number, number]>>(value: V): Easing<V> {
         return new Easing<V>(value)
     }
 
@@ -42,5 +42,38 @@ export class Easing<T extends Readonly<[number, number, number, number]>> implem
     public toString() {
         return this.toCSSValue()
     }
+
+    public static readonly AllEnums = {
+        Standard: this.Standard, StandardAccelerate: this.StandardAccelerate, StandardDecelerate: this.StandardDecelerate,
+        Emphasized: this.Emphasized, EmphasizedAccelerate: this.EmphasizedAccelerate, EmphasizedDecelerate: this.EmphasizedDecelerate,
+        Legacy: this.Legacy, LegacyAccelerate: this.LegacyAccelerate, LegacyDecelerate: this.LegacyDecelerate,
+        Linear: this.Linear,
+        ExpressiveFastSpatial: this.ExpressiveFastSpatial, ExpressiveDefaultSpatial: this.ExpressiveDefaultSpatial, ExpressiveSlowSpatial: this.ExpressiveSlowSpatial,
+        ExpressiveFastEffects: this.ExpressiveFastEffects, ExpressiveDefaultEffects: this.ExpressiveDefaultEffects, ExpressiveSlowEffects: this.ExpressiveSlowEffects,
+        StandardFastSpatial: this.StandardFastSpatial, StandardDefaultSpatial: this.StandardDefaultSpatial, StandardSlowSpatial: this.StandardSlowSpatial,
+        StandardFastEffects: this.StandardFastEffects, StandardDefaultEffects: this.StandardDefaultEffects, StandardSlowEffects: this.StandardSlowEffects,
+    } as const
+
+    public static readonly AllValues = [
+        this.Standard, this.StandardAccelerate, this.StandardDecelerate,
+        this.Emphasized, this.EmphasizedAccelerate, this.EmphasizedDecelerate,
+        this.Legacy, this.LegacyAccelerate, this.LegacyDecelerate,
+        this.Linear,
+        this.ExpressiveFastSpatial, this.ExpressiveDefaultSpatial, this.ExpressiveSlowSpatial,
+        this.ExpressiveFastEffects, this.ExpressiveDefaultEffects, this.ExpressiveSlowEffects,
+        this.StandardFastSpatial, this.StandardDefaultSpatial, this.StandardSlowSpatial,
+        this.StandardFastEffects, this.StandardDefaultEffects, this.StandardSlowEffects,
+    ] as const
+
+    public static readonly AllKeys = [
+        '--md-sys-motion-easing-standard', '--md-sys-motion-easing-standard-accelerate', '--md-sys-motion-easing-standard-decelerate',
+        '--md-sys-motion-easing-emphasized', '--md-sys-motion-easing-emphasized-accelerate', '--md-sys-motion-easing-emphasized-decelerate',
+        '--md-sys-motion-easing-legacy', '--md-sys-motion-easing-legacy-accelerate', '--md-sys-motion-easing-legacy-decelerate',
+        '--md-sys-motion-easing-linear',
+        '--md-sys-motion-easing-expressive-fast-spatial', '--md-sys-motion-easing-expressive-default-spatial', '--md-sys-motion-easing-expressive-slow-spatial',
+        '--md-sys-motion-easing-expressive-fast-effects', '--md-sys-motion-easing-expressive-default-effects', '--md-sys-motion-easing-expressive-slow-effects',
+        '--md-sys-motion-easing-standard-fast-spatial', '--md-sys-motion-easing-standard-default-spatial', '--md-sys-motion-easing-standard-slow-spatial',
+        '--md-sys-motion-easing-standard-fast-effects', '--md-sys-motion-easing-standard-default-effects', '--md-sys-motion-easing-standard-slow-effects',
+    ]
 
 }

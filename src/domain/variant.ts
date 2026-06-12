@@ -23,4 +23,30 @@ export class Variant<K extends string, V extends number> implements IValueObject
     public static readonly Rainbow    = Variant.of('Rainbow', 7)
     public static readonly FruitSalad = Variant.of('FruitSalad', 8)
 
+    public static readonly AllEnums = {
+        Monochrome: Variant.Monochrome,
+        Neutral   : Variant.Neutral,
+        TonalSpot : Variant.TonalSpot,
+        Vibrant   : Variant.Vibrant,
+        Expressive: Variant.Expressive,
+        Fidelity  : Variant.Fidelity,
+        Content   : Variant.Content,
+        Rainbow   : Variant.Rainbow,
+        FruitSalad: Variant.FruitSalad
+    } as const
+
+    public static readonly AllValues = [
+        Variant.Monochrome,
+        Variant.Neutral,
+        Variant.TonalSpot,
+        Variant.Vibrant,
+        Variant.Expressive,
+        Variant.Fidelity,
+        Variant.Content,
+        Variant.Rainbow,
+        Variant.FruitSalad
+    ] as const
+
+    public static readonly AllKeys = Variant.AllValues.map(v => v.key)
+
 }

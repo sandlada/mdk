@@ -27,6 +27,34 @@ export class Shape<K extends string, V extends number | string, U extends string
     public static readonly ExtraExtraLarge     = Shape.of('extra-extra-large', 48, 'px')
     public static readonly Full                = Shape.of('full', 'calc(infinity * 1px)', '')
 
+    public static readonly AllEnums = {
+        None               : Shape.None,
+        ExtraSmall         : Shape.ExtraSmall,
+        Small              : Shape.Small,
+        Medium             : Shape.Medium,
+        Large              : Shape.Large,
+        LargeIncreased     : Shape.LargeIncreased,
+        ExtraLarge         : Shape.ExtraLarge,
+        ExtraLargeIncreased: Shape.ExtraLargeIncreased,
+        ExtraExtraLarge    : Shape.ExtraExtraLarge,
+        Full               : Shape.Full
+    } as const
+
+    public static readonly AllValues = [
+        Shape.None,
+        Shape.ExtraSmall,
+        Shape.Small,
+        Shape.Medium,
+        Shape.Large,
+        Shape.LargeIncreased,
+        Shape.ExtraLarge,
+        Shape.ExtraLargeIncreased,
+        Shape.ExtraExtraLarge,
+        Shape.Full
+    ] as const
+
+    public static readonly AllKeys = Shape.AllValues.map(v => v.key)
+
     public toCSSValue(): `var(--md-sys-shape-corner-${K}, ${V}${U})` {
         return `var(--md-sys-shape-corner-${this.key}, ${this.value}${this.unit})`
     }

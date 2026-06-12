@@ -13,14 +13,14 @@ export class Typeface<K extends string, V extends number | string> implements IC
         return new Typeface(key, value)
     }
 
-    public toCSSValue(): `var(--md-sys-typeface-${K}, ${V})` {
-        return `var(--md-sys-typeface-${this.key}, ${this.value})`
+    public toCSSValue(): `var(--md-ref-typeface-${K}, ${V})` {
+        return `var(--md-ref-typeface-${this.key}, ${this.value})`
     }
 
     public toString() {
         return this.toCSSValue()
     }
-    
+
     public static readonly FontBrand     = Typeface.of('font-brand', `"Roboto"`)
     public static readonly FontPlain     = Typeface.of('font-plain', `"Roboto"`)
     public static readonly WeightBold    = Typeface.of('weight-bold', 700)

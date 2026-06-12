@@ -9,7 +9,7 @@ export class ElevationLevel<K extends number, V extends number> implements IValu
         this.key   = key
         this.value = value
     }
-    
+
     private static of<K extends number, V extends number>(key: K, value: V): ElevationLevel<K, V> {
         return new ElevationLevel<K, V>(key, value)
     }
@@ -39,5 +39,15 @@ export class ElevationLevel<K extends number, V extends number> implements IValu
             case 5: return `box-shadow: rgba(0, 0, 0, 0.2) 0px 7px 8px -4px, rgba(0, 0, 0, 0.14) 0px 12px 17px 2px, rgba(0, 0, 0, 0.12) 0px 5px 22px 4px`
         }
     }
+
+    public static readonly AllEnums = {
+        Level0: this.Level0, Level1: this.Level1, Level2: this.Level2, Level3: this.Level3, Level4: this.Level4, Level5: this.Level5,
+    } as const
+
+    public static readonly AllValues = [
+        this.Level0, this.Level1, this.Level2, this.Level3, this.Level4, this.Level5,
+    ] as const
+
+    public static readonly AllKeys = ElevationLevel.AllValues.map((elevation) => elevation.key)
 
 }
