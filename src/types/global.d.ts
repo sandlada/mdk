@@ -8,7 +8,10 @@ declare global {
         readonly key: KEY
         readonly value: VALUE
 
-        toCSSDeclaration(semicolon: boolean = false): CSSDECELARATION
+        toCSSDeclaration(options?: {
+            semicolon?: boolean
+            wrapVariable?: boolean
+        }): CSSDECELARATION | string
         toString(): string
         toJSON(): Record
     }

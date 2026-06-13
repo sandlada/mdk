@@ -5,7 +5,11 @@ export class Color<K extends string, V extends string> implements ICSSDeclaratio
 
     public toJSON() { return { key: this.key, value: this.value } }
     public toString() { return this.value }
-    public toCSSDeclaration(semicolon: boolean = false): `${K}: ${V}${'' | ';'}` { return `${this.key}: ${this.value}${semicolon ? ';' : ''}` }
+    public toCSSDeclaration({ semicolon = false, wrapVariable = false }: { semicolon?: boolean, wrapVariable?: boolean } = {}): string {
+        return wrapVariable
+            ? `var(${this.key}, ${this.value})`
+            : `${this.key}: ${this.value}${semicolon ? ';' : ''}`
+    }
 
     private constructor(key: K, value: V) {
         this.key = key

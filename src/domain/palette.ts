@@ -6,7 +6,11 @@ export class Palette<
     public readonly value: V
 
     public toJSON() { return ({ key: this.key, value: this.value }) }
-    public toCSSDeclaration(semicolon: boolean = false): `${K}: ${V}${';' | ''}` { return `${this.key}: ${this.value}${semicolon ? ';' : ''}` }
+    public toCSSDeclaration({ semicolon = false, wrapVariable = false }: { semicolon?: boolean, wrapVariable?: boolean } = {}): string {
+        return wrapVariable
+            ? `var(${this.key}, ${this.value})`
+            : `${this.key}: ${this.value}${semicolon ? ';' : ''}`
+    }
     public toString() { return this.toCSSDeclaration() }
 
     private constructor(key: K, value: V) {

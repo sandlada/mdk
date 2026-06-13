@@ -5,7 +5,12 @@ export class Easing<K extends string, T extends Readonly<[number, number, number
     public readonly value: T
 
     public toJSON() { return ({ key: this.key, value: this.value }) }
-    public toCSSDeclaration(semicolin: boolean = false): EasingDecolaration<K, T> { return `${this.key}: cubic-bezier(${this.value[0]}, ${this.value[1]}, ${this.value[2]}, ${this.value[3]})${semicolin ? ';' : ''}` }
+    public toCSSDeclaration({ semicolon: semicolin = false, wrapVariable = false }: { semicolon?: boolean, wrapVariable?: boolean } = {}): string {
+        const value = `cubic-bezier(${this.value[0]}, ${this.value[1]}, ${this.value[2]}, ${this.value[3]})`
+        return wrapVariable
+            ? `var(${this.key}, ${value})`
+            : `${this.key}: ${value}${semicolin ? ';' : ''}`
+    }
     public toString() { return this.toCSSDeclaration() }
 
     private constructor(key: K, value: T) {

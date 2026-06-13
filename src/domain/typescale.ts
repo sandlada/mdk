@@ -6,7 +6,11 @@ class FontCSSDeclaration<K extends string, V extends number, U extends string> i
     public readonly unit: U
 
     public toJSON() { return { key: this.key, value: this.value, unit: this.unit } }
-    public toCSSDeclaration(semicolon: boolean = false): `${K}: ${V}${U}${';' | ''}` { return `${this.key}: ${this.value}${this.unit}${semicolon ? ';' : ''}` }
+    public toCSSDeclaration({ semicolon = false, wrapVariable = false }: { semicolon?: boolean, wrapVariable?: boolean } = {}): string {
+        return wrapVariable
+            ? `var(${this.key}, ${this.value}${this.unit})`
+            : `${this.key}: ${this.value}${this.unit}${semicolon ? ';' : ''}`
+    }
     public toString() { return this.toCSSDeclaration() }
 
     public constructor(key: K, value: V, unit: U) {

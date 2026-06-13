@@ -1,22 +1,28 @@
-export class ElevationLevel<K extends string, V extends number> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`> {
+export class ElevationLevel<K extends string, V extends number, U extends string> implements ICSSDeclaration<K, V, `${K}: ${V}${U}${';' | ''}`> {
     public readonly key  : K
     public readonly value: V
+    public readonly unit : U
 
-    public toJSON() { return ({ key: this.key, value: this.value }) }
-    public toCSSDeclaration(semicolon: boolean = false): `${K}: ${V}${';' | ''}` { return `${this.key}: ${this.value}${semicolon ? ';' : ''}` }
+    public toJSON() { return ({ key: this.key, value: this.value, unit: this.unit }) }
+    public toCSSDeclaration({ semicolon = false, wrapVariable = false }: { semicolon?: boolean, wrapVariable?: boolean } = {}): string {
+        return wrapVariable
+            ? `var(${this.key}, ${this.value}${this.unit})`
+            : `${this.key}: ${this.value}${this.unit}${semicolon ? ';' : ''}`
+    }
     public toString() { return this.toCSSDeclaration() }
 
-    private constructor(key: K, value: V) {
+    private constructor(key: K, value: V, unit: U) {
         this.key   = key
         this.value = value
+        this.unit  = unit
     }
 
-    public static readonly Level0 = new ElevationLevel('--md-sys-elevation-level-0', 1)
-    public static readonly Level1 = new ElevationLevel('--md-sys-elevation-level-1', 2)
-    public static readonly Level2 = new ElevationLevel('--md-sys-elevation-level-2', 2)
-    public static readonly Level3 = new ElevationLevel('--md-sys-elevation-level-3', 3)
-    public static readonly Level4 = new ElevationLevel('--md-sys-elevation-level-4', 4)
-    public static readonly Level5 = new ElevationLevel('--md-sys-elevation-level-5', 5)
+    public static readonly Level0 = new ElevationLevel('--md-sys-elevation-level-0', 0 , 'px')
+    public static readonly Level1 = new ElevationLevel('--md-sys-elevation-level-1', 1 , 'px')
+    public static readonly Level2 = new ElevationLevel('--md-sys-elevation-level-2', 3 , 'px')
+    public static readonly Level3 = new ElevationLevel('--md-sys-elevation-level-3', 6 , 'px')
+    public static readonly Level4 = new ElevationLevel('--md-sys-elevation-level-4', 8 , 'px')
+    public static readonly Level5 = new ElevationLevel('--md-sys-elevation-level-5', 12, 'px')
 
     public toBoxShadow() {
         switch(this.value) {
