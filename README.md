@@ -4,12 +4,14 @@
 
 + Palette
 + Color
-+ Variant
 + ElevationLevel
-+ ContrastLevel
 + Duration
 + Easing
 + Shape
++ State
++ Space
++ Typeface
++ Typescale
 
 ## Installation
 
@@ -37,7 +39,7 @@ console.log(surface.key)
 /**
  * @output
  * ```
- * ["var(--md-sys-palette-neutral-98, #fef7ff)", "var(--md-sys-palette-neutral-6, #141218)"]
+ * light-dark(#f4fbf1, #0e150f)
  * ```
  */
 console.log(surface.value)
@@ -45,13 +47,21 @@ console.log(surface.value)
 /**
  * @output
  * ```
- * var(--md-sys-color-surface, light-dark(var(--md-sys-palette-neutral-98, #fef7ff), var(--md-sys-palette-neutral-6, #141218)))
+ * --md-sys-color-surface: light-dark(#f4fbf1, #0e150f)
  * ```
  */
-console.log(surface.toCSSValue())
+console.log(surface.toCSSDeclaration())
+
+/**
+ * @output
+ * ```
+ * var(--md-sys-color-surface, light-dark(#f4fbf1, #0e150f))
+ * ```
+ */
+console.log(surface.toCSSDeclaration({ wrapVariable: true }))
 
 const yourDiv = document.querySelector('body')
-yourDiv.style.setProperty('background-color', surface.toCSSValue())
+yourDiv.style.setProperty('background-color', surface.toCSSDeclaration({ wrapVariable: true }))
 ```
 
 ### Use Shape
@@ -64,7 +74,7 @@ const shapeLarge = Shape.Large
 /**
  * @output
  * ```
- * large
+ * --md-sys-shape-corner-large
  * ```
  */
 console.log(shapeLarge.key)
@@ -88,13 +98,21 @@ console.log(shapeLarge.unit)
 /**
  * @output
  * ```
+ * --md-sys-shape-corner-large: 16px
+ * ```
+ */
+console.log(shapeLarge.toCSSDeclaration())
+
+/**
+ * @output
+ * ```
  * var(--md-sys-shape-corner-large, 16px)
  * ```
  */
-console.log(shapeLarge.toCSSValue())
+console.log(shapeLarge.toCSSDeclaration({ wrapVariable: true }))
 
 const myBox = document.querySelector('#my-box')
-myBox.style.setProperty('border-radius', shapeLarge.toCSSValue())
+myBox.style.setProperty('border-radius', shapeLarge.toCSSDeclaration({ wrapVariable: true }))
 ```
 
 ### Use Typescale
@@ -104,12 +122,12 @@ import { Typescale } from '@sandlada/mdk'
 
 const displayLarge = Typescale.DisplayLarge
 
-const fontSize = displayLarge.fontSize
+const fontSize = displayLarge.FontSize
 
 /**
  * @output
  * ```
- * display-large-font-size
+ * --md-sys-typescale-display-large-font-size
  * ```
  */
 console.log(fontSize.key)
@@ -133,8 +151,34 @@ console.log(fontSize.unit)
 /**
  * @output
  * ```
+ * --md-sys-typescale-display-large-font-size: 57px
+ * ```
+ */
+console.log(fontSize.toCSSDeclaration())
+
+/**
+ * @output
+ * ```
  * var(--md-sys-typescale-display-large-font-size, 57px)
  * ```
  */
-console.log(fontSize.toCSSValue())
+console.log(fontSize.toCSSDeclaration({ wrapVariable: true }))
 ```
+
+## API
+
+### `toCSSDeclaration(options?)`
+
+All token classes implement the `ICSSDeclaration` interface and provide the `toCSSDeclaration` method.
+
+| Option         | Type      | Default | Description                                             |
+| -------------- | --------- | ------- | ------------------------------------------------------- |
+| `semicolon`    | `boolean` | `false` | Append a semicolon to the declaration                   |
+| `wrapVariable` | `boolean` | `false` | Output as `var(--key, value)` instead of `--key: value` |
+
+When `wrapVariable` is `true`, the output becomes a CSS `var()` function call suitable for direct use as a CSS property value. The `semicolon` option is ignored when `wrapVariable` is `true`.
+
+```typescript
+Color.Primary.toCSSDeclaration()                           // --md-sys-color-primary: light-dark(#006d38, #76f29e)
+Color.Primary.toCSSDeclaration({ semicolon: true })        // --md-sys-color-primary: light-dark(#006d38, #76f29e);
+Color.Primary.toCSSDeclaration({ wrapVariable: true })     // var(--md-sys-color-primary, light-dark(#006d38, #76f29e))
