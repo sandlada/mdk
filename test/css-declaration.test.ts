@@ -6,7 +6,7 @@ import { ElevationLevel } from '../src/domain/elevation';
 import { Shape } from '../src/domain/shape';
 import { Palette } from '../src/domain/palette';
 import { State } from '../src/domain/state';
-import { MeasurementSpace } from '../src/domain/spacing';
+import { Space } from '../src/domain/spacing';
 import { Typeface } from '../src/domain/typeface';
 import { Typescale } from '../src/domain/typescale';
 
@@ -104,8 +104,8 @@ describe('ICSSDeclaration.toCSSDeclaration', () => {
         });
     });
 
-    describe('MeasurementSpace', () => {
-        const token = MeasurementSpace.Space100;
+    describe('Space', () => {
+        const token = Space.Space100;
 
         it('should output declaration by default', () => {
             expect(token.toCSSDeclaration()).toBe('--md-sys-measurement-space100: 8px');
