@@ -1,4 +1,5 @@
 import { Typeface } from './typeface'
+import type { ICSSDeclaration } from '../types'
 
 class FontCSSDeclaration<K extends string, V extends number, U extends string> implements ICSSDeclaration<K, V, `${K}: ${V}${U}${';' | ''}`> {
     public readonly key: K

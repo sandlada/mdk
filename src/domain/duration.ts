@@ -1,3 +1,5 @@
+import type { ICSSDeclaration } from '../types'
+
 export class Duration<K extends string, V extends number, U extends string = 'ms'> implements ICSSDeclaration<K, V, `${K}: ${V}${U}${';' | ''}`> {
     public readonly key: K
     public readonly value: V

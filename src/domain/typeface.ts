@@ -1,3 +1,5 @@
+import type { ICSSDeclaration } from '../types'
+
 export class Typeface<K extends string, V extends number | string> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`> {
     public readonly key  : K
     public readonly value: V

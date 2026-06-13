@@ -1,3 +1,5 @@
+import type { ICSSDeclaration } from '../types'
+
 type EasingDecolaration<K extends string, T extends Readonly<[number, number, number, number]>> = `${K}: cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]})${';' | ''}`
 
 export class Easing<K extends string, T extends Readonly<[number, number, number, number]>> implements ICSSDeclaration<K, T, EasingDecolaration<K, T>> {

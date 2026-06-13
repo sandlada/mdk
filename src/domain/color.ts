@@ -1,3 +1,5 @@
+import type { ICSSDeclaration } from '../types'
+
 export class Color<K extends string, V extends string> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`> {
 
     public readonly key  : K

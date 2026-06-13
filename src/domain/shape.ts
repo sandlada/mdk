@@ -1,3 +1,5 @@
+import type { ICSSDeclaration } from '../types'
+
 type ShapeDeclaration<K extends string, V extends number | string, U extends string> = `${K}: ${V}${U}${';' | ''}`
 
 export class Shape<

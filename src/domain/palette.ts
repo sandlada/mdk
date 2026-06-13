@@ -1,3 +1,5 @@
+import type { ICSSDeclaration } from '../types'
+
 export class Palette<
     K extends string,
     V extends string
