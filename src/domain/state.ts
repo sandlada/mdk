@@ -1,10 +1,11 @@
-import type { ICSSValue } from "../primitives/ICSSValue"
-import type { IValueObject } from "../primitives/IValueObject"
-
-export class State<K extends string, V extends number, U extends string> implements ICSSValue, IValueObject<V> {
+export class State<K extends string, V extends number, U extends string> implements ICSSDeclaration<K, V, `${K}: ${V}${U}${';' | ''}`> {
     public readonly key  : K
     public readonly value: V
     public readonly unit : U
+
+    public toJSON() { return ({ key: this.key, value: this.value, unit: this.unit }) }
+    public toCSSDeclaration(semicolon: boolean = false): `${K}: ${V}${U}${';' | ''}` { return `${this.key}: ${this.value}${this.unit}${semicolon ? ';' : ''}` }
+    public toString() { return this.toCSSDeclaration() }
 
     private constructor(key: K, value: V, unit: U) {
         this.key   = key
@@ -12,25 +13,24 @@ export class State<K extends string, V extends number, U extends string> impleme
         this.unit  = unit
     }
 
-    private static of<K extends string, V extends number, U extends string>(key: K, value: V, unit: U): State<K, V, U> {
-        return new State<K, V, U>(key, value, unit)
-    }
-    
-    public static readonly DraggedStateLayerOpacity = State.of('dragged-state-layer-opacity', 0.16, '')
-    public static readonly FocusedStateLayerOpacity = State.of('focused-state-layer-opacity', 0.12, '')
-    public static readonly HoveredStateLayerOpacity = State.of('hovered-state-layer-opacity', 0.08, '')
-    public static readonly PressedStateLayerOpacity = State.of('pressed-state-layer-opacity', 0.12, '')
+    public static readonly DraggedStateLayerOpacity = new State('--md-sys-state-dragged-state-layer-opacity', 0.16, '')
+    public static readonly FocusedStateLayerOpacity = new State('--md-sys-state-focused-state-layer-opacity', 0.12, '')
+    public static readonly HoveredStateLayerOpacity = new State('--md-sys-state-hovered-state-layer-opacity', 0.08, '')
+    public static readonly PressedStateLayerOpacity = new State('--md-sys-state-pressed-state-layer-opacity', 0.12, '')
     public static readonly FocusIndicator           = {
-        Thickness   : State.of('thickness', 3, 'px'),
-        OuterOffset : State.of('outer-offset', 2, 'px'),
+        Thickness   : new State('--md-sys-state-focus-indicator-thickness', 3, 'px'),
+        OuterOffset : new State('--md-sys-state-focus-indicator-outer-offset', 2, 'px'),
     }
 
-    public toCSSValue(): `var(--md-sys-state-${K}, ${V}${U})` {
-        return `var(--md-sys-state-${this.key}, ${this.value}${this.unit})`
-    }
-
-    public toString() {
-        return this.toCSSValue()
-    }
+    public static readonly AllEnums = {
+        DraggedStateLayerOpacity: this.DraggedStateLayerOpacity,
+        FocusedStateLayerOpacity: this.FocusedStateLayerOpacity,
+        HoveredStateLayerOpacity: this.HoveredStateLayerOpacity,
+        PressedStateLayerOpacity: this.PressedStateLayerOpacity,
+        FocusIndicator: {
+            Thickness: this.FocusIndicator.Thickness,
+            OuterOffset: this.FocusIndicator.OuterOffset,
+        }
+    } as const
 
 }

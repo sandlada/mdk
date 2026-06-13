@@ -1,79 +1,50 @@
-import type { ICSSValue } from "../primitives/ICSSValue"
-import type { IValueObject } from "../primitives/IValueObject"
+type EasingDecolaration<K extends string, T extends Readonly<[number, number, number, number]>> = `${K}: cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]})${';' | ''}`
 
-export class Easing<T extends Readonly<[number, number, number, number]>> implements IValueObject<T>, ICSSValue {
+export class Easing<K extends string, T extends Readonly<[number, number, number, number]>> implements ICSSDeclaration<K, T, EasingDecolaration<K, T>> {
+    public readonly key: K
     public readonly value: T
 
-    private constructor(value: T) {
+    public toJSON() { return ({ key: this.key, value: this.value }) }
+    public toCSSDeclaration(semicolin: boolean = false): EasingDecolaration<K, T> { return `${this.key}: cubic-bezier(${this.value[0]}, ${this.value[1]}, ${this.value[2]}, ${this.value[3]})${semicolin ? ';' : ''}` }
+    public toString() { return this.toCSSDeclaration() }
+
+    private constructor(key: K, value: T) {
+        this.key = key
         this.value = value
     }
 
-    private static of<V extends Readonly<[number, number, number, number]>>(value: V): Easing<V> {
-        return new Easing<V>(value)
-    }
-
-    public static readonly Standard                 = Easing.of([0.20, 0.00, 0.0, 1.00] as const)
-    public static readonly StandardAccelerate       = Easing.of([0.30, 0.00, 1.0, 1.00] as const)
-    public static readonly StandardDecelerate       = Easing.of([0.00, 0.00, 0.0, 1.00] as const)
-    public static readonly Emphasized               = Easing.of([0.20, 0.00, 0.0, 1.00] as const)
-    public static readonly EmphasizedAccelerate     = Easing.of([0.30, 0.00, 0.8, 0.15] as const)
-    public static readonly EmphasizedDecelerate     = Easing.of([0.05, 0.70, 0.1, 1.00] as const)
-    public static readonly Legacy                   = Easing.of([0.40, 0.00, 0.2, 1.00] as const)
-    public static readonly LegacyAccelerate         = Easing.of([0.40, 0.00, 1.0, 1.00] as const)
-    public static readonly LegacyDecelerate         = Easing.of([0.00, 0.00, 0.2, 1.00] as const)
-    public static readonly Linear                   = Easing.of([0.00, 0.00, 1.0, 1.00] as const)
-    public static readonly ExpressiveFastSpatial    = Easing.of([0.42, 1.67, 0.21, 0.90] as const)
-    public static readonly ExpressiveDefaultSpatial = Easing.of([0.38, 1.21, 0.22, 1.00] as const)
-    public static readonly ExpressiveSlowSpatial    = Easing.of([0.39, 1.29, 0.35, 0.98] as const)
-    public static readonly ExpressiveFastEffects    = Easing.of([0.31, 0.94, 0.34, 1.00] as const)
-    public static readonly ExpressiveDefaultEffects = Easing.of([0.34, 0.80, 0.34, 1.00] as const)
-    public static readonly ExpressiveSlowEffects    = Easing.of([0.34, 0.88, 0.34, 1.00] as const)
-    public static readonly StandardFastSpatial      = Easing.of([0.27, 1.06, 0.18, 1.00] as const)
-    public static readonly StandardDefaultSpatial   = Easing.of([0.27, 1.06, 0.18, 1.00] as const)
-    public static readonly StandardSlowSpatial      = Easing.of([0.27, 1.06, 0.18, 1.00] as const)
-    public static readonly StandardFastEffects      = Easing.of([0.31, 0.94, 0.34, 1.00] as const)
-    public static readonly StandardDefaultEffects   = Easing.of([0.34, 0.80, 0.34, 1.00] as const)
-    public static readonly StandardSlowEffects      = Easing.of([0.34, 0.88, 0.34, 1.00] as const)
-
-    public toCSSValue(): `cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]})` {
-        return `cubic-bezier(${this.value[0]}, ${this.value[1]}, ${this.value[2]}, ${this.value[3]})`
-    }
-
-    public toString() {
-        return this.toCSSValue()
-    }
+    public static readonly Standard                 = new Easing('--md-sys-motion-easing-standard',                   [0.20, 0.00, 0.00, 1.00] as const)
+    public static readonly StandardAccelerate       = new Easing('--md-sys-motion-easing-standard-accelerate',        [0.30, 0.00, 1.00, 1.00] as const)
+    public static readonly StandardDecelerate       = new Easing('--md-sys-motion-easing-standard-decelerate',        [0.00, 0.00, 0.00, 1.00] as const)
+    public static readonly Emphasized               = new Easing('--md-sys-motion-easing-emphasized',                 [0.20, 0.00, 0.00, 1.00] as const)
+    public static readonly EmphasizedAccelerate     = new Easing('--md-sys-motion-easing-emphasized-accelerate',      [0.30, 0.00, 0.80, 0.15] as const)
+    public static readonly EmphasizedDecelerate     = new Easing('--md-sys-motion-easing-emphasized-decelerate',      [0.05, 0.70, 0.10, 1.00] as const)
+    public static readonly Legacy                   = new Easing('--md-sys-motion-easing-legacy',                     [0.40, 0.00, 0.20, 1.00] as const)
+    public static readonly LegacyAccelerate         = new Easing('--md-sys-motion-easing-legacy-accelerate',          [0.40, 0.00, 1.00, 1.00] as const)
+    public static readonly LegacyDecelerate         = new Easing('--md-sys-motion-easing-legacy-decelerate',          [0.00, 0.00, 0.20, 1.00] as const)
+    public static readonly Linear                   = new Easing('--md-sys-motion-easing-linear',                     [0.00, 0.00, 1.00, 1.00] as const)
+    public static readonly ExpressiveFastSpatial    = new Easing('--md-sys-motion-easing-expressive-fast-spatial',    [0.42, 1.67, 0.21, 0.90] as const)
+    public static readonly ExpressiveDefaultSpatial = new Easing('--md-sys-motion-easing-expressive-default-spatial', [0.38, 1.21, 0.22, 1.00] as const)
+    public static readonly ExpressiveSlowSpatial    = new Easing('--md-sys-motion-easing-expressive-slow-spatial',    [0.39, 1.29, 0.35, 0.98] as const)
+    public static readonly ExpressiveFastEffects    = new Easing('--md-sys-motion-easing-expressive-fast-effects',    [0.31, 0.94, 0.34, 1.00] as const)
+    public static readonly ExpressiveDefaultEffects = new Easing('--md-sys-motion-easing-expressive-default-effects', [0.34, 0.80, 0.34, 1.00] as const)
+    public static readonly ExpressiveSlowEffects    = new Easing('--md-sys-motion-easing-expressive-slow-effects',    [0.34, 0.88, 0.34, 1.00] as const)
+    public static readonly StandardFastSpatial      = new Easing('--md-sys-motion-easing-standard-fast-spatial',      [0.27, 1.06, 0.18, 1.00] as const)
+    public static readonly StandardDefaultSpatial   = new Easing('--md-sys-motion-easing-standard-default-spatial',   [0.27, 1.06, 0.18, 1.00] as const)
+    public static readonly StandardSlowSpatial      = new Easing('--md-sys-motion-easing-standard-slow-spatial',      [0.27, 1.06, 0.18, 1.00] as const)
+    public static readonly StandardFastEffects      = new Easing('--md-sys-motion-easing-standard-fast-effects',      [0.31, 0.94, 0.34, 1.00] as const)
+    public static readonly StandardDefaultEffects   = new Easing('--md-sys-motion-easing-standard-default-effects',   [0.34, 0.80, 0.34, 1.00] as const)
+    public static readonly StandardSlowEffects      = new Easing('--md-sys-motion-easing-standard-slow-effects',      [0.34, 0.88, 0.34, 1.00] as const)
 
     public static readonly AllEnums = {
-        Standard: this.Standard, StandardAccelerate: this.StandardAccelerate, StandardDecelerate: this.StandardDecelerate,
-        Emphasized: this.Emphasized, EmphasizedAccelerate: this.EmphasizedAccelerate, EmphasizedDecelerate: this.EmphasizedDecelerate,
-        Legacy: this.Legacy, LegacyAccelerate: this.LegacyAccelerate, LegacyDecelerate: this.LegacyDecelerate,
-        Linear: this.Linear,
+        Standard             : this.Standard,              StandardAccelerate      : this.StandardAccelerate,       StandardDecelerate   : this.StandardDecelerate,
+        Emphasized           : this.Emphasized,            EmphasizedAccelerate    : this.EmphasizedAccelerate,     EmphasizedDecelerate : this.EmphasizedDecelerate,
+        Legacy               : this.Legacy,                LegacyAccelerate        : this.LegacyAccelerate,         LegacyDecelerate     : this.LegacyDecelerate,
+        Linear               : this.Linear,
         ExpressiveFastSpatial: this.ExpressiveFastSpatial, ExpressiveDefaultSpatial: this.ExpressiveDefaultSpatial, ExpressiveSlowSpatial: this.ExpressiveSlowSpatial,
         ExpressiveFastEffects: this.ExpressiveFastEffects, ExpressiveDefaultEffects: this.ExpressiveDefaultEffects, ExpressiveSlowEffects: this.ExpressiveSlowEffects,
-        StandardFastSpatial: this.StandardFastSpatial, StandardDefaultSpatial: this.StandardDefaultSpatial, StandardSlowSpatial: this.StandardSlowSpatial,
-        StandardFastEffects: this.StandardFastEffects, StandardDefaultEffects: this.StandardDefaultEffects, StandardSlowEffects: this.StandardSlowEffects,
+        StandardFastSpatial  : this.StandardFastSpatial,   StandardDefaultSpatial  : this.StandardDefaultSpatial,   StandardSlowSpatial  : this.StandardSlowSpatial,
+        StandardFastEffects  : this.StandardFastEffects,   StandardDefaultEffects  : this.StandardDefaultEffects,   StandardSlowEffects  : this.StandardSlowEffects,
     } as const
-
-    public static readonly AllValues = [
-        this.Standard, this.StandardAccelerate, this.StandardDecelerate,
-        this.Emphasized, this.EmphasizedAccelerate, this.EmphasizedDecelerate,
-        this.Legacy, this.LegacyAccelerate, this.LegacyDecelerate,
-        this.Linear,
-        this.ExpressiveFastSpatial, this.ExpressiveDefaultSpatial, this.ExpressiveSlowSpatial,
-        this.ExpressiveFastEffects, this.ExpressiveDefaultEffects, this.ExpressiveSlowEffects,
-        this.StandardFastSpatial, this.StandardDefaultSpatial, this.StandardSlowSpatial,
-        this.StandardFastEffects, this.StandardDefaultEffects, this.StandardSlowEffects,
-    ] as const
-
-    public static readonly AllKeys = [
-        '--md-sys-motion-easing-standard', '--md-sys-motion-easing-standard-accelerate', '--md-sys-motion-easing-standard-decelerate',
-        '--md-sys-motion-easing-emphasized', '--md-sys-motion-easing-emphasized-accelerate', '--md-sys-motion-easing-emphasized-decelerate',
-        '--md-sys-motion-easing-legacy', '--md-sys-motion-easing-legacy-accelerate', '--md-sys-motion-easing-legacy-decelerate',
-        '--md-sys-motion-easing-linear',
-        '--md-sys-motion-easing-expressive-fast-spatial', '--md-sys-motion-easing-expressive-default-spatial', '--md-sys-motion-easing-expressive-slow-spatial',
-        '--md-sys-motion-easing-expressive-fast-effects', '--md-sys-motion-easing-expressive-default-effects', '--md-sys-motion-easing-expressive-slow-effects',
-        '--md-sys-motion-easing-standard-fast-spatial', '--md-sys-motion-easing-standard-default-spatial', '--md-sys-motion-easing-standard-slow-spatial',
-        '--md-sys-motion-easing-standard-fast-effects', '--md-sys-motion-easing-standard-default-effects', '--md-sys-motion-easing-standard-slow-effects',
-    ]
 
 }

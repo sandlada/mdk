@@ -1,27 +1,28 @@
-import type { IValueObject } from "../primitives/IValueObject"
-
-export class Variant<K extends string, V extends number> implements IValueObject<V> {
+export class Variant<K extends string, V extends number> {
     public readonly key  : K
     public readonly value: V
+
+    public toJSON() {
+        return ({
+            key  : this.key,
+            value: this.value
+        })
+    }
 
     private constructor(key: K, value: V) {
         this.key   = key
         this.value = value
     }
 
-    private static of<K extends string, V extends number>(key: K, value: V) {
-        return new Variant(key, value)
-    }
-
-    public static readonly Monochrome = Variant.of('Monochrome', 0)
-    public static readonly Neutral    = Variant.of('Neutral', 1)
-    public static readonly TonalSpot  = Variant.of('TonalSpot', 2)
-    public static readonly Vibrant    = Variant.of('Vibrant', 3)
-    public static readonly Expressive = Variant.of('Expressive', 4)
-    public static readonly Fidelity   = Variant.of('Fidelity', 5)
-    public static readonly Content    = Variant.of('Content', 6)
-    public static readonly Rainbow    = Variant.of('Rainbow', 7)
-    public static readonly FruitSalad = Variant.of('FruitSalad', 8)
+    public static readonly Monochrome = new Variant('Monochrome', 0)
+    public static readonly Neutral    = new Variant('Neutral',    1)
+    public static readonly TonalSpot  = new Variant('TonalSpot',  2)
+    public static readonly Vibrant    = new Variant('Vibrant',    3)
+    public static readonly Expressive = new Variant('Expressive', 4)
+    public static readonly Fidelity   = new Variant('Fidelity',   5)
+    public static readonly Content    = new Variant('Content',    6)
+    public static readonly Rainbow    = new Variant('Rainbow',    7)
+    public static readonly FruitSalad = new Variant('FruitSalad', 8)
 
     public static readonly AllEnums = {
         Monochrome: Variant.Monochrome,
@@ -34,19 +35,5 @@ export class Variant<K extends string, V extends number> implements IValueObject
         Rainbow   : Variant.Rainbow,
         FruitSalad: Variant.FruitSalad
     } as const
-
-    public static readonly AllValues = [
-        Variant.Monochrome,
-        Variant.Neutral,
-        Variant.TonalSpot,
-        Variant.Vibrant,
-        Variant.Expressive,
-        Variant.Fidelity,
-        Variant.Content,
-        Variant.Rainbow,
-        Variant.FruitSalad
-    ] as const
-
-    public static readonly AllKeys = Variant.AllValues.map(v => v.key)
 
 }

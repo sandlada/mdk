@@ -1,10 +1,17 @@
-import type { IValueObject } from "../primitives/IValueObject"
-import type { ICSSValue } from "../primitives/ICSSValue"
+type ShapeDeclaration<K extends string, V extends number | string, U extends string> = `${K}: ${V}${U}${';' | ''}`
 
-export class Shape<K extends string, V extends number | string, U extends string> implements IValueObject<V>, ICSSValue {
+export class Shape<
+    K extends string,
+    V extends number | string,
+    U extends string
+> implements ICSSDeclaration<K, V, ShapeDeclaration<K, V, U>> {
     public readonly key  : K
     public readonly value: V
     public readonly unit : U
+
+    public toJSON() { return ({ key: this.key, value: this.value, unit: this.unit }) }
+    public toCSSDeclaration(semicolon: boolean = false): ShapeDeclaration<K, V, U> { return `${this.key}: ${this.value}${this.unit}${semicolon ? ';' : ''}` }
+    public toString() { return this.toCSSDeclaration() }
 
     private constructor(key: K, value: V, unit: U) {
         this.key   = key
@@ -12,20 +19,16 @@ export class Shape<K extends string, V extends number | string, U extends string
         this.unit  = unit
     }
 
-    private static of<K extends string, V extends number | string, U extends string>(key: K, value: V, unit: U): Shape<K, V, U> {
-        return new Shape<K, V, U>(key, value, unit)
-    }
-
-    public static readonly None                = Shape.of('none', 0, 'px')
-    public static readonly ExtraSmall          = Shape.of('extra-small', 4, 'px')
-    public static readonly Small               = Shape.of('small', 8, 'px')
-    public static readonly Medium              = Shape.of('medium', 12, 'px')
-    public static readonly Large               = Shape.of('large', 16, 'px')
-    public static readonly LargeIncreased      = Shape.of('large-increased', 20, 'px')
-    public static readonly ExtraLarge          = Shape.of('extra-large', 28, 'px')
-    public static readonly ExtraLargeIncreased = Shape.of('extra-large-increased', 32, 'px')
-    public static readonly ExtraExtraLarge     = Shape.of('extra-extra-large', 48, 'px')
-    public static readonly Full                = Shape.of('full', 'calc(infinity * 1px)', '')
+    public static readonly None                = new Shape('--md-sys-shape-corner-none',                  0,                      'px')
+    public static readonly ExtraSmall          = new Shape('--md-sys-shape-corner-extra-small',           4,                      'px')
+    public static readonly Small               = new Shape('--md-sys-shape-corner-small',                 8,                      'px')
+    public static readonly Medium              = new Shape('--md-sys-shape-corner-medium',                12,                     'px')
+    public static readonly Large               = new Shape('--md-sys-shape-corner-large',                 16,                     'px')
+    public static readonly LargeIncreased      = new Shape('--md-sys-shape-corner-large-increased',       20,                     'px')
+    public static readonly ExtraLarge          = new Shape('--md-sys-shape-corner-extra-large',           28,                     'px')
+    public static readonly ExtraLargeIncreased = new Shape('--md-sys-shape-corner-extra-large-increased', 32,                     'px')
+    public static readonly ExtraExtraLarge     = new Shape('--md-sys-shape-corner-extra-extra-large',     48,                     'px')
+    public static readonly Full                = new Shape('--md-sys-shape-corner-full',                  'calc(infinity * 1px)', '')
 
     public static readonly AllEnums = {
         None               : Shape.None,
@@ -39,28 +42,5 @@ export class Shape<K extends string, V extends number | string, U extends string
         ExtraExtraLarge    : Shape.ExtraExtraLarge,
         Full               : Shape.Full
     } as const
-
-    public static readonly AllValues = [
-        Shape.None,
-        Shape.ExtraSmall,
-        Shape.Small,
-        Shape.Medium,
-        Shape.Large,
-        Shape.LargeIncreased,
-        Shape.ExtraLarge,
-        Shape.ExtraLargeIncreased,
-        Shape.ExtraExtraLarge,
-        Shape.Full
-    ] as const
-
-    public static readonly AllKeys = Shape.AllValues.map(v => v.key)
-
-    public toCSSValue(): `var(--md-sys-shape-corner-${K}, ${V}${U})` {
-        return `var(--md-sys-shape-corner-${this.key}, ${this.value}${this.unit})`
-    }
-
-    public toString() {
-        return this.toCSSValue()
-    }
 
 }

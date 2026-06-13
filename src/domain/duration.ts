@@ -1,77 +1,56 @@
-import type { ICSSValue } from "../primitives/ICSSValue"
-import type { IValueObject } from "../primitives/IValueObject"
+export class Duration<K extends string, V extends number, U extends string = 'ms'> implements ICSSDeclaration<K, V, `${K}: ${V}${U}${';' | ''}`> {
+    public readonly key: K
+    public readonly value: V
+    public readonly unit: U
 
-export class Duration<T extends number> implements ICSSValue, IValueObject<T> {
-    public readonly value: T
+    public toJSON() { return ({ key: this.key, value: this.value, unit: this.unit }) }
+    public toCSSDeclaration(semicolon: boolean = false): `${K}: ${V}${U}${';' | ''}` { return `${this.key}: ${this.value}${this.unit}${semicolon ? ';' : ''}` }
+    public toString() { return this.toCSSDeclaration() }
 
-    private constructor(value: T) {
+    private constructor(key: K, value: V, unit: U) {
+        this.key = key
         this.value = value
+        this.unit = unit
     }
 
-    private static of<T extends number>(ms: T): Duration<T> {
-        return new Duration(ms)
-    }
-
-    public static readonly Short1     = Duration.of(50)
-    public static readonly Short2     = Duration.of(100)
-    public static readonly Short3     = Duration.of(150)
-    public static readonly Short4     = Duration.of(200)
-    public static readonly Medium1    = Duration.of(250)
-    public static readonly Medium2    = Duration.of(300)
-    public static readonly Medium3    = Duration.of(350)
-    public static readonly Medium4    = Duration.of(400)
-    public static readonly Long1      = Duration.of(450)
-    public static readonly Long2      = Duration.of(500)
-    public static readonly Long3      = Duration.of(550)
-    public static readonly Long4      = Duration.of(600)
-    public static readonly ExtraLong1 = Duration.of(700)
-    public static readonly ExtraLong2 = Duration.of(800)
-    public static readonly ExtraLong3 = Duration.of(900)
-    public static readonly ExtraLong4 = Duration.of(1000)
-
-    public static readonly ExpressiveFastSpatial    = Duration.of(350)
-    public static readonly ExpressiveDefaultSpatial = Duration.of(500)
-    public static readonly ExpressiveSlowSpatial    = Duration.of(650)
-    public static readonly ExpressiveFastEffects    = Duration.of(150)
-    public static readonly ExpressiveDefaultEffects = Duration.of(200)
-    public static readonly ExpressiveSlowEffects    = Duration.of(300)
-    public static readonly StandardFastSpatial      = Duration.of(350)
-    public static readonly StandardDefaultSpatial   = Duration.of(500)
-    public static readonly StandardSlowSpatial      = Duration.of(750)
-    public static readonly StandardFastEffects      = Duration.of(150)
-    public static readonly StandardDefaultEffects   = Duration.of(200)
-    public static readonly StandardSlowEffects      = Duration.of(300)
-
-    public toCSSValue(): `${T}ms` {
-        return `${this.value}ms`
-    }
-
-    public toString() {
-        return this.toCSSValue()
-    }
+    public static readonly Short1                   = new Duration('--md-sys-motion-duration-short1', 50, 'ms')
+    public static readonly Short2                   = new Duration('--md-sys-motion-duration-short2', 100, 'ms')
+    public static readonly Short3                   = new Duration('--md-sys-motion-duration-short3', 150, 'ms')
+    public static readonly Short4                   = new Duration('--md-sys-motion-duration-short4', 200, 'ms')
+    public static readonly Medium1                  = new Duration('--md-sys-motion-duration-medium1', 250, 'ms')
+    public static readonly Medium2                  = new Duration('--md-sys-motion-duration-medium2', 300, 'ms')
+    public static readonly Medium3                  = new Duration('--md-sys-motion-duration-medium3', 350, 'ms')
+    public static readonly Medium4                  = new Duration('--md-sys-motion-duration-medium4', 400, 'ms')
+    public static readonly Long1                    = new Duration('--md-sys-motion-duration-long1', 450, 'ms')
+    public static readonly Long2                    = new Duration('--md-sys-motion-duration-long2', 500, 'ms')
+    public static readonly Long3                    = new Duration('--md-sys-motion-duration-long3', 550, 'ms')
+    public static readonly Long4                    = new Duration('--md-sys-motion-duration-long4', 600, 'ms')
+    public static readonly ExtraLong1               = new Duration('--md-sys-motion-duration-extra-long1', 700, 'ms')
+    public static readonly ExtraLong2               = new Duration('--md-sys-motion-duration-extra-long2', 800, 'ms')
+    public static readonly ExtraLong3               = new Duration('--md-sys-motion-duration-extra-long3', 900, 'ms')
+    public static readonly ExtraLong4               = new Duration('--md-sys-motion-duration-extra-long4', 1000, 'ms')
+    public static readonly ExpressiveFastSpatial    = new Duration('--md-sys-motion-duration-expressive-fast-spatial', 350, 'ms')
+    public static readonly ExpressiveDefaultSpatial = new Duration('--md-sys-motion-duration-expressive-default-spatial', 500, 'ms')
+    public static readonly ExpressiveSlowSpatial    = new Duration('--md-sys-motion-duration-expressive-slow-spatial', 650, 'ms')
+    public static readonly ExpressiveFastEffects    = new Duration('--md-sys-motion-duration-expressive-fast-effects', 150, 'ms')
+    public static readonly ExpressiveDefaultEffects = new Duration('--md-sys-motion-duration-expressive-default-effects', 200, 'ms')
+    public static readonly ExpressiveSlowEffects    = new Duration('--md-sys-motion-duration-expressive-slow-effects', 300, 'ms')
+    public static readonly StandardFastSpatial      = new Duration('--md-sys-motion-duration-standard-fast-spatial', 350, 'ms')
+    public static readonly StandardDefaultSpatial   = new Duration('--md-sys-motion-duration-standard-default-spatial', 500, 'ms')
+    public static readonly StandardSlowSpatial      = new Duration('--md-sys-motion-duration-standard-slow-spatial', 750, 'ms')
+    public static readonly StandardFastEffects      = new Duration('--md-sys-motion-duration-standard-fast-effects', 150, 'ms')
+    public static readonly StandardDefaultEffects   = new Duration('--md-sys-motion-duration-standard-default-effects', 200, 'ms')
+    public static readonly StandardSlowEffects      = new Duration('--md-sys-motion-duration-standard-slow-effects', 300, 'ms')
 
     public static readonly AllEnums = {
-        Short1: this.Short1, Short2: this.Short2, Short3: this.Short3, Short4: this.Short4,
-        Medium1: this.Medium1, Medium2: this.Medium2, Medium3: this.Medium3, Medium4: this.Medium4,
-        Long1: this.Long1, Long2: this.Long2, Long3: this.Long3, Long4: this.Long4,
-        ExtraLong1: this.ExtraLong1, ExtraLong2: this.ExtraLong2, ExtraLong3: this.ExtraLong3, ExtraLong4: this.ExtraLong4,
+        Short1               : this.Short1,                Short2                  : this.Short2,                   Short3               : this.Short3,                Short4    : this.Short4,
+        Medium1              : this.Medium1,               Medium2                 : this.Medium2,                  Medium3              : this.Medium3,               Medium4   : this.Medium4,
+        Long1                : this.Long1,                 Long2                   : this.Long2,                    Long3                : this.Long3,                 Long4     : this.Long4,
+        ExtraLong1           : this.ExtraLong1,            ExtraLong2              : this.ExtraLong2,               ExtraLong3           : this.ExtraLong3,            ExtraLong4: this.ExtraLong4,
         ExpressiveFastSpatial: this.ExpressiveFastSpatial, ExpressiveDefaultSpatial: this.ExpressiveDefaultSpatial, ExpressiveSlowSpatial: this.ExpressiveSlowSpatial,
         ExpressiveFastEffects: this.ExpressiveFastEffects, ExpressiveDefaultEffects: this.ExpressiveDefaultEffects, ExpressiveSlowEffects: this.ExpressiveSlowEffects,
-        StandardFastSpatial: this.StandardFastSpatial, StandardDefaultSpatial: this.StandardDefaultSpatial, StandardSlowSpatial: this.StandardSlowSpatial,
-        StandardFastEffects: this.StandardFastEffects, StandardDefaultEffects: this.StandardDefaultEffects, StandardSlowEffects: this.StandardSlowEffects,
+        StandardFastSpatial  : this.StandardFastSpatial,   StandardDefaultSpatial  : this.StandardDefaultSpatial,   StandardSlowSpatial  : this.StandardSlowSpatial,
+        StandardFastEffects  : this.StandardFastEffects,   StandardDefaultEffects  : this.StandardDefaultEffects,   StandardSlowEffects  : this.StandardSlowEffects,
     } as const
-
-    public static readonly AllValues = [
-        this.Short1, this.Short2, this.Short3, this.Short4,
-        this.Medium1, this.Medium2, this.Medium3, this.Medium4,
-        this.Long1, this.Long2, this.Long3, this.Long4,
-        this.ExtraLong1, this.ExtraLong2, this.ExtraLong3, this.ExtraLong4,
-        this.ExpressiveFastSpatial, this.ExpressiveDefaultSpatial, this.ExpressiveSlowSpatial,
-        this.ExpressiveFastEffects, this.ExpressiveDefaultEffects, this.ExpressiveSlowEffects,
-        this.StandardFastSpatial, this.StandardDefaultSpatial, this.StandardSlowSpatial,
-        this.StandardFastEffects, this.StandardDefaultEffects, this.StandardSlowEffects,
-     ] as const
-
-    public static readonly AllKeys = Duration.AllValues.map((duration) => duration.value)
 
 }
