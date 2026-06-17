@@ -21,6 +21,21 @@ npm i @sandlada/mdk
 
 ## Usage
 
+Including:
+
+- `Color`
+- `Palette`
+- `Duration`
+- `Easing`
+- `Elevation`
+- `Shape`
+- `Space`
+- `State`
+- `Typeface`
+- `Typescale`
+- `Variant`
+- `ContrastLevel`
+
 ### Use Color
 
 ```typescript
@@ -174,7 +189,7 @@ All token classes implement the `ICSSDeclaration` interface and provide the `ToC
 | Option         | Type      | Default | Description                                             |
 | -------------- | --------- | ------- | ------------------------------------------------------- |
 | `Semicolon`    | `boolean` | `false` | Append a Semicolon to the declaration                   |
-| `WrapVariable` | `boolean` | `false` | Output as `var(--key, value)` instead of `--Key: value` |
+| `WrapVariable` | `boolean` | `false` | Output as `var(--key, value)` instead of `--key: value` |
 
 When `WrapVariable` is `true`, the output becomes a CSS `var()` function call suitable for direct use as a CSS property Value. The `Semicolon` option is ignored when `WrapVariable` is `true`.
 

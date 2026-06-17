@@ -1,4 +1,10 @@
-export type { ICSSDeclaration } from './interfaces/css-declaration.interface'
+export * from './interfaces/css-declaration.interface'
+export * from './interfaces/palette-contract.interface'
+export * from './interfaces/palette-names.interface'
+export * from './interfaces/semantic-color-contract.interface'
+export * from './interfaces/semantic-color-names.interface'
+export * from './interfaces/semantic-colors.interface'
+
 export * from './domain/color'
 export * from './domain/contrast-level'
 export * from './domain/duration'
@@ -11,3 +17,6 @@ export * from './domain/palette'
 export * from './domain/typeface'
 export * from './domain/typescale'
 export * from './domain/variant'
+
+export * from './consts/default-color-contract.const'
+export * from './consts/default-palette-contract.const'
