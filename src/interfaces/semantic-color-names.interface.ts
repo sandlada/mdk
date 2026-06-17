@@ -1,8 +1,3 @@
-export type SemanticColors<V = string> = Record<
-    SemanticColorNames,
-    V
->
-
 export type SemanticColorNames
     = 'PrimaryKeyColor'
     | 'SecondaryKeyColor'

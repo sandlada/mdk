@@ -13,7 +13,7 @@ import { Typescale } from '../src/domain/typescale';
 describe('ICSSDeclaration.toCSSDeclaration', () => {
 
     describe('Color', () => {
-        const token = Color.Primary;
+        const token = Color.From().Primary;
 
         it('should output declaration by default', () => {
             expect(token.toCSSDeclaration()).toBe('--md-sys-color-primary: light-dark(#006d38, #76f29e)');
@@ -28,7 +28,7 @@ describe('ICSSDeclaration.toCSSDeclaration', () => {
         });
 
         it('should output wrapped var() ignoring semicolon', () => {
-            expect(token.toCSSDeclaration({ wrapVariable: true, semicolon: true })).toBe('var(--md-sys-color-primary, light-dark(#006d38, #76f29e))');
+            expect(token.toCSSDeclaration({ wrapVariable: true, semicolon: true })).toBe('var(--md-sys-color-primary, light-dark(#006d38, #76f29e));');
         });
     });
 
@@ -94,7 +94,7 @@ describe('ICSSDeclaration.toCSSDeclaration', () => {
 
     describe('State', () => {
         const token = State.HoveredStateLayerOpacity;
-
+``
         it('should output declaration by default', () => {
             expect(token.toCSSDeclaration()).toBe('--md-sys-state-hovered-state-layer-opacity: 0.08');
         });
