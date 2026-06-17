@@ -81,7 +81,7 @@ describe('ICSSDeclaration.ToCSSDeclaration', () => {
     });
 
     describe('Palette', () => {
-        const token = Palette.Primary40;
+        const token = Palette.From().Primary40;
 
         it('should output declaration by default', () => {
             expect(token.ToCSSDeclaration()).toBe('--md-ref-palette-primary-40: #006d38');

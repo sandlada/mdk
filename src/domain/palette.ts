@@ -1,817 +1,817 @@
+import { DefaultPaletteContract } from '../consts/default-palette-contract.const'
+import type { PaletteContract } from '../interfaces/palette-contract.interface'
+import type { PaletteNames } from '../interfaces/palette-names.interface'
 import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
 
-export class Palette<
-    K extends string,
-    V extends string
-> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`> {
+class _Palette<K extends string, V extends string> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`> {
     public readonly Key  : K
     public readonly Value: V
 
     public toJSON() { return ({ Key: this.Key, Value: this.Value }) }
-    public ToCSSDeclaration({ Semicolon = false, WrapVariable = false }: { Semicolon?: boolean, WrapVariable?: boolean } = {}): string {
+    public ToCSSDeclaration(): `${K}: ${V}`
+    public ToCSSDeclaration(options: { Semicolon: true, WrapVariable?: false }): `${K}: ${V};`
+    public ToCSSDeclaration(options?: { Semicolon?: false, WrapVariable?: false }): `${K}: ${V}`
+    public ToCSSDeclaration(options: { Semicolon: true, WrapVariable: true }): `var(${K}, ${V});`
+    public ToCSSDeclaration(options: { Semicolon?: false, WrapVariable: true }): `var(${K}, ${V})`
+    public ToCSSDeclaration({ Semicolon = false, WrapVariable = false }: { Semicolon?: boolean, WrapVariable?: boolean } = {}): `${K}: ${V}${';' | ''}` | `var(${K}, ${V})${';' | ''}` {
         return WrapVariable
-            ? `var(${this.Key}, ${this.Value})`
+            ? `var(${this.Key}, ${this.Value})${Semicolon ? ';' : ''}`
             : `${this.Key}: ${this.Value}${Semicolon ? ';' : ''}`
     }
     public toString() { return this.ToCSSDeclaration() }
 
-    private constructor(Key: K, Value: V) {
+    public constructor(Key: K, Value: V) {
         this.Key   = Key
         this.Value = Value
     }
+}
 
-    public static readonly Primary0          = new Palette(`--md-ref-palette-primary-0`, `#000000`)
-    public static readonly Primary1          = new Palette(`--md-ref-palette-primary-1`, `#000501`)
-    public static readonly Primary2          = new Palette(`--md-ref-palette-primary-2`, `#000a03`)
-    public static readonly Primary3          = new Palette(`--md-ref-palette-primary-3`, `#000e04`)
-    public static readonly Primary4          = new Palette(`--md-ref-palette-primary-4`, `#001205`)
-    public static readonly Primary5          = new Palette(`--md-ref-palette-primary-5`, `#001506`)
-    public static readonly Primary6          = new Palette(`--md-ref-palette-primary-6`, `#001808`)
-    public static readonly Primary7          = new Palette(`--md-ref-palette-primary-7`, `#001a09`)
-    public static readonly Primary8          = new Palette(`--md-ref-palette-primary-8`, `#001d0a`)
-    public static readonly Primary9          = new Palette(`--md-ref-palette-primary-9`, `#001f0b`)
-    public static readonly Primary10         = new Palette(`--md-ref-palette-primary-10`, `#00210d`)
-    public static readonly Primary11         = new Palette(`--md-ref-palette-primary-11`, `#00230e`)
-    public static readonly Primary12         = new Palette(`--md-ref-palette-primary-12`, `#00260f`)
-    public static readonly Primary13         = new Palette(`--md-ref-palette-primary-13`, `#002811`)
-    public static readonly Primary14         = new Palette(`--md-ref-palette-primary-14`, `#002a12`)
-    public static readonly Primary15         = new Palette(`--md-ref-palette-primary-15`, `#002d13`)
-    public static readonly Primary16         = new Palette(`--md-ref-palette-primary-16`, `#002f15`)
-    public static readonly Primary17         = new Palette(`--md-ref-palette-primary-17`, `#003216`)
-    public static readonly Primary18         = new Palette(`--md-ref-palette-primary-18`, `#003417`)
-    public static readonly Primary19         = new Palette(`--md-ref-palette-primary-19`, `#003619`)
-    public static readonly Primary20         = new Palette(`--md-ref-palette-primary-20`, `#00391a`)
-    public static readonly Primary21         = new Palette(`--md-ref-palette-primary-21`, `#003b1c`)
-    public static readonly Primary22         = new Palette(`--md-ref-palette-primary-22`, `#003e1d`)
-    public static readonly Primary23         = new Palette(`--md-ref-palette-primary-23`, `#00401e`)
-    public static readonly Primary24         = new Palette(`--md-ref-palette-primary-24`, `#004320`)
-    public static readonly Primary25         = new Palette(`--md-ref-palette-primary-25`, `#004521`)
-    public static readonly Primary26         = new Palette(`--md-ref-palette-primary-26`, `#004823`)
-    public static readonly Primary27         = new Palette(`--md-ref-palette-primary-27`, `#004b24`)
-    public static readonly Primary28         = new Palette(`--md-ref-palette-primary-28`, `#004d26`)
-    public static readonly Primary29         = new Palette(`--md-ref-palette-primary-29`, `#005027`)
-    public static readonly Primary30         = new Palette(`--md-ref-palette-primary-30`, `#005229`)
-    public static readonly Primary31         = new Palette(`--md-ref-palette-primary-31`, `#00552a`)
-    public static readonly Primary32         = new Palette(`--md-ref-palette-primary-32`, `#00582c`)
-    public static readonly Primary33         = new Palette(`--md-ref-palette-primary-33`, `#005a2d`)
-    public static readonly Primary34         = new Palette(`--md-ref-palette-primary-34`, `#005d2f`)
-    public static readonly Primary35         = new Palette(`--md-ref-palette-primary-35`, `#006030`)
-    public static readonly Primary36         = new Palette(`--md-ref-palette-primary-36`, `#006232`)
-    public static readonly Primary37         = new Palette(`--md-ref-palette-primary-37`, `#006533`)
-    public static readonly Primary38         = new Palette(`--md-ref-palette-primary-38`, `#006835`)
-    public static readonly Primary39         = new Palette(`--md-ref-palette-primary-39`, `#006a36`)
-    public static readonly Primary40         = new Palette(`--md-ref-palette-primary-40`, `#006d38`)
-    public static readonly Primary41         = new Palette(`--md-ref-palette-primary-41`, `#007039`)
-    public static readonly Primary42         = new Palette(`--md-ref-palette-primary-42`, `#00733b`)
-    public static readonly Primary43         = new Palette(`--md-ref-palette-primary-43`, `#00753d`)
-    public static readonly Primary44         = new Palette(`--md-ref-palette-primary-44`, `#00783e`)
-    public static readonly Primary45         = new Palette(`--md-ref-palette-primary-45`, `#007b40`)
-    public static readonly Primary46         = new Palette(`--md-ref-palette-primary-46`, `#007e41`)
-    public static readonly Primary47         = new Palette(`--md-ref-palette-primary-47`, `#008143`)
-    public static readonly Primary48         = new Palette(`--md-ref-palette-primary-48`, `#008444`)
-    public static readonly Primary49         = new Palette(`--md-ref-palette-primary-49`, `#008646`)
-    public static readonly Primary50         = new Palette(`--md-ref-palette-primary-50`, `#008948`)
-    public static readonly Primary51         = new Palette(`--md-ref-palette-primary-51`, `#008c49`)
-    public static readonly Primary52         = new Palette(`--md-ref-palette-primary-52`, `#008f4b`)
-    public static readonly Primary53         = new Palette(`--md-ref-palette-primary-53`, `#00924d`)
-    public static readonly Primary54         = new Palette(`--md-ref-palette-primary-54`, `#00954e`)
-    public static readonly Primary55         = new Palette(`--md-ref-palette-primary-55`, `#009850`)
-    public static readonly Primary56         = new Palette(`--md-ref-palette-primary-56`, `#009b52`)
-    public static readonly Primary57         = new Palette(`--md-ref-palette-primary-57`, `#039d54`)
-    public static readonly Primary58         = new Palette(`--md-ref-palette-primary-58`, `#0da056`)
-    public static readonly Primary59         = new Palette(`--md-ref-palette-primary-59`, `#14a358`)
-    public static readonly Primary60         = new Palette(`--md-ref-palette-primary-60`, `#1aa65b`)
-    public static readonly Primary61         = new Palette(`--md-ref-palette-primary-61`, `#20a85d`)
-    public static readonly Primary62         = new Palette(`--md-ref-palette-primary-62`, `#24ab5f`)
-    public static readonly Primary63         = new Palette(`--md-ref-palette-primary-63`, `#29ae62`)
-    public static readonly Primary64         = new Palette(`--md-ref-palette-primary-64`, `#2db164`)
-    public static readonly Primary65         = new Palette(`--md-ref-palette-primary-65`, `#31b367`)
-    public static readonly Primary66         = new Palette(`--md-ref-palette-primary-66`, `#34b669`)
-    public static readonly Primary67         = new Palette(`--md-ref-palette-primary-67`, `#38b96b`)
-    public static readonly Primary68         = new Palette(`--md-ref-palette-primary-68`, `#3bbc6e`)
-    public static readonly Primary69         = new Palette(`--md-ref-palette-primary-69`, `#3fbf70`)
-    public static readonly Primary70         = new Palette(`--md-ref-palette-primary-70`, `#42c173`)
-    public static readonly Primary71         = new Palette(`--md-ref-palette-primary-71`, `#46c475`)
-    public static readonly Primary72         = new Palette(`--md-ref-palette-primary-72`, `#49c778`)
-    public static readonly Primary73         = new Palette(`--md-ref-palette-primary-73`, `#4cca7a`)
-    public static readonly Primary74         = new Palette(`--md-ref-palette-primary-74`, `#4fcd7d`)
-    public static readonly Primary75         = new Palette(`--md-ref-palette-primary-75`, `#52d07f`)
-    public static readonly Primary76         = new Palette(`--md-ref-palette-primary-76`, `#55d282`)
-    public static readonly Primary77         = new Palette(`--md-ref-palette-primary-77`, `#58d584`)
-    public static readonly Primary78         = new Palette(`--md-ref-palette-primary-78`, `#5bd887`)
-    public static readonly Primary79         = new Palette(`--md-ref-palette-primary-79`, `#5edb89`)
-    public static readonly Primary80         = new Palette(`--md-ref-palette-primary-80`, `#61de8c`)
-    public static readonly Primary81         = new Palette(`--md-ref-palette-primary-81`, `#64e18e`)
-    public static readonly Primary82         = new Palette(`--md-ref-palette-primary-82`, `#67e491`)
-    public static readonly Primary83         = new Palette(`--md-ref-palette-primary-83`, `#6ae794`)
-    public static readonly Primary84         = new Palette(`--md-ref-palette-primary-84`, `#6dea96`)
-    public static readonly Primary85         = new Palette(`--md-ref-palette-primary-85`, `#70ec99`)
-    public static readonly Primary86         = new Palette(`--md-ref-palette-primary-86`, `#73ef9b`)
-    public static readonly Primary87         = new Palette(`--md-ref-palette-primary-87`, `#76f29e`)
-    public static readonly Primary88         = new Palette(`--md-ref-palette-primary-88`, `#79f5a1`)
-    public static readonly Primary89         = new Palette(`--md-ref-palette-primary-89`, `#7cf8a3`)
-    public static readonly Primary90         = new Palette(`--md-ref-palette-primary-90`, `#7ffba6`)
-    public static readonly Primary91         = new Palette(`--md-ref-palette-primary-91`, `#82fea8`)
-    public static readonly Primary92         = new Palette(`--md-ref-palette-primary-92`, `#91ffb0`)
-    public static readonly Primary93         = new Palette(`--md-ref-palette-primary-93`, `#a4ffbb`)
-    public static readonly Primary94         = new Palette(`--md-ref-palette-primary-94`, `#b4ffc5`)
-    public static readonly Primary95         = new Palette(`--md-ref-palette-primary-95`, `#c3ffce`)
-    public static readonly Primary96         = new Palette(`--md-ref-palette-primary-96`, `#d1ffd8`)
-    public static readonly Primary97         = new Palette(`--md-ref-palette-primary-97`, `#deffe1`)
-    public static readonly Primary98         = new Palette(`--md-ref-palette-primary-98`, `#eaffea`)
-    public static readonly Primary99         = new Palette(`--md-ref-palette-primary-99`, `#f5fff3`)
-    public static readonly Primary100        = new Palette(`--md-ref-palette-primary-100`, `#ffffff`)
-    public static readonly Secondary0        = new Palette(`--md-ref-palette-secondary-0`, `#000000`)
-    public static readonly Secondary1        = new Palette(`--md-ref-palette-secondary-1`, `#000501`)
-    public static readonly Secondary2        = new Palette(`--md-ref-palette-secondary-2`, `#000a03`)
-    public static readonly Secondary3        = new Palette(`--md-ref-palette-secondary-3`, `#000e04`)
-    public static readonly Secondary4        = new Palette(`--md-ref-palette-secondary-4`, `#001205`)
-    public static readonly Secondary5        = new Palette(`--md-ref-palette-secondary-5`, `#001506`)
-    public static readonly Secondary6        = new Palette(`--md-ref-palette-secondary-6`, `#001808`)
-    public static readonly Secondary7        = new Palette(`--md-ref-palette-secondary-7`, `#001a09`)
-    public static readonly Secondary8        = new Palette(`--md-ref-palette-secondary-8`, `#001d0a`)
-    public static readonly Secondary9        = new Palette(`--md-ref-palette-secondary-9`, `#001f0b`)
-    public static readonly Secondary10       = new Palette(`--md-ref-palette-secondary-10`, `#00210d`)
-    public static readonly Secondary11       = new Palette(`--md-ref-palette-secondary-11`, `#00230e`)
-    public static readonly Secondary12       = new Palette(`--md-ref-palette-secondary-12`, `#00260f`)
-    public static readonly Secondary13       = new Palette(`--md-ref-palette-secondary-13`, `#002811`)
-    public static readonly Secondary14       = new Palette(`--md-ref-palette-secondary-14`, `#002a12`)
-    public static readonly Secondary15       = new Palette(`--md-ref-palette-secondary-15`, `#002d13`)
-    public static readonly Secondary16       = new Palette(`--md-ref-palette-secondary-16`, `#002f15`)
-    public static readonly Secondary17       = new Palette(`--md-ref-palette-secondary-17`, `#023116`)
-    public static readonly Secondary18       = new Palette(`--md-ref-palette-secondary-18`, `#043418`)
-    public static readonly Secondary19       = new Palette(`--md-ref-palette-secondary-19`, `#07361a`)
-    public static readonly Secondary20       = new Palette(`--md-ref-palette-secondary-20`, `#0a381c`)
-    public static readonly Secondary21       = new Palette(`--md-ref-palette-secondary-21`, `#0d3a1e`)
-    public static readonly Secondary22       = new Palette(`--md-ref-palette-secondary-22`, `#0f3d21`)
-    public static readonly Secondary23       = new Palette(`--md-ref-palette-secondary-23`, `#123f23`)
-    public static readonly Secondary24       = new Palette(`--md-ref-palette-secondary-24`, `#154125`)
-    public static readonly Secondary25       = new Palette(`--md-ref-palette-secondary-25`, `#174427`)
-    public static readonly Secondary26       = new Palette(`--md-ref-palette-secondary-26`, `#1a4629`)
-    public static readonly Secondary27       = new Palette(`--md-ref-palette-secondary-27`, `#1c482b`)
-    public static readonly Secondary28       = new Palette(`--md-ref-palette-secondary-28`, `#1f4b2d`)
-    public static readonly Secondary29       = new Palette(`--md-ref-palette-secondary-29`, `#214d2f`)
-    public static readonly Secondary30       = new Palette(`--md-ref-palette-secondary-30`, `#244f31`)
-    public static readonly Secondary31       = new Palette(`--md-ref-palette-secondary-31`, `#265233`)
-    public static readonly Secondary32       = new Palette(`--md-ref-palette-secondary-32`, `#295436`)
-    public static readonly Secondary33       = new Palette(`--md-ref-palette-secondary-33`, `#2b5738`)
-    public static readonly Secondary34       = new Palette(`--md-ref-palette-secondary-34`, `#2d593a`)
-    public static readonly Secondary35       = new Palette(`--md-ref-palette-secondary-35`, `#305b3c`)
-    public static readonly Secondary36       = new Palette(`--md-ref-palette-secondary-36`, `#325e3e`)
-    public static readonly Secondary37       = new Palette(`--md-ref-palette-secondary-37`, `#356041`)
-    public static readonly Secondary38       = new Palette(`--md-ref-palette-secondary-38`, `#376343`)
-    public static readonly Secondary39       = new Palette(`--md-ref-palette-secondary-39`, `#396545`)
-    public static readonly Secondary40       = new Palette(`--md-ref-palette-secondary-40`, `#3c6847`)
-    public static readonly Secondary41       = new Palette(`--md-ref-palette-secondary-41`, `#3e6a4a`)
-    public static readonly Secondary42       = new Palette(`--md-ref-palette-secondary-42`, `#416d4c`)
-    public static readonly Secondary43       = new Palette(`--md-ref-palette-secondary-43`, `#436f4e`)
-    public static readonly Secondary44       = new Palette(`--md-ref-palette-secondary-44`, `#467251`)
-    public static readonly Secondary45       = new Palette(`--md-ref-palette-secondary-45`, `#487453`)
-    public static readonly Secondary46       = new Palette(`--md-ref-palette-secondary-46`, `#4a7755`)
-    public static readonly Secondary47       = new Palette(`--md-ref-palette-secondary-47`, `#4d7958`)
-    public static readonly Secondary48       = new Palette(`--md-ref-palette-secondary-48`, `#4f7c5a`)
-    public static readonly Secondary49       = new Palette(`--md-ref-palette-secondary-49`, `#527e5c`)
-    public static readonly Secondary50       = new Palette(`--md-ref-palette-secondary-50`, `#54815f`)
-    public static readonly Secondary51       = new Palette(`--md-ref-palette-secondary-51`, `#578461`)
-    public static readonly Secondary52       = new Palette(`--md-ref-palette-secondary-52`, `#598664`)
-    public static readonly Secondary53       = new Palette(`--md-ref-palette-secondary-53`, `#5c8966`)
-    public static readonly Secondary54       = new Palette(`--md-ref-palette-secondary-54`, `#5e8b68`)
-    public static readonly Secondary55       = new Palette(`--md-ref-palette-secondary-55`, `#618e6b`)
-    public static readonly Secondary56       = new Palette(`--md-ref-palette-secondary-56`, `#63916d`)
-    public static readonly Secondary57       = new Palette(`--md-ref-palette-secondary-57`, `#669370`)
-    public static readonly Secondary58       = new Palette(`--md-ref-palette-secondary-58`, `#689672`)
-    public static readonly Secondary59       = new Palette(`--md-ref-palette-secondary-59`, `#6b9975`)
-    public static readonly Secondary60       = new Palette(`--md-ref-palette-secondary-60`, `#6d9b77`)
-    public static readonly Secondary61       = new Palette(`--md-ref-palette-secondary-61`, `#709e7a`)
-    public static readonly Secondary62       = new Palette(`--md-ref-palette-secondary-62`, `#73a17c`)
-    public static readonly Secondary63       = new Palette(`--md-ref-palette-secondary-63`, `#75a37f`)
-    public static readonly Secondary64       = new Palette(`--md-ref-palette-secondary-64`, `#78a681`)
-    public static readonly Secondary65       = new Palette(`--md-ref-palette-secondary-65`, `#7aa984`)
-    public static readonly Secondary66       = new Palette(`--md-ref-palette-secondary-66`, `#7dab86`)
-    public static readonly Secondary67       = new Palette(`--md-ref-palette-secondary-67`, `#7fae89`)
-    public static readonly Secondary68       = new Palette(`--md-ref-palette-secondary-68`, `#82b18b`)
-    public static readonly Secondary69       = new Palette(`--md-ref-palette-secondary-69`, `#85b38e`)
-    public static readonly Secondary70       = new Palette(`--md-ref-palette-secondary-70`, `#87b690`)
-    public static readonly Secondary71       = new Palette(`--md-ref-palette-secondary-71`, `#8ab993`)
-    public static readonly Secondary72       = new Palette(`--md-ref-palette-secondary-72`, `#8dbc96`)
-    public static readonly Secondary73       = new Palette(`--md-ref-palette-secondary-73`, `#8fbe98`)
-    public static readonly Secondary74       = new Palette(`--md-ref-palette-secondary-74`, `#92c19b`)
-    public static readonly Secondary75       = new Palette(`--md-ref-palette-secondary-75`, `#95c49d`)
-    public static readonly Secondary76       = new Palette(`--md-ref-palette-secondary-76`, `#97c7a0`)
-    public static readonly Secondary77       = new Palette(`--md-ref-palette-secondary-77`, `#9acaa3`)
-    public static readonly Secondary78       = new Palette(`--md-ref-palette-secondary-78`, `#9dcca5`)
-    public static readonly Secondary79       = new Palette(`--md-ref-palette-secondary-79`, `#9fcfa8`)
-    public static readonly Secondary80       = new Palette(`--md-ref-palette-secondary-80`, `#a2d2ab`)
-    public static readonly Secondary81       = new Palette(`--md-ref-palette-secondary-81`, `#a5d5ad`)
-    public static readonly Secondary82       = new Palette(`--md-ref-palette-secondary-82`, `#a7d8b0`)
-    public static readonly Secondary83       = new Palette(`--md-ref-palette-secondary-83`, `#aadab3`)
-    public static readonly Secondary84       = new Palette(`--md-ref-palette-secondary-84`, `#adddb5`)
-    public static readonly Secondary85       = new Palette(`--md-ref-palette-secondary-85`, `#b0e0b8`)
-    public static readonly Secondary86       = new Palette(`--md-ref-palette-secondary-86`, `#b2e3bb`)
-    public static readonly Secondary87       = new Palette(`--md-ref-palette-secondary-87`, `#b5e6bd`)
-    public static readonly Secondary88       = new Palette(`--md-ref-palette-secondary-88`, `#b8e9c0`)
-    public static readonly Secondary89       = new Palette(`--md-ref-palette-secondary-89`, `#bbecc3`)
-    public static readonly Secondary90       = new Palette(`--md-ref-palette-secondary-90`, `#bdeec5`)
-    public static readonly Secondary91       = new Palette(`--md-ref-palette-secondary-91`, `#c0f1c8`)
-    public static readonly Secondary92       = new Palette(`--md-ref-palette-secondary-92`, `#c3f4cb`)
-    public static readonly Secondary93       = new Palette(`--md-ref-palette-secondary-93`, `#c6f7ce`)
-    public static readonly Secondary94       = new Palette(`--md-ref-palette-secondary-94`, `#c8fad0`)
-    public static readonly Secondary95       = new Palette(`--md-ref-palette-secondary-95`, `#cbfdd3`)
-    public static readonly Secondary96       = new Palette(`--md-ref-palette-secondary-96`, `#d1ffd8`)
-    public static readonly Secondary97       = new Palette(`--md-ref-palette-secondary-97`, `#deffe1`)
-    public static readonly Secondary98       = new Palette(`--md-ref-palette-secondary-98`, `#eaffea`)
-    public static readonly Secondary99       = new Palette(`--md-ref-palette-secondary-99`, `#f5fff3`)
-    public static readonly Secondary100      = new Palette(`--md-ref-palette-secondary-100`, `#ffffff`)
-    public static readonly Tertiary0         = new Palette(`--md-ref-palette-tertiary-0`, `#000000`)
-    public static readonly Tertiary1         = new Palette(`--md-ref-palette-tertiary-1`, `#0b0200`)
-    public static readonly Tertiary2         = new Palette(`--md-ref-palette-tertiary-2`, `#140300`)
-    public static readonly Tertiary3         = new Palette(`--md-ref-palette-tertiary-3`, `#1a0500`)
-    public static readonly Tertiary4         = new Palette(`--md-ref-palette-tertiary-4`, `#1f0700`)
-    public static readonly Tertiary5         = new Palette(`--md-ref-palette-tertiary-5`, `#230900`)
-    public static readonly Tertiary6         = new Palette(`--md-ref-palette-tertiary-6`, `#270a00`)
-    public static readonly Tertiary7         = new Palette(`--md-ref-palette-tertiary-7`, `#2b0c00`)
-    public static readonly Tertiary8         = new Palette(`--md-ref-palette-tertiary-8`, `#2e0d00`)
-    public static readonly Tertiary9         = new Palette(`--md-ref-palette-tertiary-9`, `#310f00`)
-    public static readonly Tertiary10        = new Palette(`--md-ref-palette-tertiary-10`, `#351000`)
-    public static readonly Tertiary11        = new Palette(`--md-ref-palette-tertiary-11`, `#381200`)
-    public static readonly Tertiary12        = new Palette(`--md-ref-palette-tertiary-12`, `#3b1300`)
-    public static readonly Tertiary13        = new Palette(`--md-ref-palette-tertiary-13`, `#3e1500`)
-    public static readonly Tertiary14        = new Palette(`--md-ref-palette-tertiary-14`, `#421600`)
-    public static readonly Tertiary15        = new Palette(`--md-ref-palette-tertiary-15`, `#451800`)
-    public static readonly Tertiary16        = new Palette(`--md-ref-palette-tertiary-16`, `#481900`)
-    public static readonly Tertiary17        = new Palette(`--md-ref-palette-tertiary-17`, `#4c1b00`)
-    public static readonly Tertiary18        = new Palette(`--md-ref-palette-tertiary-18`, `#4f1c00`)
-    public static readonly Tertiary19        = new Palette(`--md-ref-palette-tertiary-19`, `#521e01`)
-    public static readonly Tertiary20        = new Palette(`--md-ref-palette-tertiary-20`, `#552002`)
-    public static readonly Tertiary21        = new Palette(`--md-ref-palette-tertiary-21`, `#582303`)
-    public static readonly Tertiary22        = new Palette(`--md-ref-palette-tertiary-22`, `#5b2505`)
-    public static readonly Tertiary23        = new Palette(`--md-ref-palette-tertiary-23`, `#5d2706`)
-    public static readonly Tertiary24        = new Palette(`--md-ref-palette-tertiary-24`, `#602908`)
-    public static readonly Tertiary25        = new Palette(`--md-ref-palette-tertiary-25`, `#632b0a`)
-    public static readonly Tertiary26        = new Palette(`--md-ref-palette-tertiary-26`, `#662d0d`)
-    public static readonly Tertiary27        = new Palette(`--md-ref-palette-tertiary-27`, `#692f0f`)
-    public static readonly Tertiary28        = new Palette(`--md-ref-palette-tertiary-28`, `#6c3211`)
-    public static readonly Tertiary29        = new Palette(`--md-ref-palette-tertiary-29`, `#6f3413`)
-    public static readonly Tertiary30        = new Palette(`--md-ref-palette-tertiary-30`, `#723615`)
-    public static readonly Tertiary31        = new Palette(`--md-ref-palette-tertiary-31`, `#743817`)
-    public static readonly Tertiary32        = new Palette(`--md-ref-palette-tertiary-32`, `#773a19`)
-    public static readonly Tertiary33        = new Palette(`--md-ref-palette-tertiary-33`, `#7a3d1b`)
-    public static readonly Tertiary34        = new Palette(`--md-ref-palette-tertiary-34`, `#7d3f1d`)
-    public static readonly Tertiary35        = new Palette(`--md-ref-palette-tertiary-35`, `#804120`)
-    public static readonly Tertiary36        = new Palette(`--md-ref-palette-tertiary-36`, `#834322`)
-    public static readonly Tertiary37        = new Palette(`--md-ref-palette-tertiary-37`, `#864624`)
-    public static readonly Tertiary38        = new Palette(`--md-ref-palette-tertiary-38`, `#894826`)
-    public static readonly Tertiary39        = new Palette(`--md-ref-palette-tertiary-39`, `#8c4a28`)
-    public static readonly Tertiary40        = new Palette(`--md-ref-palette-tertiary-40`, `#8f4d2a`)
-    public static readonly Tertiary41        = new Palette(`--md-ref-palette-tertiary-41`, `#924f2c`)
-    public static readonly Tertiary42        = new Palette(`--md-ref-palette-tertiary-42`, `#95512e`)
-    public static readonly Tertiary43        = new Palette(`--md-ref-palette-tertiary-43`, `#985431`)
-    public static readonly Tertiary44        = new Palette(`--md-ref-palette-tertiary-44`, `#9b5633`)
-    public static readonly Tertiary45        = new Palette(`--md-ref-palette-tertiary-45`, `#9e5935`)
-    public static readonly Tertiary46        = new Palette(`--md-ref-palette-tertiary-46`, `#a05b37`)
-    public static readonly Tertiary47        = new Palette(`--md-ref-palette-tertiary-47`, `#a35d39`)
-    public static readonly Tertiary48        = new Palette(`--md-ref-palette-tertiary-48`, `#a6603b`)
-    public static readonly Tertiary49        = new Palette(`--md-ref-palette-tertiary-49`, `#a9623e`)
-    public static readonly Tertiary50        = new Palette(`--md-ref-palette-tertiary-50`, `#ac6540`)
-    public static readonly Tertiary51        = new Palette(`--md-ref-palette-tertiary-51`, `#af6742`)
-    public static readonly Tertiary52        = new Palette(`--md-ref-palette-tertiary-52`, `#b26944`)
-    public static readonly Tertiary53        = new Palette(`--md-ref-palette-tertiary-53`, `#b66c47`)
-    public static readonly Tertiary54        = new Palette(`--md-ref-palette-tertiary-54`, `#b96e49`)
-    public static readonly Tertiary55        = new Palette(`--md-ref-palette-tertiary-55`, `#bc714b`)
-    public static readonly Tertiary56        = new Palette(`--md-ref-palette-tertiary-56`, `#bf734d`)
-    public static readonly Tertiary57        = new Palette(`--md-ref-palette-tertiary-57`, `#c27650`)
-    public static readonly Tertiary58        = new Palette(`--md-ref-palette-tertiary-58`, `#c57852`)
-    public static readonly Tertiary59        = new Palette(`--md-ref-palette-tertiary-59`, `#c87b54`)
-    public static readonly Tertiary60        = new Palette(`--md-ref-palette-tertiary-60`, `#cb7d57`)
-    public static readonly Tertiary61        = new Palette(`--md-ref-palette-tertiary-61`, `#ce8059`)
-    public static readonly Tertiary62        = new Palette(`--md-ref-palette-tertiary-62`, `#d1825b`)
-    public static readonly Tertiary63        = new Palette(`--md-ref-palette-tertiary-63`, `#d4855e`)
-    public static readonly Tertiary64        = new Palette(`--md-ref-palette-tertiary-64`, `#d78860`)
-    public static readonly Tertiary65        = new Palette(`--md-ref-palette-tertiary-65`, `#da8a62`)
-    public static readonly Tertiary66        = new Palette(`--md-ref-palette-tertiary-66`, `#dd8d65`)
-    public static readonly Tertiary67        = new Palette(`--md-ref-palette-tertiary-67`, `#e08f67`)
-    public static readonly Tertiary68        = new Palette(`--md-ref-palette-tertiary-68`, `#e4926a`)
-    public static readonly Tertiary69        = new Palette(`--md-ref-palette-tertiary-69`, `#e7946c`)
-    public static readonly Tertiary70        = new Palette(`--md-ref-palette-tertiary-70`, `#ea976e`)
-    public static readonly Tertiary71        = new Palette(`--md-ref-palette-tertiary-71`, `#ed9a71`)
-    public static readonly Tertiary72        = new Palette(`--md-ref-palette-tertiary-72`, `#f09c73`)
-    public static readonly Tertiary73        = new Palette(`--md-ref-palette-tertiary-73`, `#f39f76`)
-    public static readonly Tertiary74        = new Palette(`--md-ref-palette-tertiary-74`, `#f6a278`)
-    public static readonly Tertiary75        = new Palette(`--md-ref-palette-tertiary-75`, `#f9a47b`)
-    public static readonly Tertiary76        = new Palette(`--md-ref-palette-tertiary-76`, `#fda77d`)
-    public static readonly Tertiary77        = new Palette(`--md-ref-palette-tertiary-77`, `#ffaa80`)
-    public static readonly Tertiary78        = new Palette(`--md-ref-palette-tertiary-78`, `#ffae87`)
-    public static readonly Tertiary79        = new Palette(`--md-ref-palette-tertiary-79`, `#ffb28d`)
-    public static readonly Tertiary80        = new Palette(`--md-ref-palette-tertiary-80`, `#ffb693`)
-    public static readonly Tertiary81        = new Palette(`--md-ref-palette-tertiary-81`, `#ffba99`)
-    public static readonly Tertiary82        = new Palette(`--md-ref-palette-tertiary-82`, `#ffbd9f`)
-    public static readonly Tertiary83        = new Palette(`--md-ref-palette-tertiary-83`, `#ffc1a4`)
-    public static readonly Tertiary84        = new Palette(`--md-ref-palette-tertiary-84`, `#ffc5aa`)
-    public static readonly Tertiary85        = new Palette(`--md-ref-palette-tertiary-85`, `#ffc9b0`)
-    public static readonly Tertiary86        = new Palette(`--md-ref-palette-tertiary-86`, `#ffccb6`)
-    public static readonly Tertiary87        = new Palette(`--md-ref-palette-tertiary-87`, `#ffd0bb`)
-    public static readonly Tertiary88        = new Palette(`--md-ref-palette-tertiary-88`, `#ffd4c1`)
-    public static readonly Tertiary89        = new Palette(`--md-ref-palette-tertiary-89`, `#ffd7c6`)
-    public static readonly Tertiary90        = new Palette(`--md-ref-palette-tertiary-90`, `#ffdbcc`)
-    public static readonly Tertiary91        = new Palette(`--md-ref-palette-tertiary-91`, `#ffdfd1`)
-    public static readonly Tertiary92        = new Palette(`--md-ref-palette-tertiary-92`, `#ffe2d6`)
-    public static readonly Tertiary93        = new Palette(`--md-ref-palette-tertiary-93`, `#ffe6dc`)
-    public static readonly Tertiary94        = new Palette(`--md-ref-palette-tertiary-94`, `#ffeae1`)
-    public static readonly Tertiary95        = new Palette(`--md-ref-palette-tertiary-95`, `#ffede6`)
-    public static readonly Tertiary96        = new Palette(`--md-ref-palette-tertiary-96`, `#fff1eb`)
-    public static readonly Tertiary97        = new Palette(`--md-ref-palette-tertiary-97`, `#fff4f1`)
-    public static readonly Tertiary98        = new Palette(`--md-ref-palette-tertiary-98`, `#fff8f6`)
-    public static readonly Tertiary99        = new Palette(`--md-ref-palette-tertiary-99`, `#fffbff`)
-    public static readonly Tertiary100       = new Palette(`--md-ref-palette-tertiary-100`, `#ffffff`)
-    public static readonly Error0            = new Palette(`--md-ref-palette-error-0`, `#000000`)
-    public static readonly Error1            = new Palette(`--md-ref-palette-error-1`, `#100000`)
-    public static readonly Error2            = new Palette(`--md-ref-palette-error-2`, `#1a0000`)
-    public static readonly Error3            = new Palette(`--md-ref-palette-error-3`, `#210001`)
-    public static readonly Error4            = new Palette(`--md-ref-palette-error-4`, `#280001`)
-    public static readonly Error5            = new Palette(`--md-ref-palette-error-5`, `#2d0001`)
-    public static readonly Error6            = new Palette(`--md-ref-palette-error-6`, `#310001`)
-    public static readonly Error7            = new Palette(`--md-ref-palette-error-7`, `#360001`)
-    public static readonly Error8            = new Palette(`--md-ref-palette-error-8`, `#390001`)
-    public static readonly Error9            = new Palette(`--md-ref-palette-error-9`, `#3d0002`)
-    public static readonly Error10           = new Palette(`--md-ref-palette-error-10`, `#410002`)
-    public static readonly Error11           = new Palette(`--md-ref-palette-error-11`, `#450002`)
-    public static readonly Error12           = new Palette(`--md-ref-palette-error-12`, `#490002`)
-    public static readonly Error13           = new Palette(`--md-ref-palette-error-13`, `#4d0002`)
-    public static readonly Error14           = new Palette(`--md-ref-palette-error-14`, `#500003`)
-    public static readonly Error15           = new Palette(`--md-ref-palette-error-15`, `#540003`)
-    public static readonly Error16           = new Palette(`--md-ref-palette-error-16`, `#580003`)
-    public static readonly Error17           = new Palette(`--md-ref-palette-error-17`, `#5c0004`)
-    public static readonly Error18           = new Palette(`--md-ref-palette-error-18`, `#600004`)
-    public static readonly Error19           = new Palette(`--md-ref-palette-error-19`, `#640004`)
-    public static readonly Error20           = new Palette(`--md-ref-palette-error-20`, `#690005`)
-    public static readonly Error21           = new Palette(`--md-ref-palette-error-21`, `#6d0005`)
-    public static readonly Error22           = new Palette(`--md-ref-palette-error-22`, `#710005`)
-    public static readonly Error23           = new Palette(`--md-ref-palette-error-23`, `#750006`)
-    public static readonly Error24           = new Palette(`--md-ref-palette-error-24`, `#790006`)
-    public static readonly Error25           = new Palette(`--md-ref-palette-error-25`, `#7e0007`)
-    public static readonly Error26           = new Palette(`--md-ref-palette-error-26`, `#820007`)
-    public static readonly Error27           = new Palette(`--md-ref-palette-error-27`, `#860008`)
-    public static readonly Error28           = new Palette(`--md-ref-palette-error-28`, `#8a0008`)
-    public static readonly Error29           = new Palette(`--md-ref-palette-error-29`, `#8f0009`)
-    public static readonly Error30           = new Palette(`--md-ref-palette-error-30`, `#93000a`)
-    public static readonly Error31           = new Palette(`--md-ref-palette-error-31`, `#98000a`)
-    public static readonly Error32           = new Palette(`--md-ref-palette-error-32`, `#9c000b`)
-    public static readonly Error33           = new Palette(`--md-ref-palette-error-33`, `#a0000c`)
-    public static readonly Error34           = new Palette(`--md-ref-palette-error-34`, `#a4020d`)
-    public static readonly Error35           = new Palette(`--md-ref-palette-error-35`, `#a80710`)
-    public static readonly Error36           = new Palette(`--md-ref-palette-error-36`, `#ac0c12`)
-    public static readonly Error37           = new Palette(`--md-ref-palette-error-37`, `#af1014`)
-    public static readonly Error38           = new Palette(`--md-ref-palette-error-38`, `#b31416`)
-    public static readonly Error39           = new Palette(`--md-ref-palette-error-39`, `#b61718`)
-    public static readonly Error40           = new Palette(`--md-ref-palette-error-40`, `#ba1a1a`)
-    public static readonly Error41           = new Palette(`--md-ref-palette-error-41`, `#bd1e1d`)
-    public static readonly Error42           = new Palette(`--md-ref-palette-error-42`, `#c1211f`)
-    public static readonly Error43           = new Palette(`--md-ref-palette-error-43`, `#c52421`)
-    public static readonly Error44           = new Palette(`--md-ref-palette-error-44`, `#c82623`)
-    public static readonly Error45           = new Palette(`--md-ref-palette-error-45`, `#cc2925`)
-    public static readonly Error46           = new Palette(`--md-ref-palette-error-46`, `#cf2c27`)
-    public static readonly Error47           = new Palette(`--md-ref-palette-error-47`, `#d32f29`)
-    public static readonly Error48           = new Palette(`--md-ref-palette-error-48`, `#d7322c`)
-    public static readonly Error49           = new Palette(`--md-ref-palette-error-49`, `#da342e`)
-    public static readonly Error50           = new Palette(`--md-ref-palette-error-50`, `#de3730`)
-    public static readonly Error51           = new Palette(`--md-ref-palette-error-51`, `#e13a32`)
-    public static readonly Error52           = new Palette(`--md-ref-palette-error-52`, `#e53c34`)
-    public static readonly Error53           = new Palette(`--md-ref-palette-error-53`, `#e93f36`)
-    public static readonly Error54           = new Palette(`--md-ref-palette-error-54`, `#ec4139`)
-    public static readonly Error55           = new Palette(`--md-ref-palette-error-55`, `#f0443b`)
-    public static readonly Error56           = new Palette(`--md-ref-palette-error-56`, `#f3473d`)
-    public static readonly Error57           = new Palette(`--md-ref-palette-error-57`, `#f7493f`)
-    public static readonly Error58           = new Palette(`--md-ref-palette-error-58`, `#fb4c42`)
-    public static readonly Error59           = new Palette(`--md-ref-palette-error-59`, `#fe4e44`)
-    public static readonly Error60           = new Palette(`--md-ref-palette-error-60`, `#ff5449`)
-    public static readonly Error61           = new Palette(`--md-ref-palette-error-61`, `#ff5b4f`)
-    public static readonly Error62           = new Palette(`--md-ref-palette-error-62`, `#ff6154`)
-    public static readonly Error63           = new Palette(`--md-ref-palette-error-63`, `#ff665a`)
-    public static readonly Error64           = new Palette(`--md-ref-palette-error-64`, `#ff6c5f`)
-    public static readonly Error65           = new Palette(`--md-ref-palette-error-65`, `#ff7164`)
-    public static readonly Error66           = new Palette(`--md-ref-palette-error-66`, `#ff7669`)
-    public static readonly Error67           = new Palette(`--md-ref-palette-error-67`, `#ff7b6e`)
-    public static readonly Error68           = new Palette(`--md-ref-palette-error-68`, `#ff8073`)
-    public static readonly Error69           = new Palette(`--md-ref-palette-error-69`, `#ff8578`)
-    public static readonly Error70           = new Palette(`--md-ref-palette-error-70`, `#ff897d`)
-    public static readonly Error71           = new Palette(`--md-ref-palette-error-71`, `#ff8e82`)
-    public static readonly Error72           = new Palette(`--md-ref-palette-error-72`, `#ff9286`)
-    public static readonly Error73           = new Palette(`--md-ref-palette-error-73`, `#ff978b`)
-    public static readonly Error74           = new Palette(`--md-ref-palette-error-74`, `#ff9b90`)
-    public static readonly Error75           = new Palette(`--md-ref-palette-error-75`, `#ff9f94`)
-    public static readonly Error76           = new Palette(`--md-ref-palette-error-76`, `#ffa399`)
-    public static readonly Error77           = new Palette(`--md-ref-palette-error-77`, `#ffa89d`)
-    public static readonly Error78           = new Palette(`--md-ref-palette-error-78`, `#ffaca2`)
-    public static readonly Error79           = new Palette(`--md-ref-palette-error-79`, `#ffb0a6`)
-    public static readonly Error80           = new Palette(`--md-ref-palette-error-80`, `#ffb4ab`)
-    public static readonly Error81           = new Palette(`--md-ref-palette-error-81`, `#ffb8af`)
-    public static readonly Error82           = new Palette(`--md-ref-palette-error-82`, `#ffbcb3`)
-    public static readonly Error83           = new Palette(`--md-ref-palette-error-83`, `#ffbfb8`)
-    public static readonly Error84           = new Palette(`--md-ref-palette-error-84`, `#ffc3bc`)
-    public static readonly Error85           = new Palette(`--md-ref-palette-error-85`, `#ffc7c0`)
-    public static readonly Error86           = new Palette(`--md-ref-palette-error-86`, `#ffcbc5`)
-    public static readonly Error87           = new Palette(`--md-ref-palette-error-87`, `#ffcfc9`)
-    public static readonly Error88           = new Palette(`--md-ref-palette-error-88`, `#ffd3cd`)
-    public static readonly Error89           = new Palette(`--md-ref-palette-error-89`, `#ffd6d1`)
-    public static readonly Error90           = new Palette(`--md-ref-palette-error-90`, `#ffdad6`)
-    public static readonly Error91           = new Palette(`--md-ref-palette-error-91`, `#ffdeda`)
-    public static readonly Error92           = new Palette(`--md-ref-palette-error-92`, `#ffe2de`)
-    public static readonly Error93           = new Palette(`--md-ref-palette-error-93`, `#ffe5e2`)
-    public static readonly Error94           = new Palette(`--md-ref-palette-error-94`, `#ffe9e6`)
-    public static readonly Error95           = new Palette(`--md-ref-palette-error-95`, `#ffedea`)
-    public static readonly Error96           = new Palette(`--md-ref-palette-error-96`, `#fff0ee`)
-    public static readonly Error97           = new Palette(`--md-ref-palette-error-97`, `#fff4f2`)
-    public static readonly Error98           = new Palette(`--md-ref-palette-error-98`, `#fff8f7`)
-    public static readonly Error99           = new Palette(`--md-ref-palette-error-99`, `#fffbff`)
-    public static readonly Error100          = new Palette(`--md-ref-palette-error-100`, `#ffffff`)
-    public static readonly Neutral0          = new Palette(`--md-ref-palette-neutral-0`, `#000000`)
-    public static readonly Neutral1          = new Palette(`--md-ref-palette-neutral-1`, `#010402`)
-    public static readonly Neutral2          = new Palette(`--md-ref-palette-neutral-2`, `#040905`)
-    public static readonly Neutral3          = new Palette(`--md-ref-palette-neutral-3`, `#070c08`)
-    public static readonly Neutral4          = new Palette(`--md-ref-palette-neutral-4`, `#09100a`)
-    public static readonly Neutral5          = new Palette(`--md-ref-palette-neutral-5`, `#0c120d`)
-    public static readonly Neutral6          = new Palette(`--md-ref-palette-neutral-6`, `#0e150f`)
-    public static readonly Neutral7          = new Palette(`--md-ref-palette-neutral-7`, `#111712`)
-    public static readonly Neutral8          = new Palette(`--md-ref-palette-neutral-8`, `#131914`)
-    public static readonly Neutral9          = new Palette(`--md-ref-palette-neutral-9`, `#151b16`)
-    public static readonly Neutral10         = new Palette(`--md-ref-palette-neutral-10`, `#171d17`)
-    public static readonly Neutral11         = new Palette(`--md-ref-palette-neutral-11`, `#191f19`)
-    public static readonly Neutral12         = new Palette(`--md-ref-palette-neutral-12`, `#1b211b`)
-    public static readonly Neutral13         = new Palette(`--md-ref-palette-neutral-13`, `#1d231d`)
-    public static readonly Neutral14         = new Palette(`--md-ref-palette-neutral-14`, `#1f251f`)
-    public static readonly Neutral15         = new Palette(`--md-ref-palette-neutral-15`, `#212721`)
-    public static readonly Neutral16         = new Palette(`--md-ref-palette-neutral-16`, `#232a23`)
-    public static readonly Neutral17         = new Palette(`--md-ref-palette-neutral-17`, `#252c25`)
-    public static readonly Neutral18         = new Palette(`--md-ref-palette-neutral-18`, `#272e28`)
-    public static readonly Neutral19         = new Palette(`--md-ref-palette-neutral-19`, `#29302a`)
-    public static readonly Neutral20         = new Palette(`--md-ref-palette-neutral-20`, `#2b322c`)
-    public static readonly Neutral21         = new Palette(`--md-ref-palette-neutral-21`, `#2d342e`)
-    public static readonly Neutral22         = new Palette(`--md-ref-palette-neutral-22`, `#303630`)
-    public static readonly Neutral23         = new Palette(`--md-ref-palette-neutral-23`, `#323932`)
-    public static readonly Neutral24         = new Palette(`--md-ref-palette-neutral-24`, `#343b34`)
-    public static readonly Neutral25         = new Palette(`--md-ref-palette-neutral-25`, `#363d37`)
-    public static readonly Neutral26         = new Palette(`--md-ref-palette-neutral-26`, `#383f39`)
-    public static readonly Neutral27         = new Palette(`--md-ref-palette-neutral-27`, `#3b423b`)
-    public static readonly Neutral28         = new Palette(`--md-ref-palette-neutral-28`, `#3d443d`)
-    public static readonly Neutral29         = new Palette(`--md-ref-palette-neutral-29`, `#3f463f`)
-    public static readonly Neutral30         = new Palette(`--md-ref-palette-neutral-30`, `#424942`)
-    public static readonly Neutral31         = new Palette(`--md-ref-palette-neutral-31`, `#444b44`)
-    public static readonly Neutral32         = new Palette(`--md-ref-palette-neutral-32`, `#464d46`)
-    public static readonly Neutral33         = new Palette(`--md-ref-palette-neutral-33`, `#485048`)
-    public static readonly Neutral34         = new Palette(`--md-ref-palette-neutral-34`, `#4b524b`)
-    public static readonly Neutral35         = new Palette(`--md-ref-palette-neutral-35`, `#4d544d`)
-    public static readonly Neutral36         = new Palette(`--md-ref-palette-neutral-36`, `#50574f`)
-    public static readonly Neutral37         = new Palette(`--md-ref-palette-neutral-37`, `#525952`)
-    public static readonly Neutral38         = new Palette(`--md-ref-palette-neutral-38`, `#545b54`)
-    public static readonly Neutral39         = new Palette(`--md-ref-palette-neutral-39`, `#575e56`)
-    public static readonly Neutral40         = new Palette(`--md-ref-palette-neutral-40`, `#596059`)
-    public static readonly Neutral41         = new Palette(`--md-ref-palette-neutral-41`, `#5c635b`)
-    public static readonly Neutral42         = new Palette(`--md-ref-palette-neutral-42`, `#5e655e`)
-    public static readonly Neutral43         = new Palette(`--md-ref-palette-neutral-43`, `#606860`)
-    public static readonly Neutral44         = new Palette(`--md-ref-palette-neutral-44`, `#636a62`)
-    public static readonly Neutral45         = new Palette(`--md-ref-palette-neutral-45`, `#656c65`)
-    public static readonly Neutral46         = new Palette(`--md-ref-palette-neutral-46`, `#686f67`)
-    public static readonly Neutral47         = new Palette(`--md-ref-palette-neutral-47`, `#6a716a`)
-    public static readonly Neutral48         = new Palette(`--md-ref-palette-neutral-48`, `#6d746c`)
-    public static readonly Neutral49         = new Palette(`--md-ref-palette-neutral-49`, `#6f766f`)
-    public static readonly Neutral50         = new Palette(`--md-ref-palette-neutral-50`, `#727971`)
-    public static readonly Neutral51         = new Palette(`--md-ref-palette-neutral-51`, `#747b74`)
-    public static readonly Neutral52         = new Palette(`--md-ref-palette-neutral-52`, `#777e76`)
-    public static readonly Neutral53         = new Palette(`--md-ref-palette-neutral-53`, `#798179`)
-    public static readonly Neutral54         = new Palette(`--md-ref-palette-neutral-54`, `#7c837b`)
-    public static readonly Neutral55         = new Palette(`--md-ref-palette-neutral-55`, `#7e867e`)
-    public static readonly Neutral56         = new Palette(`--md-ref-palette-neutral-56`, `#818880`)
-    public static readonly Neutral57         = new Palette(`--md-ref-palette-neutral-57`, `#848b83`)
-    public static readonly Neutral58         = new Palette(`--md-ref-palette-neutral-58`, `#868d85`)
-    public static readonly Neutral59         = new Palette(`--md-ref-palette-neutral-59`, `#899088`)
-    public static readonly Neutral60         = new Palette(`--md-ref-palette-neutral-60`, `#8b938a`)
-    public static readonly Neutral61         = new Palette(`--md-ref-palette-neutral-61`, `#8e958d`)
-    public static readonly Neutral62         = new Palette(`--md-ref-palette-neutral-62`, `#91988f`)
-    public static readonly Neutral63         = new Palette(`--md-ref-palette-neutral-63`, `#939b92`)
-    public static readonly Neutral64         = new Palette(`--md-ref-palette-neutral-64`, `#969d95`)
-    public static readonly Neutral65         = new Palette(`--md-ref-palette-neutral-65`, `#99a097`)
-    public static readonly Neutral66         = new Palette(`--md-ref-palette-neutral-66`, `#9ba29a`)
-    public static readonly Neutral67         = new Palette(`--md-ref-palette-neutral-67`, `#9ea59c`)
-    public static readonly Neutral68         = new Palette(`--md-ref-palette-neutral-68`, `#a1a89f`)
-    public static readonly Neutral69         = new Palette(`--md-ref-palette-neutral-69`, `#a3aaa2`)
-    public static readonly Neutral70         = new Palette(`--md-ref-palette-neutral-70`, `#a6ada4`)
-    public static readonly Neutral71         = new Palette(`--md-ref-palette-neutral-71`, `#a9b0a7`)
-    public static readonly Neutral72         = new Palette(`--md-ref-palette-neutral-72`, `#abb3aa`)
-    public static readonly Neutral73         = new Palette(`--md-ref-palette-neutral-73`, `#aeb5ac`)
-    public static readonly Neutral74         = new Palette(`--md-ref-palette-neutral-74`, `#b1b8af`)
-    public static readonly Neutral75         = new Palette(`--md-ref-palette-neutral-75`, `#b4bbb2`)
-    public static readonly Neutral76         = new Palette(`--md-ref-palette-neutral-76`, `#b6bdb4`)
-    public static readonly Neutral77         = new Palette(`--md-ref-palette-neutral-77`, `#b9c0b7`)
-    public static readonly Neutral78         = new Palette(`--md-ref-palette-neutral-78`, `#bcc3ba`)
-    public static readonly Neutral79         = new Palette(`--md-ref-palette-neutral-79`, `#bfc6bd`)
-    public static readonly Neutral80         = new Palette(`--md-ref-palette-neutral-80`, `#c1c8bf`)
-    public static readonly Neutral81         = new Palette(`--md-ref-palette-neutral-81`, `#c4cbc2`)
-    public static readonly Neutral82         = new Palette(`--md-ref-palette-neutral-82`, `#c7cec5`)
-    public static readonly Neutral83         = new Palette(`--md-ref-palette-neutral-83`, `#cad1c8`)
-    public static readonly Neutral84         = new Palette(`--md-ref-palette-neutral-84`, `#cdd4ca`)
-    public static readonly Neutral85         = new Palette(`--md-ref-palette-neutral-85`, `#cfd6cd`)
-    public static readonly Neutral86         = new Palette(`--md-ref-palette-neutral-86`, `#d2d9d0`)
-    public static readonly Neutral87         = new Palette(`--md-ref-palette-neutral-87`, `#d5dcd3`)
-    public static readonly Neutral88         = new Palette(`--md-ref-palette-neutral-88`, `#d8dfd5`)
-    public static readonly Neutral89         = new Palette(`--md-ref-palette-neutral-89`, `#dbe2d8`)
-    public static readonly Neutral90         = new Palette(`--md-ref-palette-neutral-90`, `#dde4db`)
-    public static readonly Neutral91         = new Palette(`--md-ref-palette-neutral-91`, `#e0e7de`)
-    public static readonly Neutral92         = new Palette(`--md-ref-palette-neutral-92`, `#e3eae1`)
-    public static readonly Neutral93         = new Palette(`--md-ref-palette-neutral-93`, `#e6ede3`)
-    public static readonly Neutral94         = new Palette(`--md-ref-palette-neutral-94`, `#e9f0e6`)
-    public static readonly Neutral95         = new Palette(`--md-ref-palette-neutral-95`, `#ecf3e9`)
-    public static readonly Neutral96         = new Palette(`--md-ref-palette-neutral-96`, `#eff6ec`)
-    public static readonly Neutral97         = new Palette(`--md-ref-palette-neutral-97`, `#f2f8ef`)
-    public static readonly Neutral98         = new Palette(`--md-ref-palette-neutral-98`, `#f4fbf1`)
-    public static readonly Neutral99         = new Palette(`--md-ref-palette-neutral-99`, `#f7fef4`)
-    public static readonly Neutral100        = new Palette(`--md-ref-palette-neutral-100`, `#ffffff`)
-    public static readonly NeutralVariant0   = new Palette(`--md-ref-palette-neutral-variant-0`, `#000000`)
-    public static readonly NeutralVariant1   = new Palette(`--md-ref-palette-neutral-variant-1`, `#000501`)
-    public static readonly NeutralVariant2   = new Palette(`--md-ref-palette-neutral-variant-2`, `#020904`)
-    public static readonly NeutralVariant3   = new Palette(`--md-ref-palette-neutral-variant-3`, `#040d06`)
-    public static readonly NeutralVariant4   = new Palette(`--md-ref-palette-neutral-variant-4`, `#061108`)
-    public static readonly NeutralVariant5   = new Palette(`--md-ref-palette-neutral-variant-5`, `#08130b`)
-    public static readonly NeutralVariant6   = new Palette(`--md-ref-palette-neutral-variant-6`, `#0b160d`)
-    public static readonly NeutralVariant7   = new Palette(`--md-ref-palette-neutral-variant-7`, `#0d180f`)
-    public static readonly NeutralVariant8   = new Palette(`--md-ref-palette-neutral-variant-8`, `#0f1a11`)
-    public static readonly NeutralVariant9   = new Palette(`--md-ref-palette-neutral-variant-9`, `#111c13`)
-    public static readonly NeutralVariant10  = new Palette(`--md-ref-palette-neutral-variant-10`, `#131e15`)
-    public static readonly NeutralVariant11  = new Palette(`--md-ref-palette-neutral-variant-11`, `#152017`)
-    public static readonly NeutralVariant12  = new Palette(`--md-ref-palette-neutral-variant-12`, `#172219`)
-    public static readonly NeutralVariant13  = new Palette(`--md-ref-palette-neutral-variant-13`, `#19241b`)
-    public static readonly NeutralVariant14  = new Palette(`--md-ref-palette-neutral-variant-14`, `#1b261d`)
-    public static readonly NeutralVariant15  = new Palette(`--md-ref-palette-neutral-variant-15`, `#1d281f`)
-    public static readonly NeutralVariant16  = new Palette(`--md-ref-palette-neutral-variant-16`, `#1f2b21`)
-    public static readonly NeutralVariant17  = new Palette(`--md-ref-palette-neutral-variant-17`, `#212d23`)
-    public static readonly NeutralVariant18  = new Palette(`--md-ref-palette-neutral-variant-18`, `#232f25`)
-    public static readonly NeutralVariant19  = new Palette(`--md-ref-palette-neutral-variant-19`, `#253127`)
-    public static readonly NeutralVariant20  = new Palette(`--md-ref-palette-neutral-variant-20`, `#273329`)
-    public static readonly NeutralVariant21  = new Palette(`--md-ref-palette-neutral-variant-21`, `#2a352b`)
-    public static readonly NeutralVariant22  = new Palette(`--md-ref-palette-neutral-variant-22`, `#2c382d`)
-    public static readonly NeutralVariant23  = new Palette(`--md-ref-palette-neutral-variant-23`, `#2e3a30`)
-    public static readonly NeutralVariant24  = new Palette(`--md-ref-palette-neutral-variant-24`, `#303c32`)
-    public static readonly NeutralVariant25  = new Palette(`--md-ref-palette-neutral-variant-25`, `#323e34`)
-    public static readonly NeutralVariant26  = new Palette(`--md-ref-palette-neutral-variant-26`, `#344136`)
-    public static readonly NeutralVariant27  = new Palette(`--md-ref-palette-neutral-variant-27`, `#374338`)
-    public static readonly NeutralVariant28  = new Palette(`--md-ref-palette-neutral-variant-28`, `#39453a`)
-    public static readonly NeutralVariant29  = new Palette(`--md-ref-palette-neutral-variant-29`, `#3b473d`)
-    public static readonly NeutralVariant30  = new Palette(`--md-ref-palette-neutral-variant-30`, `#3d4a3f`)
-    public static readonly NeutralVariant31  = new Palette(`--md-ref-palette-neutral-variant-31`, `#404c41`)
-    public static readonly NeutralVariant32  = new Palette(`--md-ref-palette-neutral-variant-32`, `#424e43`)
-    public static readonly NeutralVariant33  = new Palette(`--md-ref-palette-neutral-variant-33`, `#445146`)
-    public static readonly NeutralVariant34  = new Palette(`--md-ref-palette-neutral-variant-34`, `#475348`)
-    public static readonly NeutralVariant35  = new Palette(`--md-ref-palette-neutral-variant-35`, `#49564a`)
-    public static readonly NeutralVariant36  = new Palette(`--md-ref-palette-neutral-variant-36`, `#4b584d`)
-    public static readonly NeutralVariant37  = new Palette(`--md-ref-palette-neutral-variant-37`, `#4e5a4f`)
-    public static readonly NeutralVariant38  = new Palette(`--md-ref-palette-neutral-variant-38`, `#505d51`)
-    public static readonly NeutralVariant39  = new Palette(`--md-ref-palette-neutral-variant-39`, `#525f54`)
-    public static readonly NeutralVariant40  = new Palette(`--md-ref-palette-neutral-variant-40`, `#556256`)
-    public static readonly NeutralVariant41  = new Palette(`--md-ref-palette-neutral-variant-41`, `#576458`)
-    public static readonly NeutralVariant42  = new Palette(`--md-ref-palette-neutral-variant-42`, `#5a665b`)
-    public static readonly NeutralVariant43  = new Palette(`--md-ref-palette-neutral-variant-43`, `#5c695d`)
-    public static readonly NeutralVariant44  = new Palette(`--md-ref-palette-neutral-variant-44`, `#5f6b5f`)
-    public static readonly NeutralVariant45  = new Palette(`--md-ref-palette-neutral-variant-45`, `#616e62`)
-    public static readonly NeutralVariant46  = new Palette(`--md-ref-palette-neutral-variant-46`, `#637064`)
-    public static readonly NeutralVariant47  = new Palette(`--md-ref-palette-neutral-variant-47`, `#667367`)
-    public static readonly NeutralVariant48  = new Palette(`--md-ref-palette-neutral-variant-48`, `#687569`)
-    public static readonly NeutralVariant49  = new Palette(`--md-ref-palette-neutral-variant-49`, `#6b786c`)
-    public static readonly NeutralVariant50  = new Palette(`--md-ref-palette-neutral-variant-50`, `#6d7a6e`)
-    public static readonly NeutralVariant51  = new Palette(`--md-ref-palette-neutral-variant-51`, `#707d70`)
-    public static readonly NeutralVariant52  = new Palette(`--md-ref-palette-neutral-variant-52`, `#727f73`)
-    public static readonly NeutralVariant53  = new Palette(`--md-ref-palette-neutral-variant-53`, `#758275`)
-    public static readonly NeutralVariant54  = new Palette(`--md-ref-palette-neutral-variant-54`, `#778578`)
-    public static readonly NeutralVariant55  = new Palette(`--md-ref-palette-neutral-variant-55`, `#7a877a`)
-    public static readonly NeutralVariant56  = new Palette(`--md-ref-palette-neutral-variant-56`, `#7d8a7d`)
-    public static readonly NeutralVariant57  = new Palette(`--md-ref-palette-neutral-variant-57`, `#7f8c7f`)
-    public static readonly NeutralVariant58  = new Palette(`--md-ref-palette-neutral-variant-58`, `#828f82`)
-    public static readonly NeutralVariant59  = new Palette(`--md-ref-palette-neutral-variant-59`, `#849285`)
-    public static readonly NeutralVariant60  = new Palette(`--md-ref-palette-neutral-variant-60`, `#879487`)
-    public static readonly NeutralVariant61  = new Palette(`--md-ref-palette-neutral-variant-61`, `#89978a`)
-    public static readonly NeutralVariant62  = new Palette(`--md-ref-palette-neutral-variant-62`, `#8c998c`)
-    public static readonly NeutralVariant63  = new Palette(`--md-ref-palette-neutral-variant-63`, `#8f9c8f`)
-    public static readonly NeutralVariant64  = new Palette(`--md-ref-palette-neutral-variant-64`, `#919f91`)
-    public static readonly NeutralVariant65  = new Palette(`--md-ref-palette-neutral-variant-65`, `#94a194`)
-    public static readonly NeutralVariant66  = new Palette(`--md-ref-palette-neutral-variant-66`, `#97a497`)
-    public static readonly NeutralVariant67  = new Palette(`--md-ref-palette-neutral-variant-67`, `#99a799`)
-    public static readonly NeutralVariant68  = new Palette(`--md-ref-palette-neutral-variant-68`, `#9ca99c`)
-    public static readonly NeutralVariant69  = new Palette(`--md-ref-palette-neutral-variant-69`, `#9fac9e`)
-    public static readonly NeutralVariant70  = new Palette(`--md-ref-palette-neutral-variant-70`, `#a1afa1`)
-    public static readonly NeutralVariant71  = new Palette(`--md-ref-palette-neutral-variant-71`, `#a4b1a4`)
-    public static readonly NeutralVariant72  = new Palette(`--md-ref-palette-neutral-variant-72`, `#a7b4a6`)
-    public static readonly NeutralVariant73  = new Palette(`--md-ref-palette-neutral-variant-73`, `#a9b7a9`)
-    public static readonly NeutralVariant74  = new Palette(`--md-ref-palette-neutral-variant-74`, `#acbaac`)
-    public static readonly NeutralVariant75  = new Palette(`--md-ref-palette-neutral-variant-75`, `#afbcae`)
-    public static readonly NeutralVariant76  = new Palette(`--md-ref-palette-neutral-variant-76`, `#b1bfb1`)
-    public static readonly NeutralVariant77  = new Palette(`--md-ref-palette-neutral-variant-77`, `#b4c2b4`)
-    public static readonly NeutralVariant78  = new Palette(`--md-ref-palette-neutral-variant-78`, `#b7c5b6`)
-    public static readonly NeutralVariant79  = new Palette(`--md-ref-palette-neutral-variant-79`, `#bac7b9`)
-    public static readonly NeutralVariant80  = new Palette(`--md-ref-palette-neutral-variant-80`, `#bccabc`)
-    public static readonly NeutralVariant81  = new Palette(`--md-ref-palette-neutral-variant-81`, `#bfcdbf`)
-    public static readonly NeutralVariant82  = new Palette(`--md-ref-palette-neutral-variant-82`, `#c2d0c1`)
-    public static readonly NeutralVariant83  = new Palette(`--md-ref-palette-neutral-variant-83`, `#c5d2c4`)
-    public static readonly NeutralVariant84  = new Palette(`--md-ref-palette-neutral-variant-84`, `#c8d5c7`)
-    public static readonly NeutralVariant85  = new Palette(`--md-ref-palette-neutral-variant-85`, `#cad8c9`)
-    public static readonly NeutralVariant86  = new Palette(`--md-ref-palette-neutral-variant-86`, `#cddbcc`)
-    public static readonly NeutralVariant87  = new Palette(`--md-ref-palette-neutral-variant-87`, `#d0decf`)
-    public static readonly NeutralVariant88  = new Palette(`--md-ref-palette-neutral-variant-88`, `#d3e1d2`)
-    public static readonly NeutralVariant89  = new Palette(`--md-ref-palette-neutral-variant-89`, `#d6e3d5`)
-    public static readonly NeutralVariant90  = new Palette(`--md-ref-palette-neutral-variant-90`, `#d8e6d7`)
-    public static readonly NeutralVariant91  = new Palette(`--md-ref-palette-neutral-variant-91`, `#dbe9da`)
-    public static readonly NeutralVariant92  = new Palette(`--md-ref-palette-neutral-variant-92`, `#deecdd`)
-    public static readonly NeutralVariant93  = new Palette(`--md-ref-palette-neutral-variant-93`, `#e1efe0`)
-    public static readonly NeutralVariant94  = new Palette(`--md-ref-palette-neutral-variant-94`, `#e4f2e3`)
-    public static readonly NeutralVariant95  = new Palette(`--md-ref-palette-neutral-variant-95`, `#e7f5e5`)
-    public static readonly NeutralVariant96  = new Palette(`--md-ref-palette-neutral-variant-96`, `#eaf7e8`)
-    public static readonly NeutralVariant97  = new Palette(`--md-ref-palette-neutral-variant-97`, `#ecfaeb`)
-    public static readonly NeutralVariant98  = new Palette(`--md-ref-palette-neutral-variant-98`, `#effdee`)
-    public static readonly NeutralVariant99  = new Palette(`--md-ref-palette-neutral-variant-99`, `#f5fff3`)
-    public static readonly NeutralVariant100 = new Palette(`--md-ref-palette-neutral-variant-100`, `#ffffff`)
+type MergeContracts<
+    Base extends Record<PaletteNames, PaletteContract>,
+    Override extends Partial<Record<PaletteNames, PaletteContract>>
+> = { [K in keyof Base]: K extends keyof Override ? Override[K] extends PaletteContract ? Override[K] : Base[K] : Base[K] }
 
-    public static readonly AllEnums = {
-        Primary0         : this.Primary0,          Primary1        : this.Primary1,         Primary2        : this.Primary2,
-        Primary3         : this.Primary3,          Primary4        : this.Primary4,         Primary5        : this.Primary5,
-        Primary6         : this.Primary6,          Primary7        : this.Primary7,         Primary8        : this.Primary8,
-        Primary9         : this.Primary9,          Primary10       : this.Primary10,        Primary11       : this.Primary11,
-        Primary12        : this.Primary12,         Primary13       : this.Primary13,        Primary14       : this.Primary14,
-        Primary15        : this.Primary15,         Primary16       : this.Primary16,        Primary17       : this.Primary17,
-        Primary18        : this.Primary18,         Primary19       : this.Primary19,        Primary20       : this.Primary20,
-        Primary21        : this.Primary21,         Primary22       : this.Primary22,        Primary23       : this.Primary23,
-        Primary24        : this.Primary24,         Primary25       : this.Primary25,        Primary26       : this.Primary26,
-        Primary27        : this.Primary27,         Primary28       : this.Primary28,        Primary29       : this.Primary29,
-        Primary30        : this.Primary30,         Primary31       : this.Primary31,        Primary32       : this.Primary32,
-        Primary33        : this.Primary33,         Primary34       : this.Primary34,        Primary35       : this.Primary35,
-        Primary36        : this.Primary36,         Primary37       : this.Primary37,        Primary38       : this.Primary38,
-        Primary39        : this.Primary39,         Primary40       : this.Primary40,        Primary41       : this.Primary41,
-        Primary42        : this.Primary42,         Primary43       : this.Primary43,        Primary44       : this.Primary44,
-        Primary45        : this.Primary45,         Primary46       : this.Primary46,        Primary47       : this.Primary47,
-        Primary48        : this.Primary48,         Primary49       : this.Primary49,        Primary50       : this.Primary50,
-        Primary51        : this.Primary51,         Primary52       : this.Primary52,        Primary53       : this.Primary53,
-        Primary54        : this.Primary54,         Primary55       : this.Primary55,        Primary56       : this.Primary56,
-        Primary57        : this.Primary57,         Primary58       : this.Primary58,        Primary59       : this.Primary59,
-        Primary60        : this.Primary60,         Primary61       : this.Primary61,        Primary62       : this.Primary62,
-        Primary63        : this.Primary63,         Primary64       : this.Primary64,        Primary65       : this.Primary65,
-        Primary66        : this.Primary66,         Primary67       : this.Primary67,        Primary68       : this.Primary68,
-        Primary69        : this.Primary69,         Primary70       : this.Primary70,        Primary71       : this.Primary71,
-        Primary72        : this.Primary72,         Primary73       : this.Primary73,        Primary74       : this.Primary74,
-        Primary75        : this.Primary75,         Primary76       : this.Primary76,        Primary77       : this.Primary77,
-        Primary78        : this.Primary78,         Primary79       : this.Primary79,        Primary80       : this.Primary80,
-        Primary81        : this.Primary81,         Primary82       : this.Primary82,        Primary83       : this.Primary83,
-        Primary84        : this.Primary84,         Primary85       : this.Primary85,        Primary86       : this.Primary86,
-        Primary87        : this.Primary87,         Primary88       : this.Primary88,        Primary89       : this.Primary89,
-        Primary90        : this.Primary90,         Primary91       : this.Primary91,        Primary92       : this.Primary92,
-        Primary93        : this.Primary93,         Primary94       : this.Primary94,        Primary95       : this.Primary95,
-        Primary96        : this.Primary96,         Primary97       : this.Primary97,        Primary98       : this.Primary98,
-        Primary99        : this.Primary99,         Primary100      : this.Primary100,
-        Secondary0       : this.Secondary0,        Secondary1      : this.Secondary1,       Secondary2      : this.Secondary2,
-        Secondary3       : this.Secondary3,        Secondary4      : this.Secondary4,       Secondary5      : this.Secondary5,
-        Secondary6       : this.Secondary6,        Secondary7      : this.Secondary7,       Secondary8      : this.Secondary8,
-        Secondary9       : this.Secondary9,        Secondary10     : this.Secondary10,      Secondary11     : this.Secondary11,
-        Secondary12      : this.Secondary12,       Secondary13     : this.Secondary13,      Secondary14     : this.Secondary14,
-        Secondary15      : this.Secondary15,       Secondary16     : this.Secondary16,      Secondary17     : this.Secondary17,
-        Secondary18      : this.Secondary18,       Secondary19     : this.Secondary19,      Secondary20     : this.Secondary20,
-        Secondary21      : this.Secondary21,       Secondary22     : this.Secondary22,      Secondary23     : this.Secondary23,
-        Secondary24      : this.Secondary24,       Secondary25     : this.Secondary25,      Secondary26     : this.Secondary26,
-        Secondary27      : this.Secondary27,       Secondary28     : this.Secondary28,      Secondary29     : this.Secondary29,
-        Secondary30      : this.Secondary30,       Secondary31     : this.Secondary31,      Secondary32     : this.Secondary32,
-        Secondary33      : this.Secondary33,       Secondary34     : this.Secondary34,      Secondary35     : this.Secondary35,
-        Secondary36      : this.Secondary36,       Secondary37     : this.Secondary37,      Secondary38     : this.Secondary38,
-        Secondary39      : this.Secondary39,       Secondary40     : this.Secondary40,      Secondary41     : this.Secondary41,
-        Secondary42      : this.Secondary42,       Secondary43     : this.Secondary43,      Secondary44     : this.Secondary44,
-        Secondary45      : this.Secondary45,       Secondary46     : this.Secondary46,      Secondary47     : this.Secondary47,
-        Secondary48      : this.Secondary48,       Secondary49     : this.Secondary49,      Secondary50     : this.Secondary50,      Secondary51: this.Secondary51, Secondary52: this.Secondary52,
-        Secondary53      : this.Secondary53,       Secondary54     : this.Secondary54,      Secondary55     : this.Secondary55,      Secondary56: this.Secondary56, Secondary57: this.Secondary57,
-        Secondary58      : this.Secondary58,       Secondary59     : this.Secondary59,      Secondary60     : this.Secondary60,      Secondary61: this.Secondary61, Secondary62: this.Secondary62,
-        Secondary63      : this.Secondary63,       Secondary64     : this.Secondary64,      Secondary65     : this.Secondary65,      Secondary66: this.Secondary66, Secondary67: this.Secondary67,
-        Secondary68      : this.Secondary68,       Secondary69     : this.Secondary69,      Secondary70     : this.Secondary70,      Secondary71: this.Secondary71, Secondary72: this.Secondary72,
-        Secondary73      : this.Secondary73,       Secondary74     : this.Secondary74,      Secondary75     : this.Secondary75,      Secondary76: this.Secondary76, Secondary77: this.Secondary77,
-        Secondary78      : this.Secondary78,       Secondary79     : this.Secondary79,      Secondary80     : this.Secondary80,      Secondary81: this.Secondary81, Secondary82: this.Secondary82,
-        Secondary83      : this.Secondary83,       Secondary84     : this.Secondary84,      Secondary85     : this.Secondary85,      Secondary86: this.Secondary86, Secondary87: this.Secondary87,
-        Secondary88      : this.Secondary88,       Secondary89     : this.Secondary89,      Secondary90     : this.Secondary90,      Secondary91: this.Secondary91, Secondary92: this.Secondary92,
-        Secondary93      : this.Secondary93,       Secondary94     : this.Secondary94,      Secondary95     : this.Secondary95,      Secondary96: this.Secondary96, Secondary97: this.Secondary97,
-        Secondary98      : this.Secondary98,       Secondary99     : this.Secondary99,      Secondary100    : this.Secondary100,
-        Tertiary0        : this.Tertiary0,         Tertiary1       : this.Tertiary1,        Tertiary2       : this.Tertiary2,        Tertiary3  : this.Tertiary3,
-        Tertiary4        : this.Tertiary4,         Tertiary5       : this.Tertiary5,        Tertiary6       : this.Tertiary6,        Tertiary7  : this.Tertiary7,
-        Tertiary8        : this.Tertiary8,         Tertiary9       : this.Tertiary9,        Tertiary10      : this.Tertiary10,       Tertiary11 : this.Tertiary11,  Tertiary12 : this.Tertiary12,
-        Tertiary13       : this.Tertiary13,        Tertiary14      : this.Tertiary14,       Tertiary15      : this.Tertiary15,       Tertiary16 : this.Tertiary16,  Tertiary17 : this.Tertiary17,
-        Tertiary18       : this.Tertiary18,        Tertiary19      : this.Tertiary19,       Tertiary20      : this.Tertiary20,       Tertiary21 : this.Tertiary21,  Tertiary22 : this.Tertiary22,
-        Tertiary23       : this.Tertiary23,        Tertiary24      : this.Tertiary24,       Tertiary25      : this.Tertiary25,       Tertiary26 : this.Tertiary26,  Tertiary27 : this.Tertiary27,
-        Tertiary28       : this.Tertiary28,        Tertiary29      : this.Tertiary29,       Tertiary30      : this.Tertiary30,       Tertiary31 : this.Tertiary31,  Tertiary32 : this.Tertiary32,
-        Tertiary33       : this.Tertiary33,        Tertiary34      : this.Tertiary34,       Tertiary35      : this.Tertiary35,       Tertiary36 : this.Tertiary36,  Tertiary37 : this.Tertiary37,
-        Tertiary38       : this.Tertiary38,        Tertiary39      : this.Tertiary39,       Tertiary40      : this.Tertiary40,       Tertiary41 : this.Tertiary41,  Tertiary42 : this.Tertiary42,
-        Tertiary43       : this.Tertiary43,        Tertiary44      : this.Tertiary44,       Tertiary45      : this.Tertiary45,       Tertiary46 : this.Tertiary46,  Tertiary47 : this.Tertiary47,
-        Tertiary48       : this.Tertiary48,        Tertiary49      : this.Tertiary49,       Tertiary50      : this.Tertiary50,       Tertiary51 : this.Tertiary51,  Tertiary52 : this.Tertiary52,
-        Tertiary53       : this.Tertiary53,        Tertiary54      : this.Tertiary54,       Tertiary55      : this.Tertiary55,       Tertiary56 : this.Tertiary56,  Tertiary57 : this.Tertiary57,
-        Tertiary58       : this.Tertiary58,        Tertiary59      : this.Tertiary59,       Tertiary60      : this.Tertiary60,       Tertiary61 : this.Tertiary61,  Tertiary62 : this.Tertiary62,
-        Tertiary63       : this.Tertiary63,        Tertiary64      : this.Tertiary64,       Tertiary65      : this.Tertiary65,       Tertiary66 : this.Tertiary66,  Tertiary67 : this.Tertiary67,
-        Tertiary68       : this.Tertiary68,        Tertiary69      : this.Tertiary69,       Tertiary70      : this.Tertiary70,       Tertiary71 : this.Tertiary71,  Tertiary72 : this.Tertiary72,
-        Tertiary73       : this.Tertiary73,        Tertiary74      : this.Tertiary74,       Tertiary75      : this.Tertiary75,       Tertiary76 : this.Tertiary76,  Tertiary77 : this.Tertiary77,
-        Tertiary78       : this.Tertiary78,        Tertiary79      : this.Tertiary79,       Tertiary80      : this.Tertiary80,       Tertiary81 : this.Tertiary81,  Tertiary82 : this.Tertiary82,
-        Tertiary83       : this.Tertiary83,        Tertiary84      : this.Tertiary84,       Tertiary85      : this.Tertiary85,       Tertiary86 : this.Tertiary86,  Tertiary87 : this.Tertiary87,
-        Tertiary88       : this.Tertiary88,        Tertiary89      : this.Tertiary89,       Tertiary90      : this.Tertiary90,       Tertiary91 : this.Tertiary91,  Tertiary92 : this.Tertiary92,
-        Tertiary93       : this.Tertiary93,        Tertiary94      : this.Tertiary94,       Tertiary95      : this.Tertiary95,       Tertiary96 : this.Tertiary96,  Tertiary97 : this.Tertiary97,
-        Tertiary98       : this.Tertiary98,        Tertiary99      : this.Tertiary99,       Tertiary100     : this.Tertiary100,      Error0     : this.Error0,      Error1     : this.Error1,      Error2: this.Error2,
-        Error3           : this.Error3,            Error4          : this.Error4,           Error5          : this.Error5,
-        Error6           : this.Error6,            Error7          : this.Error7,           Error8          : this.Error8,           Error9     : this.Error9,
-        Error10          : this.Error10,           Error11         : this.Error11,          Error12         : this.Error12,
-        Error13          : this.Error13,           Error14         : this.Error14,          Error15         : this.Error15,
-        Error16          : this.Error16,           Error17         : this.Error17,          Error18         : this.Error18,
-        Error19          : this.Error19,           Error20         : this.Error20,          Error21         : this.Error21,
-        Error22          : this.Error22,           Error23         : this.Error23,          Error24         : this.Error24,
-        Error25          : this.Error25,           Error26         : this.Error26,          Error27         : this.Error27,
-        Error28          : this.Error28,           Error29         : this.Error29,          Error30         : this.Error30,
-        Error31          : this.Error31,           Error32         : this.Error32,          Error33         : this.Error33,
-        Error34          : this.Error34,           Error35         : this.Error35,          Error36         : this.Error36,
-        Error37          : this.Error37,           Error38         : this.Error38,          Error39         : this.Error39,
-        Error40          : this.Error40,           Error41         : this.Error41,          Error42         : this.Error42,
-        Error43          : this.Error43,           Error44         : this.Error44,          Error45         : this.Error45,
-        Error46          : this.Error46,           Error47         : this.Error47,          Error48         : this.Error48,
-        Error49          : this.Error49,           Error50         : this.Error50,          Error51         : this.Error51,
-        Error52          : this.Error52,           Error53         : this.Error53,          Error54         : this.Error54,
-        Error55          : this.Error55,           Error56         : this.Error56,          Error57         : this.Error57,
-        Error58          : this.Error58,           Error59         : this.Error59,          Error60         : this.Error60,
-        Error61          : this.Error61,           Error62         : this.Error62,          Error63         : this.Error63,
-        Error64          : this.Error64,           Error65         : this.Error65,          Error66         : this.Error66,
-        Error67          : this.Error67,           Error68         : this.Error68,          Error69         : this.Error69,
-        Error70          : this.Error70,           Error71         : this.Error71,          Error72         : this.Error72,
-        Error73          : this.Error73,           Error74         : this.Error74,          Error75         : this.Error75,
-        Error76          : this.Error76,           Error77         : this.Error77,          Error78         : this.Error78,
-        Error79          : this.Error79,           Error80         : this.Error80,          Error81         : this.Error81,
-        Error82          : this.Error82,           Error83         : this.Error83,          Error84         : this.Error84,
-        Error85          : this.Error85,           Error86         : this.Error86,          Error87         : this.Error87,
-        Error88          : this.Error88,           Error89         : this.Error89,          Error90         : this.Error90,
-        Error91          : this.Error91,           Error92         : this.Error92,          Error93         : this.Error93,
-        Error94          : this.Error94,           Error95         : this.Error95,          Error96         : this.Error96,
-        Error97          : this.Error97,           Error98         : this.Error98,          Error99         : this.Error99,
-        Error100         : this.Error100,          Neutral0        : this.Neutral0,         Neutral1        : this.Neutral1,
-        Neutral2         : this.Neutral2,          Neutral3        : this.Neutral3,         Neutral4        : this.Neutral4,
-        Neutral5         : this.Neutral5,          Neutral6        : this.Neutral6,         Neutral7        : this.Neutral7,
-        Neutral8         : this.Neutral8,          Neutral9        : this.Neutral9,         Neutral10       : this.Neutral10,
-        Neutral11        : this.Neutral11,         Neutral12       : this.Neutral12,        Neutral13       : this.Neutral13,
-        Neutral14        : this.Neutral14,         Neutral15       : this.Neutral15,        Neutral16       : this.Neutral16,
-        Neutral17        : this.Neutral17,         Neutral18       : this.Neutral18,        Neutral19       : this.Neutral19,
-        Neutral20        : this.Neutral20,         Neutral21       : this.Neutral21,        Neutral22       : this.Neutral22,
-        Neutral23        : this.Neutral23,         Neutral24       : this.Neutral24,        Neutral25       : this.Neutral25,
-        Neutral26        : this.Neutral26,         Neutral27       : this.Neutral27,        Neutral28       : this.Neutral28,
-        Neutral29        : this.Neutral29,         Neutral30       : this.Neutral30,        Neutral31       : this.Neutral31,
-        Neutral32        : this.Neutral32,         Neutral33       : this.Neutral33,        Neutral34       : this.Neutral34,
-        Neutral35        : this.Neutral35,         Neutral36       : this.Neutral36,        Neutral37       : this.Neutral37,
-        Neutral38        : this.Neutral38,         Neutral39       : this.Neutral39,        Neutral40       : this.Neutral40,
-        Neutral41        : this.Neutral41,         Neutral42       : this.Neutral42,        Neutral43       : this.Neutral43,
-        Neutral44        : this.Neutral44,         Neutral45       : this.Neutral45,        Neutral46       : this.Neutral46,
-        Neutral47        : this.Neutral47,         Neutral48       : this.Neutral48,        Neutral49       : this.Neutral49,
-        Neutral50        : this.Neutral50,         Neutral51       : this.Neutral51,        Neutral52       : this.Neutral52,
-        Neutral53        : this.Neutral53,         Neutral54       : this.Neutral54,        Neutral55       : this.Neutral55,
-        Neutral56        : this.Neutral56,         Neutral57       : this.Neutral57,        Neutral58       : this.Neutral58,
-        Neutral59        : this.Neutral59,         Neutral60       : this.Neutral60,        Neutral61       : this.Neutral61,
-        Neutral62        : this.Neutral62,         Neutral63       : this.Neutral63,        Neutral64       : this.Neutral64,
-        Neutral65        : this.Neutral65,         Neutral66       : this.Neutral66,        Neutral67       : this.Neutral67,
-        Neutral68        : this.Neutral68,         Neutral69       : this.Neutral69,        Neutral70       : this.Neutral70,
-        Neutral71        : this.Neutral71,         Neutral72       : this.Neutral72,        Neutral73       : this.Neutral73,
-        Neutral74        : this.Neutral74,         Neutral75       : this.Neutral75,        Neutral76       : this.Neutral76,
-        Neutral77        : this.Neutral77,         Neutral78       : this.Neutral78,        Neutral79       : this.Neutral79,
-        Neutral80        : this.Neutral80,         Neutral81       : this.Neutral81,        Neutral82       : this.Neutral82,
-        Neutral83        : this.Neutral83,         Neutral84       : this.Neutral84,        Neutral85       : this.Neutral85,
-        Neutral86        : this.Neutral86,         Neutral87       : this.Neutral87,        Neutral88       : this.Neutral88,
-        Neutral89        : this.Neutral89,         Neutral90       : this.Neutral90,        Neutral91       : this.Neutral91,
-        Neutral92        : this.Neutral92,         Neutral93       : this.Neutral93,        Neutral94       : this.Neutral94,
-        Neutral95        : this.Neutral95,         Neutral96       : this.Neutral96,        Neutral97       : this.Neutral97,
-        Neutral98        : this.Neutral98,         Neutral99       : this.Neutral99,        Neutral100      : this. Neutral100,
-        NeutralVariant0  : this.NeutralVariant0,   NeutralVariant1 : this.NeutralVariant1,
-        NeutralVariant2  : this.NeutralVariant2,   NeutralVariant3 : this.NeutralVariant3,  NeutralVariant4 : this.NeutralVariant4,
-        NeutralVariant5  : this.NeutralVariant5,   NeutralVariant6 : this.NeutralVariant6,
-        NeutralVariant7  : this.NeutralVariant7,   NeutralVariant8 : this.NeutralVariant8,  NeutralVariant9 : this.NeutralVariant9,
-        NeutralVariant10 : this.NeutralVariant10,  NeutralVariant11: this.NeutralVariant11, NeutralVariant12: this.NeutralVariant12,
-        NeutralVariant13 : this.NeutralVariant13,  NeutralVariant14: this.NeutralVariant14, NeutralVariant15: this.NeutralVariant15,
-        NeutralVariant16 : this.NeutralVariant16,  NeutralVariant17: this.NeutralVariant17, NeutralVariant18: this.NeutralVariant18,
-        NeutralVariant19 : this.NeutralVariant19,  NeutralVariant20: this.NeutralVariant20, NeutralVariant21: this.NeutralVariant21,
-        NeutralVariant22 : this.NeutralVariant22,  NeutralVariant23: this.NeutralVariant23, NeutralVariant24: this.NeutralVariant24,
-        NeutralVariant25 : this.NeutralVariant25,  NeutralVariant26: this.NeutralVariant26, NeutralVariant27: this.NeutralVariant27,
-        NeutralVariant28 : this.NeutralVariant28,  NeutralVariant29: this.NeutralVariant29, NeutralVariant30: this.NeutralVariant30,
-        NeutralVariant31 : this.NeutralVariant31,  NeutralVariant32: this.NeutralVariant32, NeutralVariant33: this.NeutralVariant33,
-        NeutralVariant34 : this.NeutralVariant34,  NeutralVariant35: this.NeutralVariant35, NeutralVariant36: this.NeutralVariant36,
-        NeutralVariant37 : this.NeutralVariant37,  NeutralVariant38: this.NeutralVariant38, NeutralVariant39: this.NeutralVariant39,
-        NeutralVariant40 : this.NeutralVariant40,  NeutralVariant41: this.NeutralVariant41, NeutralVariant42: this.NeutralVariant42,
-        NeutralVariant43 : this.NeutralVariant43,  NeutralVariant44: this.NeutralVariant44, NeutralVariant45: this.NeutralVariant45,
-        NeutralVariant46 : this.NeutralVariant46,  NeutralVariant47: this.NeutralVariant47, NeutralVariant48: this.NeutralVariant48,
-        NeutralVariant49 : this.NeutralVariant49,  NeutralVariant50: this.NeutralVariant50, NeutralVariant51: this.NeutralVariant51,
-        NeutralVariant52 : this.NeutralVariant52,  NeutralVariant53: this.NeutralVariant53, NeutralVariant54: this.NeutralVariant54,
-        NeutralVariant55 : this.NeutralVariant55,  NeutralVariant56: this.NeutralVariant56, NeutralVariant57: this.NeutralVariant57,
-        NeutralVariant58 : this.NeutralVariant58,  NeutralVariant59: this.NeutralVariant59, NeutralVariant60: this.NeutralVariant60,
-        NeutralVariant61 : this.NeutralVariant61,  NeutralVariant62: this.NeutralVariant62, NeutralVariant63: this.NeutralVariant63,
-        NeutralVariant64 : this.NeutralVariant64,  NeutralVariant65: this.NeutralVariant65, NeutralVariant66: this.NeutralVariant66,
-        NeutralVariant67 : this.NeutralVariant67,  NeutralVariant68: this.NeutralVariant68, NeutralVariant69: this.NeutralVariant69,
-        NeutralVariant70 : this.NeutralVariant70,  NeutralVariant71: this.NeutralVariant71, NeutralVariant72: this.NeutralVariant72,
-        NeutralVariant73 : this.NeutralVariant73,  NeutralVariant74: this.NeutralVariant74, NeutralVariant75: this.NeutralVariant75,
-        NeutralVariant76 : this.NeutralVariant76,  NeutralVariant77: this.NeutralVariant77, NeutralVariant78: this.NeutralVariant78,
-        NeutralVariant79 : this.NeutralVariant79,  NeutralVariant80: this.NeutralVariant80, NeutralVariant81: this.NeutralVariant81,
-        NeutralVariant82 : this.NeutralVariant82,  NeutralVariant83: this.NeutralVariant83, NeutralVariant84: this.NeutralVariant84,
-        NeutralVariant85 : this.NeutralVariant85,  NeutralVariant86: this.NeutralVariant86, NeutralVariant87: this.NeutralVariant87,
-        NeutralVariant88 : this.NeutralVariant88,  NeutralVariant89: this.NeutralVariant89, NeutralVariant90: this.NeutralVariant90,
-        NeutralVariant91 : this.NeutralVariant91,  NeutralVariant92: this.NeutralVariant92, NeutralVariant93: this.NeutralVariant93,
-        NeutralVariant94 : this.NeutralVariant94,  NeutralVariant95: this.NeutralVariant95, NeutralVariant96: this.NeutralVariant96,
-        NeutralVariant97 : this.NeutralVariant97,  NeutralVariant98: this.NeutralVariant98, NeutralVariant99: this.NeutralVariant99,
-        NeutralVariant100: this.NeutralVariant100,
+type ToPaletteContract<T extends Record<PaletteNames, PaletteContract>> = { [K in keyof T]: T[K] extends {
+    readonly Key: infer K2 extends string;
+    readonly Value: infer V2 extends string
+} ? _Palette<K2, V2> : never }
+
+/**
+ * @example
+ * Useage:
+ * ```ts
+ * const YourAppPalette = Palette.From({
+ *     // Optionally, you can override the default palette contract by providing a partial contract object to the `From` method.
+ *     Primary40: { Key: `--custom-primary-40`, Value: `#abcdef` },
+ * })
+ *
+ * console.log(YourAppPalette.Primary40.Value) // #abcdef
+ * console.log(YourAppPalette.Primary40.Key) // --custom-primary-40
+ * ```
+ */
+export class Palette<
+    CONTRACT extends Record<PaletteNames, _Palette<string, string>>
+> {
+
+    private readonly contract: CONTRACT
+
+    private constructor(contract: CONTRACT) {
+        this.contract = contract
     }
 
+    public static From<
+        const C extends Partial<Record<PaletteNames, PaletteContract>>
+    >(
+        contract: C = {} as C
+    ): Palette<ToPaletteContract<MergeContracts<typeof DefaultPaletteContract, C>>> {
+        const raw = {
+            ...DefaultPaletteContract,
+            ...contract
+        } as const
+
+        const palettes = Object.fromEntries(
+            Object.entries(raw).map(([property, Value]) => [
+                property,
+                new _Palette(Value.Key, Value.Value)
+            ])
+        ) as unknown as ToPaletteContract<MergeContracts<typeof DefaultPaletteContract, C>>
+
+        return new Palette(palettes)
+    }
+
+
+    public get Primary0(): CONTRACT['Primary0'] { return this.contract.Primary0 }
+    public get Primary1(): CONTRACT['Primary1'] { return this.contract.Primary1 }
+    public get Primary2(): CONTRACT['Primary2'] { return this.contract.Primary2 }
+    public get Primary3(): CONTRACT['Primary3'] { return this.contract.Primary3 }
+    public get Primary4(): CONTRACT['Primary4'] { return this.contract.Primary4 }
+    public get Primary5(): CONTRACT['Primary5'] { return this.contract.Primary5 }
+    public get Primary6(): CONTRACT['Primary6'] { return this.contract.Primary6 }
+    public get Primary7(): CONTRACT['Primary7'] { return this.contract.Primary7 }
+    public get Primary8(): CONTRACT['Primary8'] { return this.contract.Primary8 }
+    public get Primary9(): CONTRACT['Primary9'] { return this.contract.Primary9 }
+    public get Primary10(): CONTRACT['Primary10'] { return this.contract.Primary10 }
+    public get Primary11(): CONTRACT['Primary11'] { return this.contract.Primary11 }
+    public get Primary12(): CONTRACT['Primary12'] { return this.contract.Primary12 }
+    public get Primary13(): CONTRACT['Primary13'] { return this.contract.Primary13 }
+    public get Primary14(): CONTRACT['Primary14'] { return this.contract.Primary14 }
+    public get Primary15(): CONTRACT['Primary15'] { return this.contract.Primary15 }
+    public get Primary16(): CONTRACT['Primary16'] { return this.contract.Primary16 }
+    public get Primary17(): CONTRACT['Primary17'] { return this.contract.Primary17 }
+    public get Primary18(): CONTRACT['Primary18'] { return this.contract.Primary18 }
+    public get Primary19(): CONTRACT['Primary19'] { return this.contract.Primary19 }
+    public get Primary20(): CONTRACT['Primary20'] { return this.contract.Primary20 }
+    public get Primary21(): CONTRACT['Primary21'] { return this.contract.Primary21 }
+    public get Primary22(): CONTRACT['Primary22'] { return this.contract.Primary22 }
+    public get Primary23(): CONTRACT['Primary23'] { return this.contract.Primary23 }
+    public get Primary24(): CONTRACT['Primary24'] { return this.contract.Primary24 }
+    public get Primary25(): CONTRACT['Primary25'] { return this.contract.Primary25 }
+    public get Primary26(): CONTRACT['Primary26'] { return this.contract.Primary26 }
+    public get Primary27(): CONTRACT['Primary27'] { return this.contract.Primary27 }
+    public get Primary28(): CONTRACT['Primary28'] { return this.contract.Primary28 }
+    public get Primary29(): CONTRACT['Primary29'] { return this.contract.Primary29 }
+    public get Primary30(): CONTRACT['Primary30'] { return this.contract.Primary30 }
+    public get Primary31(): CONTRACT['Primary31'] { return this.contract.Primary31 }
+    public get Primary32(): CONTRACT['Primary32'] { return this.contract.Primary32 }
+    public get Primary33(): CONTRACT['Primary33'] { return this.contract.Primary33 }
+    public get Primary34(): CONTRACT['Primary34'] { return this.contract.Primary34 }
+    public get Primary35(): CONTRACT['Primary35'] { return this.contract.Primary35 }
+    public get Primary36(): CONTRACT['Primary36'] { return this.contract.Primary36 }
+    public get Primary37(): CONTRACT['Primary37'] { return this.contract.Primary37 }
+    public get Primary38(): CONTRACT['Primary38'] { return this.contract.Primary38 }
+    public get Primary39(): CONTRACT['Primary39'] { return this.contract.Primary39 }
+    public get Primary40(): CONTRACT['Primary40'] { return this.contract.Primary40 }
+    public get Primary41(): CONTRACT['Primary41'] { return this.contract.Primary41 }
+    public get Primary42(): CONTRACT['Primary42'] { return this.contract.Primary42 }
+    public get Primary43(): CONTRACT['Primary43'] { return this.contract.Primary43 }
+    public get Primary44(): CONTRACT['Primary44'] { return this.contract.Primary44 }
+    public get Primary45(): CONTRACT['Primary45'] { return this.contract.Primary45 }
+    public get Primary46(): CONTRACT['Primary46'] { return this.contract.Primary46 }
+    public get Primary47(): CONTRACT['Primary47'] { return this.contract.Primary47 }
+    public get Primary48(): CONTRACT['Primary48'] { return this.contract.Primary48 }
+    public get Primary49(): CONTRACT['Primary49'] { return this.contract.Primary49 }
+    public get Primary50(): CONTRACT['Primary50'] { return this.contract.Primary50 }
+    public get Primary51(): CONTRACT['Primary51'] { return this.contract.Primary51 }
+    public get Primary52(): CONTRACT['Primary52'] { return this.contract.Primary52 }
+    public get Primary53(): CONTRACT['Primary53'] { return this.contract.Primary53 }
+    public get Primary54(): CONTRACT['Primary54'] { return this.contract.Primary54 }
+    public get Primary55(): CONTRACT['Primary55'] { return this.contract.Primary55 }
+    public get Primary56(): CONTRACT['Primary56'] { return this.contract.Primary56 }
+    public get Primary57(): CONTRACT['Primary57'] { return this.contract.Primary57 }
+    public get Primary58(): CONTRACT['Primary58'] { return this.contract.Primary58 }
+    public get Primary59(): CONTRACT['Primary59'] { return this.contract.Primary59 }
+    public get Primary60(): CONTRACT['Primary60'] { return this.contract.Primary60 }
+    public get Primary61(): CONTRACT['Primary61'] { return this.contract.Primary61 }
+    public get Primary62(): CONTRACT['Primary62'] { return this.contract.Primary62 }
+    public get Primary63(): CONTRACT['Primary63'] { return this.contract.Primary63 }
+    public get Primary64(): CONTRACT['Primary64'] { return this.contract.Primary64 }
+    public get Primary65(): CONTRACT['Primary65'] { return this.contract.Primary65 }
+    public get Primary66(): CONTRACT['Primary66'] { return this.contract.Primary66 }
+    public get Primary67(): CONTRACT['Primary67'] { return this.contract.Primary67 }
+    public get Primary68(): CONTRACT['Primary68'] { return this.contract.Primary68 }
+    public get Primary69(): CONTRACT['Primary69'] { return this.contract.Primary69 }
+    public get Primary70(): CONTRACT['Primary70'] { return this.contract.Primary70 }
+    public get Primary71(): CONTRACT['Primary71'] { return this.contract.Primary71 }
+    public get Primary72(): CONTRACT['Primary72'] { return this.contract.Primary72 }
+    public get Primary73(): CONTRACT['Primary73'] { return this.contract.Primary73 }
+    public get Primary74(): CONTRACT['Primary74'] { return this.contract.Primary74 }
+    public get Primary75(): CONTRACT['Primary75'] { return this.contract.Primary75 }
+    public get Primary76(): CONTRACT['Primary76'] { return this.contract.Primary76 }
+    public get Primary77(): CONTRACT['Primary77'] { return this.contract.Primary77 }
+    public get Primary78(): CONTRACT['Primary78'] { return this.contract.Primary78 }
+    public get Primary79(): CONTRACT['Primary79'] { return this.contract.Primary79 }
+    public get Primary80(): CONTRACT['Primary80'] { return this.contract.Primary80 }
+    public get Primary81(): CONTRACT['Primary81'] { return this.contract.Primary81 }
+    public get Primary82(): CONTRACT['Primary82'] { return this.contract.Primary82 }
+    public get Primary83(): CONTRACT['Primary83'] { return this.contract.Primary83 }
+    public get Primary84(): CONTRACT['Primary84'] { return this.contract.Primary84 }
+    public get Primary85(): CONTRACT['Primary85'] { return this.contract.Primary85 }
+    public get Primary86(): CONTRACT['Primary86'] { return this.contract.Primary86 }
+    public get Primary87(): CONTRACT['Primary87'] { return this.contract.Primary87 }
+    public get Primary88(): CONTRACT['Primary88'] { return this.contract.Primary88 }
+    public get Primary89(): CONTRACT['Primary89'] { return this.contract.Primary89 }
+    public get Primary90(): CONTRACT['Primary90'] { return this.contract.Primary90 }
+    public get Primary91(): CONTRACT['Primary91'] { return this.contract.Primary91 }
+    public get Primary92(): CONTRACT['Primary92'] { return this.contract.Primary92 }
+    public get Primary93(): CONTRACT['Primary93'] { return this.contract.Primary93 }
+    public get Primary94(): CONTRACT['Primary94'] { return this.contract.Primary94 }
+    public get Primary95(): CONTRACT['Primary95'] { return this.contract.Primary95 }
+    public get Primary96(): CONTRACT['Primary96'] { return this.contract.Primary96 }
+    public get Primary97(): CONTRACT['Primary97'] { return this.contract.Primary97 }
+    public get Primary98(): CONTRACT['Primary98'] { return this.contract.Primary98 }
+    public get Primary99(): CONTRACT['Primary99'] { return this.contract.Primary99 }
+    public get Primary100(): CONTRACT['Primary100'] { return this.contract.Primary100 }
+    public get Secondary0(): CONTRACT['Secondary0'] { return this.contract.Secondary0 }
+    public get Secondary1(): CONTRACT['Secondary1'] { return this.contract.Secondary1 }
+    public get Secondary2(): CONTRACT['Secondary2'] { return this.contract.Secondary2 }
+    public get Secondary3(): CONTRACT['Secondary3'] { return this.contract.Secondary3 }
+    public get Secondary4(): CONTRACT['Secondary4'] { return this.contract.Secondary4 }
+    public get Secondary5(): CONTRACT['Secondary5'] { return this.contract.Secondary5 }
+    public get Secondary6(): CONTRACT['Secondary6'] { return this.contract.Secondary6 }
+    public get Secondary7(): CONTRACT['Secondary7'] { return this.contract.Secondary7 }
+    public get Secondary8(): CONTRACT['Secondary8'] { return this.contract.Secondary8 }
+    public get Secondary9(): CONTRACT['Secondary9'] { return this.contract.Secondary9 }
+    public get Secondary10(): CONTRACT['Secondary10'] { return this.contract.Secondary10 }
+    public get Secondary11(): CONTRACT['Secondary11'] { return this.contract.Secondary11 }
+    public get Secondary12(): CONTRACT['Secondary12'] { return this.contract.Secondary12 }
+    public get Secondary13(): CONTRACT['Secondary13'] { return this.contract.Secondary13 }
+    public get Secondary14(): CONTRACT['Secondary14'] { return this.contract.Secondary14 }
+    public get Secondary15(): CONTRACT['Secondary15'] { return this.contract.Secondary15 }
+    public get Secondary16(): CONTRACT['Secondary16'] { return this.contract.Secondary16 }
+    public get Secondary17(): CONTRACT['Secondary17'] { return this.contract.Secondary17 }
+    public get Secondary18(): CONTRACT['Secondary18'] { return this.contract.Secondary18 }
+    public get Secondary19(): CONTRACT['Secondary19'] { return this.contract.Secondary19 }
+    public get Secondary20(): CONTRACT['Secondary20'] { return this.contract.Secondary20 }
+    public get Secondary21(): CONTRACT['Secondary21'] { return this.contract.Secondary21 }
+    public get Secondary22(): CONTRACT['Secondary22'] { return this.contract.Secondary22 }
+    public get Secondary23(): CONTRACT['Secondary23'] { return this.contract.Secondary23 }
+    public get Secondary24(): CONTRACT['Secondary24'] { return this.contract.Secondary24 }
+    public get Secondary25(): CONTRACT['Secondary25'] { return this.contract.Secondary25 }
+    public get Secondary26(): CONTRACT['Secondary26'] { return this.contract.Secondary26 }
+    public get Secondary27(): CONTRACT['Secondary27'] { return this.contract.Secondary27 }
+    public get Secondary28(): CONTRACT['Secondary28'] { return this.contract.Secondary28 }
+    public get Secondary29(): CONTRACT['Secondary29'] { return this.contract.Secondary29 }
+    public get Secondary30(): CONTRACT['Secondary30'] { return this.contract.Secondary30 }
+    public get Secondary31(): CONTRACT['Secondary31'] { return this.contract.Secondary31 }
+    public get Secondary32(): CONTRACT['Secondary32'] { return this.contract.Secondary32 }
+    public get Secondary33(): CONTRACT['Secondary33'] { return this.contract.Secondary33 }
+    public get Secondary34(): CONTRACT['Secondary34'] { return this.contract.Secondary34 }
+    public get Secondary35(): CONTRACT['Secondary35'] { return this.contract.Secondary35 }
+    public get Secondary36(): CONTRACT['Secondary36'] { return this.contract.Secondary36 }
+    public get Secondary37(): CONTRACT['Secondary37'] { return this.contract.Secondary37 }
+    public get Secondary38(): CONTRACT['Secondary38'] { return this.contract.Secondary38 }
+    public get Secondary39(): CONTRACT['Secondary39'] { return this.contract.Secondary39 }
+    public get Secondary40(): CONTRACT['Secondary40'] { return this.contract.Secondary40 }
+    public get Secondary41(): CONTRACT['Secondary41'] { return this.contract.Secondary41 }
+    public get Secondary42(): CONTRACT['Secondary42'] { return this.contract.Secondary42 }
+    public get Secondary43(): CONTRACT['Secondary43'] { return this.contract.Secondary43 }
+    public get Secondary44(): CONTRACT['Secondary44'] { return this.contract.Secondary44 }
+    public get Secondary45(): CONTRACT['Secondary45'] { return this.contract.Secondary45 }
+    public get Secondary46(): CONTRACT['Secondary46'] { return this.contract.Secondary46 }
+    public get Secondary47(): CONTRACT['Secondary47'] { return this.contract.Secondary47 }
+    public get Secondary48(): CONTRACT['Secondary48'] { return this.contract.Secondary48 }
+    public get Secondary49(): CONTRACT['Secondary49'] { return this.contract.Secondary49 }
+    public get Secondary50(): CONTRACT['Secondary50'] { return this.contract.Secondary50 }
+    public get Secondary51(): CONTRACT['Secondary51'] { return this.contract.Secondary51 }
+    public get Secondary52(): CONTRACT['Secondary52'] { return this.contract.Secondary52 }
+    public get Secondary53(): CONTRACT['Secondary53'] { return this.contract.Secondary53 }
+    public get Secondary54(): CONTRACT['Secondary54'] { return this.contract.Secondary54 }
+    public get Secondary55(): CONTRACT['Secondary55'] { return this.contract.Secondary55 }
+    public get Secondary56(): CONTRACT['Secondary56'] { return this.contract.Secondary56 }
+    public get Secondary57(): CONTRACT['Secondary57'] { return this.contract.Secondary57 }
+    public get Secondary58(): CONTRACT['Secondary58'] { return this.contract.Secondary58 }
+    public get Secondary59(): CONTRACT['Secondary59'] { return this.contract.Secondary59 }
+    public get Secondary60(): CONTRACT['Secondary60'] { return this.contract.Secondary60 }
+    public get Secondary61(): CONTRACT['Secondary61'] { return this.contract.Secondary61 }
+    public get Secondary62(): CONTRACT['Secondary62'] { return this.contract.Secondary62 }
+    public get Secondary63(): CONTRACT['Secondary63'] { return this.contract.Secondary63 }
+    public get Secondary64(): CONTRACT['Secondary64'] { return this.contract.Secondary64 }
+    public get Secondary65(): CONTRACT['Secondary65'] { return this.contract.Secondary65 }
+    public get Secondary66(): CONTRACT['Secondary66'] { return this.contract.Secondary66 }
+    public get Secondary67(): CONTRACT['Secondary67'] { return this.contract.Secondary67 }
+    public get Secondary68(): CONTRACT['Secondary68'] { return this.contract.Secondary68 }
+    public get Secondary69(): CONTRACT['Secondary69'] { return this.contract.Secondary69 }
+    public get Secondary70(): CONTRACT['Secondary70'] { return this.contract.Secondary70 }
+    public get Secondary71(): CONTRACT['Secondary71'] { return this.contract.Secondary71 }
+    public get Secondary72(): CONTRACT['Secondary72'] { return this.contract.Secondary72 }
+    public get Secondary73(): CONTRACT['Secondary73'] { return this.contract.Secondary73 }
+    public get Secondary74(): CONTRACT['Secondary74'] { return this.contract.Secondary74 }
+    public get Secondary75(): CONTRACT['Secondary75'] { return this.contract.Secondary75 }
+    public get Secondary76(): CONTRACT['Secondary76'] { return this.contract.Secondary76 }
+    public get Secondary77(): CONTRACT['Secondary77'] { return this.contract.Secondary77 }
+    public get Secondary78(): CONTRACT['Secondary78'] { return this.contract.Secondary78 }
+    public get Secondary79(): CONTRACT['Secondary79'] { return this.contract.Secondary79 }
+    public get Secondary80(): CONTRACT['Secondary80'] { return this.contract.Secondary80 }
+    public get Secondary81(): CONTRACT['Secondary81'] { return this.contract.Secondary81 }
+    public get Secondary82(): CONTRACT['Secondary82'] { return this.contract.Secondary82 }
+    public get Secondary83(): CONTRACT['Secondary83'] { return this.contract.Secondary83 }
+    public get Secondary84(): CONTRACT['Secondary84'] { return this.contract.Secondary84 }
+    public get Secondary85(): CONTRACT['Secondary85'] { return this.contract.Secondary85 }
+    public get Secondary86(): CONTRACT['Secondary86'] { return this.contract.Secondary86 }
+    public get Secondary87(): CONTRACT['Secondary87'] { return this.contract.Secondary87 }
+    public get Secondary88(): CONTRACT['Secondary88'] { return this.contract.Secondary88 }
+    public get Secondary89(): CONTRACT['Secondary89'] { return this.contract.Secondary89 }
+    public get Secondary90(): CONTRACT['Secondary90'] { return this.contract.Secondary90 }
+    public get Secondary91(): CONTRACT['Secondary91'] { return this.contract.Secondary91 }
+    public get Secondary92(): CONTRACT['Secondary92'] { return this.contract.Secondary92 }
+    public get Secondary93(): CONTRACT['Secondary93'] { return this.contract.Secondary93 }
+    public get Secondary94(): CONTRACT['Secondary94'] { return this.contract.Secondary94 }
+    public get Secondary95(): CONTRACT['Secondary95'] { return this.contract.Secondary95 }
+    public get Secondary96(): CONTRACT['Secondary96'] { return this.contract.Secondary96 }
+    public get Secondary97(): CONTRACT['Secondary97'] { return this.contract.Secondary97 }
+    public get Secondary98(): CONTRACT['Secondary98'] { return this.contract.Secondary98 }
+    public get Secondary99(): CONTRACT['Secondary99'] { return this.contract.Secondary99 }
+    public get Secondary100(): CONTRACT['Secondary100'] { return this.contract.Secondary100 }
+    public get Tertiary0(): CONTRACT['Tertiary0'] { return this.contract.Tertiary0 }
+    public get Tertiary1(): CONTRACT['Tertiary1'] { return this.contract.Tertiary1 }
+    public get Tertiary2(): CONTRACT['Tertiary2'] { return this.contract.Tertiary2 }
+    public get Tertiary3(): CONTRACT['Tertiary3'] { return this.contract.Tertiary3 }
+    public get Tertiary4(): CONTRACT['Tertiary4'] { return this.contract.Tertiary4 }
+    public get Tertiary5(): CONTRACT['Tertiary5'] { return this.contract.Tertiary5 }
+    public get Tertiary6(): CONTRACT['Tertiary6'] { return this.contract.Tertiary6 }
+    public get Tertiary7(): CONTRACT['Tertiary7'] { return this.contract.Tertiary7 }
+    public get Tertiary8(): CONTRACT['Tertiary8'] { return this.contract.Tertiary8 }
+    public get Tertiary9(): CONTRACT['Tertiary9'] { return this.contract.Tertiary9 }
+    public get Tertiary10(): CONTRACT['Tertiary10'] { return this.contract.Tertiary10 }
+    public get Tertiary11(): CONTRACT['Tertiary11'] { return this.contract.Tertiary11 }
+    public get Tertiary12(): CONTRACT['Tertiary12'] { return this.contract.Tertiary12 }
+    public get Tertiary13(): CONTRACT['Tertiary13'] { return this.contract.Tertiary13 }
+    public get Tertiary14(): CONTRACT['Tertiary14'] { return this.contract.Tertiary14 }
+    public get Tertiary15(): CONTRACT['Tertiary15'] { return this.contract.Tertiary15 }
+    public get Tertiary16(): CONTRACT['Tertiary16'] { return this.contract.Tertiary16 }
+    public get Tertiary17(): CONTRACT['Tertiary17'] { return this.contract.Tertiary17 }
+    public get Tertiary18(): CONTRACT['Tertiary18'] { return this.contract.Tertiary18 }
+    public get Tertiary19(): CONTRACT['Tertiary19'] { return this.contract.Tertiary19 }
+    public get Tertiary20(): CONTRACT['Tertiary20'] { return this.contract.Tertiary20 }
+    public get Tertiary21(): CONTRACT['Tertiary21'] { return this.contract.Tertiary21 }
+    public get Tertiary22(): CONTRACT['Tertiary22'] { return this.contract.Tertiary22 }
+    public get Tertiary23(): CONTRACT['Tertiary23'] { return this.contract.Tertiary23 }
+    public get Tertiary24(): CONTRACT['Tertiary24'] { return this.contract.Tertiary24 }
+    public get Tertiary25(): CONTRACT['Tertiary25'] { return this.contract.Tertiary25 }
+    public get Tertiary26(): CONTRACT['Tertiary26'] { return this.contract.Tertiary26 }
+    public get Tertiary27(): CONTRACT['Tertiary27'] { return this.contract.Tertiary27 }
+    public get Tertiary28(): CONTRACT['Tertiary28'] { return this.contract.Tertiary28 }
+    public get Tertiary29(): CONTRACT['Tertiary29'] { return this.contract.Tertiary29 }
+    public get Tertiary30(): CONTRACT['Tertiary30'] { return this.contract.Tertiary30 }
+    public get Tertiary31(): CONTRACT['Tertiary31'] { return this.contract.Tertiary31 }
+    public get Tertiary32(): CONTRACT['Tertiary32'] { return this.contract.Tertiary32 }
+    public get Tertiary33(): CONTRACT['Tertiary33'] { return this.contract.Tertiary33 }
+    public get Tertiary34(): CONTRACT['Tertiary34'] { return this.contract.Tertiary34 }
+    public get Tertiary35(): CONTRACT['Tertiary35'] { return this.contract.Tertiary35 }
+    public get Tertiary36(): CONTRACT['Tertiary36'] { return this.contract.Tertiary36 }
+    public get Tertiary37(): CONTRACT['Tertiary37'] { return this.contract.Tertiary37 }
+    public get Tertiary38(): CONTRACT['Tertiary38'] { return this.contract.Tertiary38 }
+    public get Tertiary39(): CONTRACT['Tertiary39'] { return this.contract.Tertiary39 }
+    public get Tertiary40(): CONTRACT['Tertiary40'] { return this.contract.Tertiary40 }
+    public get Tertiary41(): CONTRACT['Tertiary41'] { return this.contract.Tertiary41 }
+    public get Tertiary42(): CONTRACT['Tertiary42'] { return this.contract.Tertiary42 }
+    public get Tertiary43(): CONTRACT['Tertiary43'] { return this.contract.Tertiary43 }
+    public get Tertiary44(): CONTRACT['Tertiary44'] { return this.contract.Tertiary44 }
+    public get Tertiary45(): CONTRACT['Tertiary45'] { return this.contract.Tertiary45 }
+    public get Tertiary46(): CONTRACT['Tertiary46'] { return this.contract.Tertiary46 }
+    public get Tertiary47(): CONTRACT['Tertiary47'] { return this.contract.Tertiary47 }
+    public get Tertiary48(): CONTRACT['Tertiary48'] { return this.contract.Tertiary48 }
+    public get Tertiary49(): CONTRACT['Tertiary49'] { return this.contract.Tertiary49 }
+    public get Tertiary50(): CONTRACT['Tertiary50'] { return this.contract.Tertiary50 }
+    public get Tertiary51(): CONTRACT['Tertiary51'] { return this.contract.Tertiary51 }
+    public get Tertiary52(): CONTRACT['Tertiary52'] { return this.contract.Tertiary52 }
+    public get Tertiary53(): CONTRACT['Tertiary53'] { return this.contract.Tertiary53 }
+    public get Tertiary54(): CONTRACT['Tertiary54'] { return this.contract.Tertiary54 }
+    public get Tertiary55(): CONTRACT['Tertiary55'] { return this.contract.Tertiary55 }
+    public get Tertiary56(): CONTRACT['Tertiary56'] { return this.contract.Tertiary56 }
+    public get Tertiary57(): CONTRACT['Tertiary57'] { return this.contract.Tertiary57 }
+    public get Tertiary58(): CONTRACT['Tertiary58'] { return this.contract.Tertiary58 }
+    public get Tertiary59(): CONTRACT['Tertiary59'] { return this.contract.Tertiary59 }
+    public get Tertiary60(): CONTRACT['Tertiary60'] { return this.contract.Tertiary60 }
+    public get Tertiary61(): CONTRACT['Tertiary61'] { return this.contract.Tertiary61 }
+    public get Tertiary62(): CONTRACT['Tertiary62'] { return this.contract.Tertiary62 }
+    public get Tertiary63(): CONTRACT['Tertiary63'] { return this.contract.Tertiary63 }
+    public get Tertiary64(): CONTRACT['Tertiary64'] { return this.contract.Tertiary64 }
+    public get Tertiary65(): CONTRACT['Tertiary65'] { return this.contract.Tertiary65 }
+    public get Tertiary66(): CONTRACT['Tertiary66'] { return this.contract.Tertiary66 }
+    public get Tertiary67(): CONTRACT['Tertiary67'] { return this.contract.Tertiary67 }
+    public get Tertiary68(): CONTRACT['Tertiary68'] { return this.contract.Tertiary68 }
+    public get Tertiary69(): CONTRACT['Tertiary69'] { return this.contract.Tertiary69 }
+    public get Tertiary70(): CONTRACT['Tertiary70'] { return this.contract.Tertiary70 }
+    public get Tertiary71(): CONTRACT['Tertiary71'] { return this.contract.Tertiary71 }
+    public get Tertiary72(): CONTRACT['Tertiary72'] { return this.contract.Tertiary72 }
+    public get Tertiary73(): CONTRACT['Tertiary73'] { return this.contract.Tertiary73 }
+    public get Tertiary74(): CONTRACT['Tertiary74'] { return this.contract.Tertiary74 }
+    public get Tertiary75(): CONTRACT['Tertiary75'] { return this.contract.Tertiary75 }
+    public get Tertiary76(): CONTRACT['Tertiary76'] { return this.contract.Tertiary76 }
+    public get Tertiary77(): CONTRACT['Tertiary77'] { return this.contract.Tertiary77 }
+    public get Tertiary78(): CONTRACT['Tertiary78'] { return this.contract.Tertiary78 }
+    public get Tertiary79(): CONTRACT['Tertiary79'] { return this.contract.Tertiary79 }
+    public get Tertiary80(): CONTRACT['Tertiary80'] { return this.contract.Tertiary80 }
+    public get Tertiary81(): CONTRACT['Tertiary81'] { return this.contract.Tertiary81 }
+    public get Tertiary82(): CONTRACT['Tertiary82'] { return this.contract.Tertiary82 }
+    public get Tertiary83(): CONTRACT['Tertiary83'] { return this.contract.Tertiary83 }
+    public get Tertiary84(): CONTRACT['Tertiary84'] { return this.contract.Tertiary84 }
+    public get Tertiary85(): CONTRACT['Tertiary85'] { return this.contract.Tertiary85 }
+    public get Tertiary86(): CONTRACT['Tertiary86'] { return this.contract.Tertiary86 }
+    public get Tertiary87(): CONTRACT['Tertiary87'] { return this.contract.Tertiary87 }
+    public get Tertiary88(): CONTRACT['Tertiary88'] { return this.contract.Tertiary88 }
+    public get Tertiary89(): CONTRACT['Tertiary89'] { return this.contract.Tertiary89 }
+    public get Tertiary90(): CONTRACT['Tertiary90'] { return this.contract.Tertiary90 }
+    public get Tertiary91(): CONTRACT['Tertiary91'] { return this.contract.Tertiary91 }
+    public get Tertiary92(): CONTRACT['Tertiary92'] { return this.contract.Tertiary92 }
+    public get Tertiary93(): CONTRACT['Tertiary93'] { return this.contract.Tertiary93 }
+    public get Tertiary94(): CONTRACT['Tertiary94'] { return this.contract.Tertiary94 }
+    public get Tertiary95(): CONTRACT['Tertiary95'] { return this.contract.Tertiary95 }
+    public get Tertiary96(): CONTRACT['Tertiary96'] { return this.contract.Tertiary96 }
+    public get Tertiary97(): CONTRACT['Tertiary97'] { return this.contract.Tertiary97 }
+    public get Tertiary98(): CONTRACT['Tertiary98'] { return this.contract.Tertiary98 }
+    public get Tertiary99(): CONTRACT['Tertiary99'] { return this.contract.Tertiary99 }
+    public get Tertiary100(): CONTRACT['Tertiary100'] { return this.contract.Tertiary100 }
+    public get Error0(): CONTRACT['Error0'] { return this.contract.Error0 }
+    public get Error1(): CONTRACT['Error1'] { return this.contract.Error1 }
+    public get Error2(): CONTRACT['Error2'] { return this.contract.Error2 }
+    public get Error3(): CONTRACT['Error3'] { return this.contract.Error3 }
+    public get Error4(): CONTRACT['Error4'] { return this.contract.Error4 }
+    public get Error5(): CONTRACT['Error5'] { return this.contract.Error5 }
+    public get Error6(): CONTRACT['Error6'] { return this.contract.Error6 }
+    public get Error7(): CONTRACT['Error7'] { return this.contract.Error7 }
+    public get Error8(): CONTRACT['Error8'] { return this.contract.Error8 }
+    public get Error9(): CONTRACT['Error9'] { return this.contract.Error9 }
+    public get Error10(): CONTRACT['Error10'] { return this.contract.Error10 }
+    public get Error11(): CONTRACT['Error11'] { return this.contract.Error11 }
+    public get Error12(): CONTRACT['Error12'] { return this.contract.Error12 }
+    public get Error13(): CONTRACT['Error13'] { return this.contract.Error13 }
+    public get Error14(): CONTRACT['Error14'] { return this.contract.Error14 }
+    public get Error15(): CONTRACT['Error15'] { return this.contract.Error15 }
+    public get Error16(): CONTRACT['Error16'] { return this.contract.Error16 }
+    public get Error17(): CONTRACT['Error17'] { return this.contract.Error17 }
+    public get Error18(): CONTRACT['Error18'] { return this.contract.Error18 }
+    public get Error19(): CONTRACT['Error19'] { return this.contract.Error19 }
+    public get Error20(): CONTRACT['Error20'] { return this.contract.Error20 }
+    public get Error21(): CONTRACT['Error21'] { return this.contract.Error21 }
+    public get Error22(): CONTRACT['Error22'] { return this.contract.Error22 }
+    public get Error23(): CONTRACT['Error23'] { return this.contract.Error23 }
+    public get Error24(): CONTRACT['Error24'] { return this.contract.Error24 }
+    public get Error25(): CONTRACT['Error25'] { return this.contract.Error25 }
+    public get Error26(): CONTRACT['Error26'] { return this.contract.Error26 }
+    public get Error27(): CONTRACT['Error27'] { return this.contract.Error27 }
+    public get Error28(): CONTRACT['Error28'] { return this.contract.Error28 }
+    public get Error29(): CONTRACT['Error29'] { return this.contract.Error29 }
+    public get Error30(): CONTRACT['Error30'] { return this.contract.Error30 }
+    public get Error31(): CONTRACT['Error31'] { return this.contract.Error31 }
+    public get Error32(): CONTRACT['Error32'] { return this.contract.Error32 }
+    public get Error33(): CONTRACT['Error33'] { return this.contract.Error33 }
+    public get Error34(): CONTRACT['Error34'] { return this.contract.Error34 }
+    public get Error35(): CONTRACT['Error35'] { return this.contract.Error35 }
+    public get Error36(): CONTRACT['Error36'] { return this.contract.Error36 }
+    public get Error37(): CONTRACT['Error37'] { return this.contract.Error37 }
+    public get Error38(): CONTRACT['Error38'] { return this.contract.Error38 }
+    public get Error39(): CONTRACT['Error39'] { return this.contract.Error39 }
+    public get Error40(): CONTRACT['Error40'] { return this.contract.Error40 }
+    public get Error41(): CONTRACT['Error41'] { return this.contract.Error41 }
+    public get Error42(): CONTRACT['Error42'] { return this.contract.Error42 }
+    public get Error43(): CONTRACT['Error43'] { return this.contract.Error43 }
+    public get Error44(): CONTRACT['Error44'] { return this.contract.Error44 }
+    public get Error45(): CONTRACT['Error45'] { return this.contract.Error45 }
+    public get Error46(): CONTRACT['Error46'] { return this.contract.Error46 }
+    public get Error47(): CONTRACT['Error47'] { return this.contract.Error47 }
+    public get Error48(): CONTRACT['Error48'] { return this.contract.Error48 }
+    public get Error49(): CONTRACT['Error49'] { return this.contract.Error49 }
+    public get Error50(): CONTRACT['Error50'] { return this.contract.Error50 }
+    public get Error51(): CONTRACT['Error51'] { return this.contract.Error51 }
+    public get Error52(): CONTRACT['Error52'] { return this.contract.Error52 }
+    public get Error53(): CONTRACT['Error53'] { return this.contract.Error53 }
+    public get Error54(): CONTRACT['Error54'] { return this.contract.Error54 }
+    public get Error55(): CONTRACT['Error55'] { return this.contract.Error55 }
+    public get Error56(): CONTRACT['Error56'] { return this.contract.Error56 }
+    public get Error57(): CONTRACT['Error57'] { return this.contract.Error57 }
+    public get Error58(): CONTRACT['Error58'] { return this.contract.Error58 }
+    public get Error59(): CONTRACT['Error59'] { return this.contract.Error59 }
+    public get Error60(): CONTRACT['Error60'] { return this.contract.Error60 }
+    public get Error61(): CONTRACT['Error61'] { return this.contract.Error61 }
+    public get Error62(): CONTRACT['Error62'] { return this.contract.Error62 }
+    public get Error63(): CONTRACT['Error63'] { return this.contract.Error63 }
+    public get Error64(): CONTRACT['Error64'] { return this.contract.Error64 }
+    public get Error65(): CONTRACT['Error65'] { return this.contract.Error65 }
+    public get Error66(): CONTRACT['Error66'] { return this.contract.Error66 }
+    public get Error67(): CONTRACT['Error67'] { return this.contract.Error67 }
+    public get Error68(): CONTRACT['Error68'] { return this.contract.Error68 }
+    public get Error69(): CONTRACT['Error69'] { return this.contract.Error69 }
+    public get Error70(): CONTRACT['Error70'] { return this.contract.Error70 }
+    public get Error71(): CONTRACT['Error71'] { return this.contract.Error71 }
+    public get Error72(): CONTRACT['Error72'] { return this.contract.Error72 }
+    public get Error73(): CONTRACT['Error73'] { return this.contract.Error73 }
+    public get Error74(): CONTRACT['Error74'] { return this.contract.Error74 }
+    public get Error75(): CONTRACT['Error75'] { return this.contract.Error75 }
+    public get Error76(): CONTRACT['Error76'] { return this.contract.Error76 }
+    public get Error77(): CONTRACT['Error77'] { return this.contract.Error77 }
+    public get Error78(): CONTRACT['Error78'] { return this.contract.Error78 }
+    public get Error79(): CONTRACT['Error79'] { return this.contract.Error79 }
+    public get Error80(): CONTRACT['Error80'] { return this.contract.Error80 }
+    public get Error81(): CONTRACT['Error81'] { return this.contract.Error81 }
+    public get Error82(): CONTRACT['Error82'] { return this.contract.Error82 }
+    public get Error83(): CONTRACT['Error83'] { return this.contract.Error83 }
+    public get Error84(): CONTRACT['Error84'] { return this.contract.Error84 }
+    public get Error85(): CONTRACT['Error85'] { return this.contract.Error85 }
+    public get Error86(): CONTRACT['Error86'] { return this.contract.Error86 }
+    public get Error87(): CONTRACT['Error87'] { return this.contract.Error87 }
+    public get Error88(): CONTRACT['Error88'] { return this.contract.Error88 }
+    public get Error89(): CONTRACT['Error89'] { return this.contract.Error89 }
+    public get Error90(): CONTRACT['Error90'] { return this.contract.Error90 }
+    public get Error91(): CONTRACT['Error91'] { return this.contract.Error91 }
+    public get Error92(): CONTRACT['Error92'] { return this.contract.Error92 }
+    public get Error93(): CONTRACT['Error93'] { return this.contract.Error93 }
+    public get Error94(): CONTRACT['Error94'] { return this.contract.Error94 }
+    public get Error95(): CONTRACT['Error95'] { return this.contract.Error95 }
+    public get Error96(): CONTRACT['Error96'] { return this.contract.Error96 }
+    public get Error97(): CONTRACT['Error97'] { return this.contract.Error97 }
+    public get Error98(): CONTRACT['Error98'] { return this.contract.Error98 }
+    public get Error99(): CONTRACT['Error99'] { return this.contract.Error99 }
+    public get Error100(): CONTRACT['Error100'] { return this.contract.Error100 }
+    public get Neutral0(): CONTRACT['Neutral0'] { return this.contract.Neutral0 }
+    public get Neutral1(): CONTRACT['Neutral1'] { return this.contract.Neutral1 }
+    public get Neutral2(): CONTRACT['Neutral2'] { return this.contract.Neutral2 }
+    public get Neutral3(): CONTRACT['Neutral3'] { return this.contract.Neutral3 }
+    public get Neutral4(): CONTRACT['Neutral4'] { return this.contract.Neutral4 }
+    public get Neutral5(): CONTRACT['Neutral5'] { return this.contract.Neutral5 }
+    public get Neutral6(): CONTRACT['Neutral6'] { return this.contract.Neutral6 }
+    public get Neutral7(): CONTRACT['Neutral7'] { return this.contract.Neutral7 }
+    public get Neutral8(): CONTRACT['Neutral8'] { return this.contract.Neutral8 }
+    public get Neutral9(): CONTRACT['Neutral9'] { return this.contract.Neutral9 }
+    public get Neutral10(): CONTRACT['Neutral10'] { return this.contract.Neutral10 }
+    public get Neutral11(): CONTRACT['Neutral11'] { return this.contract.Neutral11 }
+    public get Neutral12(): CONTRACT['Neutral12'] { return this.contract.Neutral12 }
+    public get Neutral13(): CONTRACT['Neutral13'] { return this.contract.Neutral13 }
+    public get Neutral14(): CONTRACT['Neutral14'] { return this.contract.Neutral14 }
+    public get Neutral15(): CONTRACT['Neutral15'] { return this.contract.Neutral15 }
+    public get Neutral16(): CONTRACT['Neutral16'] { return this.contract.Neutral16 }
+    public get Neutral17(): CONTRACT['Neutral17'] { return this.contract.Neutral17 }
+    public get Neutral18(): CONTRACT['Neutral18'] { return this.contract.Neutral18 }
+    public get Neutral19(): CONTRACT['Neutral19'] { return this.contract.Neutral19 }
+    public get Neutral20(): CONTRACT['Neutral20'] { return this.contract.Neutral20 }
+    public get Neutral21(): CONTRACT['Neutral21'] { return this.contract.Neutral21 }
+    public get Neutral22(): CONTRACT['Neutral22'] { return this.contract.Neutral22 }
+    public get Neutral23(): CONTRACT['Neutral23'] { return this.contract.Neutral23 }
+    public get Neutral24(): CONTRACT['Neutral24'] { return this.contract.Neutral24 }
+    public get Neutral25(): CONTRACT['Neutral25'] { return this.contract.Neutral25 }
+    public get Neutral26(): CONTRACT['Neutral26'] { return this.contract.Neutral26 }
+    public get Neutral27(): CONTRACT['Neutral27'] { return this.contract.Neutral27 }
+    public get Neutral28(): CONTRACT['Neutral28'] { return this.contract.Neutral28 }
+    public get Neutral29(): CONTRACT['Neutral29'] { return this.contract.Neutral29 }
+    public get Neutral30(): CONTRACT['Neutral30'] { return this.contract.Neutral30 }
+    public get Neutral31(): CONTRACT['Neutral31'] { return this.contract.Neutral31 }
+    public get Neutral32(): CONTRACT['Neutral32'] { return this.contract.Neutral32 }
+    public get Neutral33(): CONTRACT['Neutral33'] { return this.contract.Neutral33 }
+    public get Neutral34(): CONTRACT['Neutral34'] { return this.contract.Neutral34 }
+    public get Neutral35(): CONTRACT['Neutral35'] { return this.contract.Neutral35 }
+    public get Neutral36(): CONTRACT['Neutral36'] { return this.contract.Neutral36 }
+    public get Neutral37(): CONTRACT['Neutral37'] { return this.contract.Neutral37 }
+    public get Neutral38(): CONTRACT['Neutral38'] { return this.contract.Neutral38 }
+    public get Neutral39(): CONTRACT['Neutral39'] { return this.contract.Neutral39 }
+    public get Neutral40(): CONTRACT['Neutral40'] { return this.contract.Neutral40 }
+    public get Neutral41(): CONTRACT['Neutral41'] { return this.contract.Neutral41 }
+    public get Neutral42(): CONTRACT['Neutral42'] { return this.contract.Neutral42 }
+    public get Neutral43(): CONTRACT['Neutral43'] { return this.contract.Neutral43 }
+    public get Neutral44(): CONTRACT['Neutral44'] { return this.contract.Neutral44 }
+    public get Neutral45(): CONTRACT['Neutral45'] { return this.contract.Neutral45 }
+    public get Neutral46(): CONTRACT['Neutral46'] { return this.contract.Neutral46 }
+    public get Neutral47(): CONTRACT['Neutral47'] { return this.contract.Neutral47 }
+    public get Neutral48(): CONTRACT['Neutral48'] { return this.contract.Neutral48 }
+    public get Neutral49(): CONTRACT['Neutral49'] { return this.contract.Neutral49 }
+    public get Neutral50(): CONTRACT['Neutral50'] { return this.contract.Neutral50 }
+    public get Neutral51(): CONTRACT['Neutral51'] { return this.contract.Neutral51 }
+    public get Neutral52(): CONTRACT['Neutral52'] { return this.contract.Neutral52 }
+    public get Neutral53(): CONTRACT['Neutral53'] { return this.contract.Neutral53 }
+    public get Neutral54(): CONTRACT['Neutral54'] { return this.contract.Neutral54 }
+    public get Neutral55(): CONTRACT['Neutral55'] { return this.contract.Neutral55 }
+    public get Neutral56(): CONTRACT['Neutral56'] { return this.contract.Neutral56 }
+    public get Neutral57(): CONTRACT['Neutral57'] { return this.contract.Neutral57 }
+    public get Neutral58(): CONTRACT['Neutral58'] { return this.contract.Neutral58 }
+    public get Neutral59(): CONTRACT['Neutral59'] { return this.contract.Neutral59 }
+    public get Neutral60(): CONTRACT['Neutral60'] { return this.contract.Neutral60 }
+    public get Neutral61(): CONTRACT['Neutral61'] { return this.contract.Neutral61 }
+    public get Neutral62(): CONTRACT['Neutral62'] { return this.contract.Neutral62 }
+    public get Neutral63(): CONTRACT['Neutral63'] { return this.contract.Neutral63 }
+    public get Neutral64(): CONTRACT['Neutral64'] { return this.contract.Neutral64 }
+    public get Neutral65(): CONTRACT['Neutral65'] { return this.contract.Neutral65 }
+    public get Neutral66(): CONTRACT['Neutral66'] { return this.contract.Neutral66 }
+    public get Neutral67(): CONTRACT['Neutral67'] { return this.contract.Neutral67 }
+    public get Neutral68(): CONTRACT['Neutral68'] { return this.contract.Neutral68 }
+    public get Neutral69(): CONTRACT['Neutral69'] { return this.contract.Neutral69 }
+    public get Neutral70(): CONTRACT['Neutral70'] { return this.contract.Neutral70 }
+    public get Neutral71(): CONTRACT['Neutral71'] { return this.contract.Neutral71 }
+    public get Neutral72(): CONTRACT['Neutral72'] { return this.contract.Neutral72 }
+    public get Neutral73(): CONTRACT['Neutral73'] { return this.contract.Neutral73 }
+    public get Neutral74(): CONTRACT['Neutral74'] { return this.contract.Neutral74 }
+    public get Neutral75(): CONTRACT['Neutral75'] { return this.contract.Neutral75 }
+    public get Neutral76(): CONTRACT['Neutral76'] { return this.contract.Neutral76 }
+    public get Neutral77(): CONTRACT['Neutral77'] { return this.contract.Neutral77 }
+    public get Neutral78(): CONTRACT['Neutral78'] { return this.contract.Neutral78 }
+    public get Neutral79(): CONTRACT['Neutral79'] { return this.contract.Neutral79 }
+    public get Neutral80(): CONTRACT['Neutral80'] { return this.contract.Neutral80 }
+    public get Neutral81(): CONTRACT['Neutral81'] { return this.contract.Neutral81 }
+    public get Neutral82(): CONTRACT['Neutral82'] { return this.contract.Neutral82 }
+    public get Neutral83(): CONTRACT['Neutral83'] { return this.contract.Neutral83 }
+    public get Neutral84(): CONTRACT['Neutral84'] { return this.contract.Neutral84 }
+    public get Neutral85(): CONTRACT['Neutral85'] { return this.contract.Neutral85 }
+    public get Neutral86(): CONTRACT['Neutral86'] { return this.contract.Neutral86 }
+    public get Neutral87(): CONTRACT['Neutral87'] { return this.contract.Neutral87 }
+    public get Neutral88(): CONTRACT['Neutral88'] { return this.contract.Neutral88 }
+    public get Neutral89(): CONTRACT['Neutral89'] { return this.contract.Neutral89 }
+    public get Neutral90(): CONTRACT['Neutral90'] { return this.contract.Neutral90 }
+    public get Neutral91(): CONTRACT['Neutral91'] { return this.contract.Neutral91 }
+    public get Neutral92(): CONTRACT['Neutral92'] { return this.contract.Neutral92 }
+    public get Neutral93(): CONTRACT['Neutral93'] { return this.contract.Neutral93 }
+    public get Neutral94(): CONTRACT['Neutral94'] { return this.contract.Neutral94 }
+    public get Neutral95(): CONTRACT['Neutral95'] { return this.contract.Neutral95 }
+    public get Neutral96(): CONTRACT['Neutral96'] { return this.contract.Neutral96 }
+    public get Neutral97(): CONTRACT['Neutral97'] { return this.contract.Neutral97 }
+    public get Neutral98(): CONTRACT['Neutral98'] { return this.contract.Neutral98 }
+    public get Neutral99(): CONTRACT['Neutral99'] { return this.contract.Neutral99 }
+    public get Neutral100(): CONTRACT['Neutral100'] { return this.contract.Neutral100 }
+    public get NeutralVariant0(): CONTRACT['NeutralVariant0'] { return this.contract.NeutralVariant0 }
+    public get NeutralVariant1(): CONTRACT['NeutralVariant1'] { return this.contract.NeutralVariant1 }
+    public get NeutralVariant2(): CONTRACT['NeutralVariant2'] { return this.contract.NeutralVariant2 }
+    public get NeutralVariant3(): CONTRACT['NeutralVariant3'] { return this.contract.NeutralVariant3 }
+    public get NeutralVariant4(): CONTRACT['NeutralVariant4'] { return this.contract.NeutralVariant4 }
+    public get NeutralVariant5(): CONTRACT['NeutralVariant5'] { return this.contract.NeutralVariant5 }
+    public get NeutralVariant6(): CONTRACT['NeutralVariant6'] { return this.contract.NeutralVariant6 }
+    public get NeutralVariant7(): CONTRACT['NeutralVariant7'] { return this.contract.NeutralVariant7 }
+    public get NeutralVariant8(): CONTRACT['NeutralVariant8'] { return this.contract.NeutralVariant8 }
+    public get NeutralVariant9(): CONTRACT['NeutralVariant9'] { return this.contract.NeutralVariant9 }
+    public get NeutralVariant10(): CONTRACT['NeutralVariant10'] { return this.contract.NeutralVariant10 }
+    public get NeutralVariant11(): CONTRACT['NeutralVariant11'] { return this.contract.NeutralVariant11 }
+    public get NeutralVariant12(): CONTRACT['NeutralVariant12'] { return this.contract.NeutralVariant12 }
+    public get NeutralVariant13(): CONTRACT['NeutralVariant13'] { return this.contract.NeutralVariant13 }
+    public get NeutralVariant14(): CONTRACT['NeutralVariant14'] { return this.contract.NeutralVariant14 }
+    public get NeutralVariant15(): CONTRACT['NeutralVariant15'] { return this.contract.NeutralVariant15 }
+    public get NeutralVariant16(): CONTRACT['NeutralVariant16'] { return this.contract.NeutralVariant16 }
+    public get NeutralVariant17(): CONTRACT['NeutralVariant17'] { return this.contract.NeutralVariant17 }
+    public get NeutralVariant18(): CONTRACT['NeutralVariant18'] { return this.contract.NeutralVariant18 }
+    public get NeutralVariant19(): CONTRACT['NeutralVariant19'] { return this.contract.NeutralVariant19 }
+    public get NeutralVariant20(): CONTRACT['NeutralVariant20'] { return this.contract.NeutralVariant20 }
+    public get NeutralVariant21(): CONTRACT['NeutralVariant21'] { return this.contract.NeutralVariant21 }
+    public get NeutralVariant22(): CONTRACT['NeutralVariant22'] { return this.contract.NeutralVariant22 }
+    public get NeutralVariant23(): CONTRACT['NeutralVariant23'] { return this.contract.NeutralVariant23 }
+    public get NeutralVariant24(): CONTRACT['NeutralVariant24'] { return this.contract.NeutralVariant24 }
+    public get NeutralVariant25(): CONTRACT['NeutralVariant25'] { return this.contract.NeutralVariant25 }
+    public get NeutralVariant26(): CONTRACT['NeutralVariant26'] { return this.contract.NeutralVariant26 }
+    public get NeutralVariant27(): CONTRACT['NeutralVariant27'] { return this.contract.NeutralVariant27 }
+    public get NeutralVariant28(): CONTRACT['NeutralVariant28'] { return this.contract.NeutralVariant28 }
+    public get NeutralVariant29(): CONTRACT['NeutralVariant29'] { return this.contract.NeutralVariant29 }
+    public get NeutralVariant30(): CONTRACT['NeutralVariant30'] { return this.contract.NeutralVariant30 }
+    public get NeutralVariant31(): CONTRACT['NeutralVariant31'] { return this.contract.NeutralVariant31 }
+    public get NeutralVariant32(): CONTRACT['NeutralVariant32'] { return this.contract.NeutralVariant32 }
+    public get NeutralVariant33(): CONTRACT['NeutralVariant33'] { return this.contract.NeutralVariant33 }
+    public get NeutralVariant34(): CONTRACT['NeutralVariant34'] { return this.contract.NeutralVariant34 }
+    public get NeutralVariant35(): CONTRACT['NeutralVariant35'] { return this.contract.NeutralVariant35 }
+    public get NeutralVariant36(): CONTRACT['NeutralVariant36'] { return this.contract.NeutralVariant36 }
+    public get NeutralVariant37(): CONTRACT['NeutralVariant37'] { return this.contract.NeutralVariant37 }
+    public get NeutralVariant38(): CONTRACT['NeutralVariant38'] { return this.contract.NeutralVariant38 }
+    public get NeutralVariant39(): CONTRACT['NeutralVariant39'] { return this.contract.NeutralVariant39 }
+    public get NeutralVariant40(): CONTRACT['NeutralVariant40'] { return this.contract.NeutralVariant40 }
+    public get NeutralVariant41(): CONTRACT['NeutralVariant41'] { return this.contract.NeutralVariant41 }
+    public get NeutralVariant42(): CONTRACT['NeutralVariant42'] { return this.contract.NeutralVariant42 }
+    public get NeutralVariant43(): CONTRACT['NeutralVariant43'] { return this.contract.NeutralVariant43 }
+    public get NeutralVariant44(): CONTRACT['NeutralVariant44'] { return this.contract.NeutralVariant44 }
+    public get NeutralVariant45(): CONTRACT['NeutralVariant45'] { return this.contract.NeutralVariant45 }
+    public get NeutralVariant46(): CONTRACT['NeutralVariant46'] { return this.contract.NeutralVariant46 }
+    public get NeutralVariant47(): CONTRACT['NeutralVariant47'] { return this.contract.NeutralVariant47 }
+    public get NeutralVariant48(): CONTRACT['NeutralVariant48'] { return this.contract.NeutralVariant48 }
+    public get NeutralVariant49(): CONTRACT['NeutralVariant49'] { return this.contract.NeutralVariant49 }
+    public get NeutralVariant50(): CONTRACT['NeutralVariant50'] { return this.contract.NeutralVariant50 }
+    public get NeutralVariant51(): CONTRACT['NeutralVariant51'] { return this.contract.NeutralVariant51 }
+    public get NeutralVariant52(): CONTRACT['NeutralVariant52'] { return this.contract.NeutralVariant52 }
+    public get NeutralVariant53(): CONTRACT['NeutralVariant53'] { return this.contract.NeutralVariant53 }
+    public get NeutralVariant54(): CONTRACT['NeutralVariant54'] { return this.contract.NeutralVariant54 }
+    public get NeutralVariant55(): CONTRACT['NeutralVariant55'] { return this.contract.NeutralVariant55 }
+    public get NeutralVariant56(): CONTRACT['NeutralVariant56'] { return this.contract.NeutralVariant56 }
+    public get NeutralVariant57(): CONTRACT['NeutralVariant57'] { return this.contract.NeutralVariant57 }
+    public get NeutralVariant58(): CONTRACT['NeutralVariant58'] { return this.contract.NeutralVariant58 }
+    public get NeutralVariant59(): CONTRACT['NeutralVariant59'] { return this.contract.NeutralVariant59 }
+    public get NeutralVariant60(): CONTRACT['NeutralVariant60'] { return this.contract.NeutralVariant60 }
+    public get NeutralVariant61(): CONTRACT['NeutralVariant61'] { return this.contract.NeutralVariant61 }
+    public get NeutralVariant62(): CONTRACT['NeutralVariant62'] { return this.contract.NeutralVariant62 }
+    public get NeutralVariant63(): CONTRACT['NeutralVariant63'] { return this.contract.NeutralVariant63 }
+    public get NeutralVariant64(): CONTRACT['NeutralVariant64'] { return this.contract.NeutralVariant64 }
+    public get NeutralVariant65(): CONTRACT['NeutralVariant65'] { return this.contract.NeutralVariant65 }
+    public get NeutralVariant66(): CONTRACT['NeutralVariant66'] { return this.contract.NeutralVariant66 }
+    public get NeutralVariant67(): CONTRACT['NeutralVariant67'] { return this.contract.NeutralVariant67 }
+    public get NeutralVariant68(): CONTRACT['NeutralVariant68'] { return this.contract.NeutralVariant68 }
+    public get NeutralVariant69(): CONTRACT['NeutralVariant69'] { return this.contract.NeutralVariant69 }
+    public get NeutralVariant70(): CONTRACT['NeutralVariant70'] { return this.contract.NeutralVariant70 }
+    public get NeutralVariant71(): CONTRACT['NeutralVariant71'] { return this.contract.NeutralVariant71 }
+    public get NeutralVariant72(): CONTRACT['NeutralVariant72'] { return this.contract.NeutralVariant72 }
+    public get NeutralVariant73(): CONTRACT['NeutralVariant73'] { return this.contract.NeutralVariant73 }
+    public get NeutralVariant74(): CONTRACT['NeutralVariant74'] { return this.contract.NeutralVariant74 }
+    public get NeutralVariant75(): CONTRACT['NeutralVariant75'] { return this.contract.NeutralVariant75 }
+    public get NeutralVariant76(): CONTRACT['NeutralVariant76'] { return this.contract.NeutralVariant76 }
+    public get NeutralVariant77(): CONTRACT['NeutralVariant77'] { return this.contract.NeutralVariant77 }
+    public get NeutralVariant78(): CONTRACT['NeutralVariant78'] { return this.contract.NeutralVariant78 }
+    public get NeutralVariant79(): CONTRACT['NeutralVariant79'] { return this.contract.NeutralVariant79 }
+    public get NeutralVariant80(): CONTRACT['NeutralVariant80'] { return this.contract.NeutralVariant80 }
+    public get NeutralVariant81(): CONTRACT['NeutralVariant81'] { return this.contract.NeutralVariant81 }
+    public get NeutralVariant82(): CONTRACT['NeutralVariant82'] { return this.contract.NeutralVariant82 }
+    public get NeutralVariant83(): CONTRACT['NeutralVariant83'] { return this.contract.NeutralVariant83 }
+    public get NeutralVariant84(): CONTRACT['NeutralVariant84'] { return this.contract.NeutralVariant84 }
+    public get NeutralVariant85(): CONTRACT['NeutralVariant85'] { return this.contract.NeutralVariant85 }
+    public get NeutralVariant86(): CONTRACT['NeutralVariant86'] { return this.contract.NeutralVariant86 }
+    public get NeutralVariant87(): CONTRACT['NeutralVariant87'] { return this.contract.NeutralVariant87 }
+    public get NeutralVariant88(): CONTRACT['NeutralVariant88'] { return this.contract.NeutralVariant88 }
+    public get NeutralVariant89(): CONTRACT['NeutralVariant89'] { return this.contract.NeutralVariant89 }
+    public get NeutralVariant90(): CONTRACT['NeutralVariant90'] { return this.contract.NeutralVariant90 }
+    public get NeutralVariant91(): CONTRACT['NeutralVariant91'] { return this.contract.NeutralVariant91 }
+    public get NeutralVariant92(): CONTRACT['NeutralVariant92'] { return this.contract.NeutralVariant92 }
+    public get NeutralVariant93(): CONTRACT['NeutralVariant93'] { return this.contract.NeutralVariant93 }
+    public get NeutralVariant94(): CONTRACT['NeutralVariant94'] { return this.contract.NeutralVariant94 }
+    public get NeutralVariant95(): CONTRACT['NeutralVariant95'] { return this.contract.NeutralVariant95 }
+    public get NeutralVariant96(): CONTRACT['NeutralVariant96'] { return this.contract.NeutralVariant96 }
+    public get NeutralVariant97(): CONTRACT['NeutralVariant97'] { return this.contract.NeutralVariant97 }
+    public get NeutralVariant98(): CONTRACT['NeutralVariant98'] { return this.contract.NeutralVariant98 }
+    public get NeutralVariant99(): CONTRACT['NeutralVariant99'] { return this.contract.NeutralVariant99 }
+    public get NeutralVariant100(): CONTRACT['NeutralVariant100'] { return this.contract.NeutralVariant100 }
+
+    public get AllEnums() {
+        return {
+            Primary0: this.Primary0, Primary1: this.Primary1, Primary2: this.Primary2, Primary3: this.Primary3, Primary4: this.Primary4,
+            Primary5: this.Primary5, Primary6: this.Primary6, Primary7: this.Primary7, Primary8: this.Primary8, Primary9: this.Primary9,
+            Primary10: this.Primary10, Primary11: this.Primary11, Primary12: this.Primary12, Primary13: this.Primary13, Primary14: this.Primary14,
+            Primary15: this.Primary15, Primary16: this.Primary16, Primary17: this.Primary17, Primary18: this.Primary18, Primary19: this.Primary19,
+            Primary20: this.Primary20, Primary21: this.Primary21, Primary22: this.Primary22, Primary23: this.Primary23, Primary24: this.Primary24,
+            Primary25: this.Primary25, Primary26: this.Primary26, Primary27: this.Primary27, Primary28: this.Primary28, Primary29: this.Primary29,
+            Primary30: this.Primary30, Primary31: this.Primary31, Primary32: this.Primary32, Primary33: this.Primary33, Primary34: this.Primary34,
+            Primary35: this.Primary35, Primary36: this.Primary36, Primary37: this.Primary37, Primary38: this.Primary38, Primary39: this.Primary39,
+            Primary40: this.Primary40, Primary41: this.Primary41, Primary42: this.Primary42, Primary43: this.Primary43, Primary44: this.Primary44,
+            Primary45: this.Primary45, Primary46: this.Primary46, Primary47: this.Primary47, Primary48: this.Primary48, Primary49: this.Primary49,
+            Primary50: this.Primary50, Primary51: this.Primary51, Primary52: this.Primary52, Primary53: this.Primary53, Primary54: this.Primary54,
+            Primary55: this.Primary55, Primary56: this.Primary56, Primary57: this.Primary57, Primary58: this.Primary58, Primary59: this.Primary59,
+            Primary60: this.Primary60, Primary61: this.Primary61, Primary62: this.Primary62, Primary63: this.Primary63, Primary64: this.Primary64,
+            Primary65: this.Primary65, Primary66: this.Primary66, Primary67: this.Primary67, Primary68: this.Primary68, Primary69: this.Primary69,
+            Primary70: this.Primary70, Primary71: this.Primary71, Primary72: this.Primary72, Primary73: this.Primary73, Primary74: this.Primary74,
+            Primary75: this.Primary75, Primary76: this.Primary76, Primary77: this.Primary77, Primary78: this.Primary78, Primary79: this.Primary79,
+            Primary80: this.Primary80, Primary81: this.Primary81, Primary82: this.Primary82, Primary83: this.Primary83, Primary84: this.Primary84,
+            Primary85: this.Primary85, Primary86: this.Primary86, Primary87: this.Primary87, Primary88: this.Primary88, Primary89: this.Primary89,
+            Primary90: this.Primary90, Primary91: this.Primary91, Primary92: this.Primary92, Primary93: this.Primary93, Primary94: this.Primary94,
+            Primary95: this.Primary95, Primary96: this.Primary96, Primary97: this.Primary97, Primary98: this.Primary98, Primary99: this.Primary99,
+            Primary100: this.Primary100, Secondary0: this.Secondary0, Secondary1: this.Secondary1, Secondary2: this.Secondary2, Secondary3: this.Secondary3,
+            Secondary4: this.Secondary4, Secondary5: this.Secondary5, Secondary6: this.Secondary6, Secondary7: this.Secondary7, Secondary8: this.Secondary8,
+            Secondary9: this.Secondary9, Secondary10: this.Secondary10, Secondary11: this.Secondary11, Secondary12: this.Secondary12, Secondary13: this.Secondary13,
+            Secondary14: this.Secondary14, Secondary15: this.Secondary15, Secondary16: this.Secondary16, Secondary17: this.Secondary17, Secondary18: this.Secondary18,
+            Secondary19: this.Secondary19, Secondary20: this.Secondary20, Secondary21: this.Secondary21, Secondary22: this.Secondary22, Secondary23: this.Secondary23,
+            Secondary24: this.Secondary24, Secondary25: this.Secondary25, Secondary26: this.Secondary26, Secondary27: this.Secondary27, Secondary28: this.Secondary28,
+            Secondary29: this.Secondary29, Secondary30: this.Secondary30, Secondary31: this.Secondary31, Secondary32: this.Secondary32, Secondary33: this.Secondary33,
+            Secondary34: this.Secondary34, Secondary35: this.Secondary35, Secondary36: this.Secondary36, Secondary37: this.Secondary37, Secondary38: this.Secondary38,
+            Secondary39: this.Secondary39, Secondary40: this.Secondary40, Secondary41: this.Secondary41, Secondary42: this.Secondary42, Secondary43: this.Secondary43,
+            Secondary44: this.Secondary44, Secondary45: this.Secondary45, Secondary46: this.Secondary46, Secondary47: this.Secondary47, Secondary48: this.Secondary48,
+            Secondary49: this.Secondary49, Secondary50: this.Secondary50, Secondary51: this.Secondary51, Secondary52: this.Secondary52, Secondary53: this.Secondary53,
+            Secondary54: this.Secondary54, Secondary55: this.Secondary55, Secondary56: this.Secondary56, Secondary57: this.Secondary57, Secondary58: this.Secondary58,
+            Secondary59: this.Secondary59, Secondary60: this.Secondary60, Secondary61: this.Secondary61, Secondary62: this.Secondary62, Secondary63: this.Secondary63,
+            Secondary64: this.Secondary64, Secondary65: this.Secondary65, Secondary66: this.Secondary66, Secondary67: this.Secondary67, Secondary68: this.Secondary68,
+            Secondary69: this.Secondary69, Secondary70: this.Secondary70, Secondary71: this.Secondary71, Secondary72: this.Secondary72, Secondary73: this.Secondary73,
+            Secondary74: this.Secondary74, Secondary75: this.Secondary75, Secondary76: this.Secondary76, Secondary77: this.Secondary77, Secondary78: this.Secondary78,
+            Secondary79: this.Secondary79, Secondary80: this.Secondary80, Secondary81: this.Secondary81, Secondary82: this.Secondary82, Secondary83: this.Secondary83,
+            Secondary84: this.Secondary84, Secondary85: this.Secondary85, Secondary86: this.Secondary86, Secondary87: this.Secondary87, Secondary88: this.Secondary88,
+            Secondary89: this.Secondary89, Secondary90: this.Secondary90, Secondary91: this.Secondary91, Secondary92: this.Secondary92, Secondary93: this.Secondary93,
+            Secondary94: this.Secondary94, Secondary95: this.Secondary95, Secondary96: this.Secondary96, Secondary97: this.Secondary97, Secondary98: this.Secondary98,
+            Secondary99: this.Secondary99, Secondary100: this.Secondary100, Tertiary0: this.Tertiary0, Tertiary1: this.Tertiary1, Tertiary2: this.Tertiary2,
+            Tertiary3: this.Tertiary3, Tertiary4: this.Tertiary4, Tertiary5: this.Tertiary5, Tertiary6: this.Tertiary6, Tertiary7: this.Tertiary7,
+            Tertiary8: this.Tertiary8, Tertiary9: this.Tertiary9, Tertiary10: this.Tertiary10, Tertiary11: this.Tertiary11, Tertiary12: this.Tertiary12,
+            Tertiary13: this.Tertiary13, Tertiary14: this.Tertiary14, Tertiary15: this.Tertiary15, Tertiary16: this.Tertiary16, Tertiary17: this.Tertiary17,
+            Tertiary18: this.Tertiary18, Tertiary19: this.Tertiary19, Tertiary20: this.Tertiary20, Tertiary21: this.Tertiary21, Tertiary22: this.Tertiary22,
+            Tertiary23: this.Tertiary23, Tertiary24: this.Tertiary24, Tertiary25: this.Tertiary25, Tertiary26: this.Tertiary26, Tertiary27: this.Tertiary27,
+            Tertiary28: this.Tertiary28, Tertiary29: this.Tertiary29, Tertiary30: this.Tertiary30, Tertiary31: this.Tertiary31, Tertiary32: this.Tertiary32,
+            Tertiary33: this.Tertiary33, Tertiary34: this.Tertiary34, Tertiary35: this.Tertiary35, Tertiary36: this.Tertiary36, Tertiary37: this.Tertiary37,
+            Tertiary38: this.Tertiary38, Tertiary39: this.Tertiary39, Tertiary40: this.Tertiary40, Tertiary41: this.Tertiary41, Tertiary42: this.Tertiary42,
+            Tertiary43: this.Tertiary43, Tertiary44: this.Tertiary44, Tertiary45: this.Tertiary45, Tertiary46: this.Tertiary46, Tertiary47: this.Tertiary47,
+            Tertiary48: this.Tertiary48, Tertiary49: this.Tertiary49, Tertiary50: this.Tertiary50, Tertiary51: this.Tertiary51, Tertiary52: this.Tertiary52,
+            Tertiary53: this.Tertiary53, Tertiary54: this.Tertiary54, Tertiary55: this.Tertiary55, Tertiary56: this.Tertiary56, Tertiary57: this.Tertiary57,
+            Tertiary58: this.Tertiary58, Tertiary59: this.Tertiary59, Tertiary60: this.Tertiary60, Tertiary61: this.Tertiary61, Tertiary62: this.Tertiary62,
+            Tertiary63: this.Tertiary63, Tertiary64: this.Tertiary64, Tertiary65: this.Tertiary65, Tertiary66: this.Tertiary66, Tertiary67: this.Tertiary67,
+            Tertiary68: this.Tertiary68, Tertiary69: this.Tertiary69, Tertiary70: this.Tertiary70, Tertiary71: this.Tertiary71, Tertiary72: this.Tertiary72,
+            Tertiary73: this.Tertiary73, Tertiary74: this.Tertiary74, Tertiary75: this.Tertiary75, Tertiary76: this.Tertiary76, Tertiary77: this.Tertiary77,
+            Tertiary78: this.Tertiary78, Tertiary79: this.Tertiary79, Tertiary80: this.Tertiary80, Tertiary81: this.Tertiary81, Tertiary82: this.Tertiary82,
+            Tertiary83: this.Tertiary83, Tertiary84: this.Tertiary84, Tertiary85: this.Tertiary85, Tertiary86: this.Tertiary86, Tertiary87: this.Tertiary87,
+            Tertiary88: this.Tertiary88, Tertiary89: this.Tertiary89, Tertiary90: this.Tertiary90, Tertiary91: this.Tertiary91, Tertiary92: this.Tertiary92,
+            Tertiary93: this.Tertiary93, Tertiary94: this.Tertiary94, Tertiary95: this.Tertiary95, Tertiary96: this.Tertiary96, Tertiary97: this.Tertiary97,
+            Tertiary98: this.Tertiary98, Tertiary99: this.Tertiary99, Tertiary100: this.Tertiary100, Error0: this.Error0, Error1: this.Error1,
+            Error2: this.Error2, Error3: this.Error3, Error4: this.Error4, Error5: this.Error5, Error6: this.Error6,
+            Error7: this.Error7, Error8: this.Error8, Error9: this.Error9, Error10: this.Error10, Error11: this.Error11,
+            Error12: this.Error12, Error13: this.Error13, Error14: this.Error14, Error15: this.Error15, Error16: this.Error16,
+            Error17: this.Error17, Error18: this.Error18, Error19: this.Error19, Error20: this.Error20, Error21: this.Error21,
+            Error22: this.Error22, Error23: this.Error23, Error24: this.Error24, Error25: this.Error25, Error26: this.Error26,
+            Error27: this.Error27, Error28: this.Error28, Error29: this.Error29, Error30: this.Error30, Error31: this.Error31,
+            Error32: this.Error32, Error33: this.Error33, Error34: this.Error34, Error35: this.Error35, Error36: this.Error36,
+            Error37: this.Error37, Error38: this.Error38, Error39: this.Error39, Error40: this.Error40, Error41: this.Error41,
+            Error42: this.Error42, Error43: this.Error43, Error44: this.Error44, Error45: this.Error45, Error46: this.Error46,
+            Error47: this.Error47, Error48: this.Error48, Error49: this.Error49, Error50: this.Error50, Error51: this.Error51,
+            Error52: this.Error52, Error53: this.Error53, Error54: this.Error54, Error55: this.Error55, Error56: this.Error56,
+            Error57: this.Error57, Error58: this.Error58, Error59: this.Error59, Error60: this.Error60, Error61: this.Error61,
+            Error62: this.Error62, Error63: this.Error63, Error64: this.Error64, Error65: this.Error65, Error66: this.Error66,
+            Error67: this.Error67, Error68: this.Error68, Error69: this.Error69, Error70: this.Error70, Error71: this.Error71,
+            Error72: this.Error72, Error73: this.Error73, Error74: this.Error74, Error75: this.Error75, Error76: this.Error76,
+            Error77: this.Error77, Error78: this.Error78, Error79: this.Error79, Error80: this.Error80, Error81: this.Error81,
+            Error82: this.Error82, Error83: this.Error83, Error84: this.Error84, Error85: this.Error85, Error86: this.Error86,
+            Error87: this.Error87, Error88: this.Error88, Error89: this.Error89, Error90: this.Error90, Error91: this.Error91,
+            Error92: this.Error92, Error93: this.Error93, Error94: this.Error94, Error95: this.Error95, Error96: this.Error96,
+            Error97: this.Error97, Error98: this.Error98, Error99: this.Error99, Error100: this.Error100, Neutral0: this.Neutral0,
+            Neutral1: this.Neutral1, Neutral2: this.Neutral2, Neutral3: this.Neutral3, Neutral4: this.Neutral4, Neutral5: this.Neutral5,
+            Neutral6: this.Neutral6, Neutral7: this.Neutral7, Neutral8: this.Neutral8, Neutral9: this.Neutral9, Neutral10: this.Neutral10,
+            Neutral11: this.Neutral11, Neutral12: this.Neutral12, Neutral13: this.Neutral13, Neutral14: this.Neutral14, Neutral15: this.Neutral15,
+            Neutral16: this.Neutral16, Neutral17: this.Neutral17, Neutral18: this.Neutral18, Neutral19: this.Neutral19, Neutral20: this.Neutral20,
+            Neutral21: this.Neutral21, Neutral22: this.Neutral22, Neutral23: this.Neutral23, Neutral24: this.Neutral24, Neutral25: this.Neutral25,
+            Neutral26: this.Neutral26, Neutral27: this.Neutral27, Neutral28: this.Neutral28, Neutral29: this.Neutral29, Neutral30: this.Neutral30,
+            Neutral31: this.Neutral31, Neutral32: this.Neutral32, Neutral33: this.Neutral33, Neutral34: this.Neutral34, Neutral35: this.Neutral35,
+            Neutral36: this.Neutral36, Neutral37: this.Neutral37, Neutral38: this.Neutral38, Neutral39: this.Neutral39, Neutral40: this.Neutral40,
+            Neutral41: this.Neutral41, Neutral42: this.Neutral42, Neutral43: this.Neutral43, Neutral44: this.Neutral44, Neutral45: this.Neutral45,
+            Neutral46: this.Neutral46, Neutral47: this.Neutral47, Neutral48: this.Neutral48, Neutral49: this.Neutral49, Neutral50: this.Neutral50,
+            Neutral51: this.Neutral51, Neutral52: this.Neutral52, Neutral53: this.Neutral53, Neutral54: this.Neutral54, Neutral55: this.Neutral55,
+            Neutral56: this.Neutral56, Neutral57: this.Neutral57, Neutral58: this.Neutral58, Neutral59: this.Neutral59, Neutral60: this.Neutral60,
+            Neutral61: this.Neutral61, Neutral62: this.Neutral62, Neutral63: this.Neutral63, Neutral64: this.Neutral64, Neutral65: this.Neutral65,
+            Neutral66: this.Neutral66, Neutral67: this.Neutral67, Neutral68: this.Neutral68, Neutral69: this.Neutral69, Neutral70: this.Neutral70,
+            Neutral71: this.Neutral71, Neutral72: this.Neutral72, Neutral73: this.Neutral73, Neutral74: this.Neutral74, Neutral75: this.Neutral75,
+            Neutral76: this.Neutral76, Neutral77: this.Neutral77, Neutral78: this.Neutral78, Neutral79: this.Neutral79, Neutral80: this.Neutral80,
+            Neutral81: this.Neutral81, Neutral82: this.Neutral82, Neutral83: this.Neutral83, Neutral84: this.Neutral84, Neutral85: this.Neutral85,
+            Neutral86: this.Neutral86, Neutral87: this.Neutral87, Neutral88: this.Neutral88, Neutral89: this.Neutral89, Neutral90: this.Neutral90,
+            Neutral91: this.Neutral91, Neutral92: this.Neutral92, Neutral93: this.Neutral93, Neutral94: this.Neutral94, Neutral95: this.Neutral95,
+            Neutral96: this.Neutral96, Neutral97: this.Neutral97, Neutral98: this.Neutral98, Neutral99: this.Neutral99, Neutral100: this.Neutral100,
+            NeutralVariant0: this.NeutralVariant0, NeutralVariant1: this.NeutralVariant1, NeutralVariant2: this.NeutralVariant2, NeutralVariant3: this.NeutralVariant3, NeutralVariant4: this.NeutralVariant4,
+            NeutralVariant5: this.NeutralVariant5, NeutralVariant6: this.NeutralVariant6, NeutralVariant7: this.NeutralVariant7, NeutralVariant8: this.NeutralVariant8, NeutralVariant9: this.NeutralVariant9,
+            NeutralVariant10: this.NeutralVariant10, NeutralVariant11: this.NeutralVariant11, NeutralVariant12: this.NeutralVariant12, NeutralVariant13: this.NeutralVariant13, NeutralVariant14: this.NeutralVariant14,
+            NeutralVariant15: this.NeutralVariant15, NeutralVariant16: this.NeutralVariant16, NeutralVariant17: this.NeutralVariant17, NeutralVariant18: this.NeutralVariant18, NeutralVariant19: this.NeutralVariant19,
+            NeutralVariant20: this.NeutralVariant20, NeutralVariant21: this.NeutralVariant21, NeutralVariant22: this.NeutralVariant22, NeutralVariant23: this.NeutralVariant23, NeutralVariant24: this.NeutralVariant24,
+            NeutralVariant25: this.NeutralVariant25, NeutralVariant26: this.NeutralVariant26, NeutralVariant27: this.NeutralVariant27, NeutralVariant28: this.NeutralVariant28, NeutralVariant29: this.NeutralVariant29,
+            NeutralVariant30: this.NeutralVariant30, NeutralVariant31: this.NeutralVariant31, NeutralVariant32: this.NeutralVariant32, NeutralVariant33: this.NeutralVariant33, NeutralVariant34: this.NeutralVariant34,
+            NeutralVariant35: this.NeutralVariant35, NeutralVariant36: this.NeutralVariant36, NeutralVariant37: this.NeutralVariant37, NeutralVariant38: this.NeutralVariant38, NeutralVariant39: this.NeutralVariant39,
+            NeutralVariant40: this.NeutralVariant40, NeutralVariant41: this.NeutralVariant41, NeutralVariant42: this.NeutralVariant42, NeutralVariant43: this.NeutralVariant43, NeutralVariant44: this.NeutralVariant44,
+            NeutralVariant45: this.NeutralVariant45, NeutralVariant46: this.NeutralVariant46, NeutralVariant47: this.NeutralVariant47, NeutralVariant48: this.NeutralVariant48, NeutralVariant49: this.NeutralVariant49,
+            NeutralVariant50: this.NeutralVariant50, NeutralVariant51: this.NeutralVariant51, NeutralVariant52: this.NeutralVariant52, NeutralVariant53: this.NeutralVariant53, NeutralVariant54: this.NeutralVariant54,
+            NeutralVariant55: this.NeutralVariant55, NeutralVariant56: this.NeutralVariant56, NeutralVariant57: this.NeutralVariant57, NeutralVariant58: this.NeutralVariant58, NeutralVariant59: this.NeutralVariant59,
+            NeutralVariant60: this.NeutralVariant60, NeutralVariant61: this.NeutralVariant61, NeutralVariant62: this.NeutralVariant62, NeutralVariant63: this.NeutralVariant63, NeutralVariant64: this.NeutralVariant64,
+            NeutralVariant65: this.NeutralVariant65, NeutralVariant66: this.NeutralVariant66, NeutralVariant67: this.NeutralVariant67, NeutralVariant68: this.NeutralVariant68, NeutralVariant69: this.NeutralVariant69,
+            NeutralVariant70: this.NeutralVariant70, NeutralVariant71: this.NeutralVariant71, NeutralVariant72: this.NeutralVariant72, NeutralVariant73: this.NeutralVariant73, NeutralVariant74: this.NeutralVariant74,
+            NeutralVariant75: this.NeutralVariant75, NeutralVariant76: this.NeutralVariant76, NeutralVariant77: this.NeutralVariant77, NeutralVariant78: this.NeutralVariant78, NeutralVariant79: this.NeutralVariant79,
+            NeutralVariant80: this.NeutralVariant80, NeutralVariant81: this.NeutralVariant81, NeutralVariant82: this.NeutralVariant82, NeutralVariant83: this.NeutralVariant83, NeutralVariant84: this.NeutralVariant84,
+            NeutralVariant85: this.NeutralVariant85, NeutralVariant86: this.NeutralVariant86, NeutralVariant87: this.NeutralVariant87, NeutralVariant88: this.NeutralVariant88, NeutralVariant89: this.NeutralVariant89,
+            NeutralVariant90: this.NeutralVariant90, NeutralVariant91: this.NeutralVariant91, NeutralVariant92: this.NeutralVariant92, NeutralVariant93: this.NeutralVariant93, NeutralVariant94: this.NeutralVariant94,
+            NeutralVariant95: this.NeutralVariant95, NeutralVariant96: this.NeutralVariant96, NeutralVariant97: this.NeutralVariant97, NeutralVariant98: this.NeutralVariant98, NeutralVariant99: this.NeutralVariant99,
+            NeutralVariant100: this.NeutralVariant100,
+        } as const
+    }
 
 }
