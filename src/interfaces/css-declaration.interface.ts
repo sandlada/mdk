@@ -3,12 +3,12 @@ export interface ICSSDeclaration<
     VALUE = unknown,
     CSSDECELARATION extends string = string
 > {
-    readonly key: KEY
-    readonly value: VALUE
+    readonly Key: KEY
+    readonly Value: VALUE
 
-    toCSSDeclaration(options?: {
-        semicolon?: boolean
-        wrapVariable?: boolean
+    ToCSSDeclaration(options?: {
+        Semicolon?: boolean
+        WrapVariable?: boolean
     }): CSSDECELARATION | string
     toString(): string
     toJSON(): Record<string, unknown>

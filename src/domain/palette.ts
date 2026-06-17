@@ -1,23 +1,23 @@
-import type { ICSSDeclaration } from '../types'
+import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
 
 export class Palette<
     K extends string,
     V extends string
 > implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`> {
-    public readonly key  : K
-    public readonly value: V
+    public readonly Key  : K
+    public readonly Value: V
 
-    public toJSON() { return ({ key: this.key, value: this.value }) }
-    public toCSSDeclaration({ semicolon = false, wrapVariable = false }: { semicolon?: boolean, wrapVariable?: boolean } = {}): string {
-        return wrapVariable
-            ? `var(${this.key}, ${this.value})`
-            : `${this.key}: ${this.value}${semicolon ? ';' : ''}`
+    public toJSON() { return ({ Key: this.Key, Value: this.Value }) }
+    public ToCSSDeclaration({ Semicolon = false, WrapVariable = false }: { Semicolon?: boolean, WrapVariable?: boolean } = {}): string {
+        return WrapVariable
+            ? `var(${this.Key}, ${this.Value})`
+            : `${this.Key}: ${this.Value}${Semicolon ? ';' : ''}`
     }
-    public toString() { return this.toCSSDeclaration() }
+    public toString() { return this.ToCSSDeclaration() }
 
-    private constructor(key: K, value: V) {
-        this.key   = key
-        this.value = value
+    private constructor(Key: K, Value: V) {
+        this.Key   = Key
+        this.Value = Value
     }
 
     public static readonly Primary0          = new Palette(`--md-ref-palette-primary-0`, `#000000`)

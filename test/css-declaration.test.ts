@@ -10,25 +10,25 @@ import { Space } from '../src/domain/spacing';
 import { Typeface } from '../src/domain/typeface';
 import { Typescale } from '../src/domain/typescale';
 
-describe('ICSSDeclaration.toCSSDeclaration', () => {
+describe('ICSSDeclaration.ToCSSDeclaration', () => {
 
     describe('Color', () => {
         const token = Color.From().Primary;
 
         it('should output declaration by default', () => {
-            expect(token.toCSSDeclaration()).toBe('--md-sys-color-primary: light-dark(#006d38, #76f29e)');
+            expect(token.ToCSSDeclaration()).toBe('--md-sys-color-primary: light-dark(#006d38, #76f29e)');
         });
 
-        it('should output declaration with semicolon', () => {
-            expect(token.toCSSDeclaration({ semicolon: true })).toBe('--md-sys-color-primary: light-dark(#006d38, #76f29e);');
+        it('should output declaration with Semicolon', () => {
+            expect(token.ToCSSDeclaration({ Semicolon: true })).toBe('--md-sys-color-primary: light-dark(#006d38, #76f29e);');
         });
 
-        it('should output wrapped var() when wrapVariable is true', () => {
-            expect(token.toCSSDeclaration({ wrapVariable: true })).toBe('var(--md-sys-color-primary, light-dark(#006d38, #76f29e))');
+        it('should output wrapped var() when WrapVariable is true', () => {
+            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-sys-color-primary, light-dark(#006d38, #76f29e))');
         });
 
-        it('should output wrapped var() ignoring semicolon', () => {
-            expect(token.toCSSDeclaration({ wrapVariable: true, semicolon: true })).toBe('var(--md-sys-color-primary, light-dark(#006d38, #76f29e));');
+        it('should output wrapped var() ignoring Semicolon', () => {
+            expect(token.ToCSSDeclaration({ WrapVariable: true, Semicolon: true })).toBe('var(--md-sys-color-primary, light-dark(#006d38, #76f29e));');
         });
     });
 
@@ -36,11 +36,11 @@ describe('ICSSDeclaration.toCSSDeclaration', () => {
         const token = Duration.Short1;
 
         it('should output declaration by default', () => {
-            expect(token.toCSSDeclaration()).toBe('--md-sys-motion-duration-short1: 50ms');
+            expect(token.ToCSSDeclaration()).toBe('--md-sys-motion-duration-short1: 50ms');
         });
 
-        it('should output wrapped var() with unit when wrapVariable is true', () => {
-            expect(token.toCSSDeclaration({ wrapVariable: true })).toBe('var(--md-sys-motion-duration-short1, 50ms)');
+        it('should output wrapped var() with Unit when WrapVariable is true', () => {
+            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-sys-motion-duration-short1, 50ms)');
         });
     });
 
@@ -48,11 +48,11 @@ describe('ICSSDeclaration.toCSSDeclaration', () => {
         const token = Easing.Standard;
 
         it('should output declaration by default', () => {
-            expect(token.toCSSDeclaration()).toBe('--md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1)');
+            expect(token.ToCSSDeclaration()).toBe('--md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1)');
         });
 
-        it('should output wrapped var() when wrapVariable is true', () => {
-            expect(token.toCSSDeclaration({ wrapVariable: true })).toBe('var(--md-sys-motion-easing-standard, cubic-bezier(0.2, 0, 0, 1))');
+        it('should output wrapped var() when WrapVariable is true', () => {
+            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-sys-motion-easing-standard, cubic-bezier(0.2, 0, 0, 1))');
         });
     });
 
@@ -60,11 +60,11 @@ describe('ICSSDeclaration.toCSSDeclaration', () => {
         const token = ElevationLevel.Level1;
 
         it('should output declaration by default', () => {
-            expect(token.toCSSDeclaration()).toBe('--md-sys-elevation-level-1: 1px');
+            expect(token.ToCSSDeclaration()).toBe('--md-sys-elevation-level-1: 1px');
         });
 
-        it('should output wrapped var() when wrapVariable is true', () => {
-            expect(token.toCSSDeclaration({ wrapVariable: true })).toBe('var(--md-sys-elevation-level-1, 1px)');
+        it('should output wrapped var() when WrapVariable is true', () => {
+            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-sys-elevation-level-1, 1px)');
         });
     });
 
@@ -72,11 +72,11 @@ describe('ICSSDeclaration.toCSSDeclaration', () => {
         const token = Shape.Medium;
 
         it('should output declaration by default', () => {
-            expect(token.toCSSDeclaration()).toBe('--md-sys-shape-corner-medium: 12px');
+            expect(token.ToCSSDeclaration()).toBe('--md-sys-shape-corner-medium: 12px');
         });
 
-        it('should output wrapped var() when wrapVariable is true', () => {
-            expect(token.toCSSDeclaration({ wrapVariable: true })).toBe('var(--md-sys-shape-corner-medium, 12px)');
+        it('should output wrapped var() when WrapVariable is true', () => {
+            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-sys-shape-corner-medium, 12px)');
         });
     });
 
@@ -84,11 +84,11 @@ describe('ICSSDeclaration.toCSSDeclaration', () => {
         const token = Palette.Primary40;
 
         it('should output declaration by default', () => {
-            expect(token.toCSSDeclaration()).toBe('--md-ref-palette-primary-40: #006d38');
+            expect(token.ToCSSDeclaration()).toBe('--md-ref-palette-primary-40: #006d38');
         });
 
-        it('should output wrapped var() when wrapVariable is true', () => {
-            expect(token.toCSSDeclaration({ wrapVariable: true })).toBe('var(--md-ref-palette-primary-40, #006d38)');
+        it('should output wrapped var() when WrapVariable is true', () => {
+            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-ref-palette-primary-40, #006d38)');
         });
     });
 
@@ -96,11 +96,11 @@ describe('ICSSDeclaration.toCSSDeclaration', () => {
         const token = State.HoveredStateLayerOpacity;
 ``
         it('should output declaration by default', () => {
-            expect(token.toCSSDeclaration()).toBe('--md-sys-state-hovered-state-layer-opacity: 0.08');
+            expect(token.ToCSSDeclaration()).toBe('--md-sys-state-hovered-state-layer-opacity: 0.08');
         });
 
-        it('should output wrapped var() when wrapVariable is true', () => {
-            expect(token.toCSSDeclaration({ wrapVariable: true })).toBe('var(--md-sys-state-hovered-state-layer-opacity, 0.08)');
+        it('should output wrapped var() when WrapVariable is true', () => {
+            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-sys-state-hovered-state-layer-opacity, 0.08)');
         });
     });
 
@@ -108,11 +108,11 @@ describe('ICSSDeclaration.toCSSDeclaration', () => {
         const token = Space.Space100;
 
         it('should output declaration by default', () => {
-            expect(token.toCSSDeclaration()).toBe('--md-sys-measurement-space100: 8px');
+            expect(token.ToCSSDeclaration()).toBe('--md-sys-measurement-space100: 8px');
         });
 
-        it('should output wrapped var() when wrapVariable is true', () => {
-            expect(token.toCSSDeclaration({ wrapVariable: true })).toBe('var(--md-sys-measurement-space100, 8px)');
+        it('should output wrapped var() when WrapVariable is true', () => {
+            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-sys-measurement-space100, 8px)');
         });
     });
 
@@ -120,11 +120,11 @@ describe('ICSSDeclaration.toCSSDeclaration', () => {
         const token = Typeface.FontBrand;
 
         it('should output declaration by default', () => {
-            expect(token.toCSSDeclaration()).toBe('--md-ref-typeface-font-brand: Roboto');
+            expect(token.ToCSSDeclaration()).toBe('--md-ref-typeface-font-brand: Roboto');
         });
 
-        it('should output wrapped var() when wrapVariable is true', () => {
-            expect(token.toCSSDeclaration({ wrapVariable: true })).toBe('var(--md-ref-typeface-font-brand, Roboto)');
+        it('should output wrapped var() when WrapVariable is true', () => {
+            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-ref-typeface-font-brand, Roboto)');
         });
     });
 
@@ -132,11 +132,11 @@ describe('ICSSDeclaration.toCSSDeclaration', () => {
         const token = Typescale.DisplayLarge.FontSize;
 
         it('should output declaration by default', () => {
-            expect(token.toCSSDeclaration()).toBe('--md-sys-typescale-display-large-font-size: 57px');
+            expect(token.ToCSSDeclaration()).toBe('--md-sys-typescale-display-large-font-size: 57px');
         });
 
-        it('should output wrapped var() when wrapVariable is true', () => {
-            expect(token.toCSSDeclaration({ wrapVariable: true })).toBe('var(--md-sys-typescale-display-large-font-size, 57px)');
+        it('should output wrapped var() when WrapVariable is true', () => {
+            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-sys-typescale-display-large-font-size, 57px)');
         });
     });
 

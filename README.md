@@ -34,7 +34,7 @@ const surface = Color.Surface
  * --md-sys-color-surface
  * ```
  */
-console.log(surface.key)
+console.log(surface.Key)
 
 /**
  * @output
@@ -42,7 +42,7 @@ console.log(surface.key)
  * light-dark(#f4fbf1, #0e150f)
  * ```
  */
-console.log(surface.value)
+console.log(surface.Value)
 
 /**
  * @output
@@ -50,7 +50,7 @@ console.log(surface.value)
  * --md-sys-color-surface: light-dark(#f4fbf1, #0e150f)
  * ```
  */
-console.log(surface.toCSSDeclaration())
+console.log(surface.ToCSSDeclaration())
 
 /**
  * @output
@@ -58,10 +58,10 @@ console.log(surface.toCSSDeclaration())
  * var(--md-sys-color-surface, light-dark(#f4fbf1, #0e150f))
  * ```
  */
-console.log(surface.toCSSDeclaration({ wrapVariable: true }))
+console.log(surface.ToCSSDeclaration({ WrapVariable: true }))
 
 const yourDiv = document.querySelector('body')
-yourDiv.style.setProperty('background-color', surface.toCSSDeclaration({ wrapVariable: true }))
+yourDiv.style.setProperty('background-color', surface.ToCSSDeclaration({ WrapVariable: true }))
 ```
 
 ### Use Shape
@@ -77,7 +77,7 @@ const shapeLarge = Shape.Large
  * --md-sys-shape-corner-large
  * ```
  */
-console.log(shapeLarge.key)
+console.log(shapeLarge.Key)
 
 /**
  * @output
@@ -85,7 +85,7 @@ console.log(shapeLarge.key)
  * 16
  * ```
  */
-console.log(shapeLarge.value)
+console.log(shapeLarge.Value)
 
 /**
  * @output
@@ -93,7 +93,7 @@ console.log(shapeLarge.value)
  * px
  * ```
  */
-console.log(shapeLarge.unit)
+console.log(shapeLarge.Unit)
 
 /**
  * @output
@@ -101,7 +101,7 @@ console.log(shapeLarge.unit)
  * --md-sys-shape-corner-large: 16px
  * ```
  */
-console.log(shapeLarge.toCSSDeclaration())
+console.log(shapeLarge.ToCSSDeclaration())
 
 /**
  * @output
@@ -109,10 +109,10 @@ console.log(shapeLarge.toCSSDeclaration())
  * var(--md-sys-shape-corner-large, 16px)
  * ```
  */
-console.log(shapeLarge.toCSSDeclaration({ wrapVariable: true }))
+console.log(shapeLarge.ToCSSDeclaration({ WrapVariable: true }))
 
 const myBox = document.querySelector('#my-box')
-myBox.style.setProperty('border-radius', shapeLarge.toCSSDeclaration({ wrapVariable: true }))
+myBox.style.setProperty('border-radius', shapeLarge.ToCSSDeclaration({ WrapVariable: true }))
 ```
 
 ### Use Typescale
@@ -130,7 +130,7 @@ const fontSize = displayLarge.FontSize
  * --md-sys-typescale-display-large-font-size
  * ```
  */
-console.log(fontSize.key)
+console.log(fontSize.Key)
 
 /**
  * @output
@@ -138,7 +138,7 @@ console.log(fontSize.key)
  * 57
  * ```
  */
-console.log(fontSize.value)
+console.log(fontSize.Value)
 
 /**
  * @output
@@ -146,7 +146,7 @@ console.log(fontSize.value)
  * px
  * ```
  */
-console.log(fontSize.unit)
+console.log(fontSize.Unit)
 
 /**
  * @output
@@ -154,7 +154,7 @@ console.log(fontSize.unit)
  * --md-sys-typescale-display-large-font-size: 57px
  * ```
  */
-console.log(fontSize.toCSSDeclaration())
+console.log(fontSize.ToCSSDeclaration())
 
 /**
  * @output
@@ -162,23 +162,23 @@ console.log(fontSize.toCSSDeclaration())
  * var(--md-sys-typescale-display-large-font-size, 57px)
  * ```
  */
-console.log(fontSize.toCSSDeclaration({ wrapVariable: true }))
+console.log(fontSize.ToCSSDeclaration({ WrapVariable: true }))
 ```
 
 ## API
 
-### `toCSSDeclaration(options?)`
+### `ToCSSDeclaration(options?)`
 
-All token classes implement the `ICSSDeclaration` interface and provide the `toCSSDeclaration` method.
+All token classes implement the `ICSSDeclaration` interface and provide the `ToCSSDeclaration` method.
 
 | Option         | Type      | Default | Description                                             |
 | -------------- | --------- | ------- | ------------------------------------------------------- |
-| `semicolon`    | `boolean` | `false` | Append a semicolon to the declaration                   |
-| `wrapVariable` | `boolean` | `false` | Output as `var(--key, value)` instead of `--key: value` |
+| `Semicolon`    | `boolean` | `false` | Append a Semicolon to the declaration                   |
+| `WrapVariable` | `boolean` | `false` | Output as `var(--key, value)` instead of `--Key: value` |
 
-When `wrapVariable` is `true`, the output becomes a CSS `var()` function call suitable for direct use as a CSS property value. The `semicolon` option is ignored when `wrapVariable` is `true`.
+When `WrapVariable` is `true`, the output becomes a CSS `var()` function call suitable for direct use as a CSS property Value. The `Semicolon` option is ignored when `WrapVariable` is `true`.
 
 ```typescript
-Color.Primary.toCSSDeclaration()                           // --md-sys-color-primary: light-dark(#006d38, #76f29e)
-Color.Primary.toCSSDeclaration({ semicolon: true })        // --md-sys-color-primary: light-dark(#006d38, #76f29e);
-Color.Primary.toCSSDeclaration({ wrapVariable: true })     // var(--md-sys-color-primary, light-dark(#006d38, #76f29e))
+Color.Primary.ToCSSDeclaration()                           // --md-sys-color-primary: light-dark(#006d38, #76f29e)
+Color.Primary.ToCSSDeclaration({ Semicolon: true })        // --md-sys-color-primary: light-dark(#006d38, #76f29e);
+Color.Primary.ToCSSDeclaration({ WrapVariable: true })     // var(--md-sys-color-primary, light-dark(#006d38, #76f29e))

@@ -1,30 +1,30 @@
 import { DefaultColorContract } from '../consts/default-color-contract.const';
 import type { SemanticColorContract } from '../interfaces/semantic-color-contract.interface';
 import type { SemanticColorNames } from '../interfaces/semantic-color-names.interface';
-import type { ICSSDeclaration } from '../types'
+import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
 
 class _Color<K extends string, V extends string> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`> {
 
-    public readonly key: K
-    public readonly value: V
+    public readonly Key: K
+    public readonly Value: V
 
-    public toJSON() { return { key: this.key, value: this.value } }
-    public toString() { return this.value }
+    public toJSON() { return { Key: this.Key, Value: this.Value } }
+    public toString() { return this.Value }
 
-    public toCSSDeclaration(): `${K}: ${V}`
-    public toCSSDeclaration(options: { semicolon: true, wrapVariable?: false }): `${K}: ${V};`
-    public toCSSDeclaration(options?: { semicolon?: false, wrapVariable?: false }): `${K}: ${V}`
-    public toCSSDeclaration(options: { semicolon: true, wrapVariable: true }): `var(${K}, ${V});`
-    public toCSSDeclaration(options: { semicolon?: false, wrapVariable: true }): `var(${K}, ${V})`
-    public toCSSDeclaration({ semicolon = false, wrapVariable = false }: { semicolon?: boolean, wrapVariable?: boolean } = {}): `${K}: ${V}${';' | ''}` | `var(${K}, ${V})${';' | ''}` {
-        return wrapVariable
-            ? `var(${this.key}, ${this.value})${semicolon ? ';' : ''}`
-            : `${this.key}: ${this.value}${semicolon ? ';' : ''}`
+    public ToCSSDeclaration(): `${K}: ${V}`
+    public ToCSSDeclaration(options: { Semicolon: true, WrapVariable?: false }): `${K}: ${V};`
+    public ToCSSDeclaration(options?: { Semicolon?: false, WrapVariable?: false }): `${K}: ${V}`
+    public ToCSSDeclaration(options: { Semicolon: true, WrapVariable: true }): `var(${K}, ${V});`
+    public ToCSSDeclaration(options: { Semicolon?: false, WrapVariable: true }): `var(${K}, ${V})`
+    public ToCSSDeclaration({ Semicolon = false, WrapVariable = false }: { Semicolon?: boolean, WrapVariable?: boolean } = {}): `${K}: ${V}${';' | ''}` | `var(${K}, ${V})${';' | ''}` {
+        return WrapVariable
+            ? `var(${this.Key}, ${this.Value})${Semicolon ? ';' : ''}`
+            : `${this.Key}: ${this.Value}${Semicolon ? ';' : ''}`
     }
 
-    public constructor(key: K, value: V) {
-        this.key = key
-        this.value = value
+    public constructor(Key: K, Value: V) {
+        this.Key = Key
+        this.Value = Value
     }
 
 }
@@ -35,8 +35,8 @@ type MergeContracts<
 > = { [K in keyof Base]: K extends keyof Override ? Override[K] extends SemanticColorContract ? Override[K] : Base[K] : Base[K] }
 
 type ToColorContract<T extends Record<SemanticColorNames, SemanticColorContract>> = { [K in keyof T]: T[K] extends {
-    readonly key: infer K2 extends string;
-    readonly value: infer V2 extends string
+    readonly Key: infer K2 extends string;
+    readonly Value: infer V2 extends string
 } ? _Color<K2, V2> : never }
 
 /**
@@ -45,7 +45,7 @@ type ToColorContract<T extends Record<SemanticColorNames, SemanticColorContract>
  * ```ts
  * const YourAppColor = Color.From({
  *     // Optionally, you can override the default color contract by providing a partial contract object to the `From` method.
- *     Primary: { key: `--hum-hum`, value: `abcdefgHumHumHum` },
+ *     Primary: { Key: `--hum-hum`, Value: `abcdefgHumHumHum` },
  * })
  *
  * console.log(YourAppColor.Primary.Value) // abcdefgHumHumHum
@@ -58,7 +58,7 @@ export class Color<
 
     /**
      * {
-     *     OnPrimary: _Color({ key: `--md-sys-color-on-primary`, value: `light-dark(#ffffff, #00391a)` }),
+     *     OnPrimary: _Color({ Key: `--md-sys-color-on-primary`, Value: `light-dark(#ffffff, #00391a)` }),
      *     ...
      * }
      */
@@ -78,9 +78,9 @@ export class Color<
         } as const
 
         const colors = Object.fromEntries(
-            Object.entries(raw).map(([property, value]) => [
+            Object.entries(raw).map(([property, Value]) => [
                 property,
-                new _Color(value.key, value.value)
+                new _Color(Value.Key, Value.Value)
             ])
         ) as unknown as ToColorContract<MergeContracts<typeof DefaultColorContract, C>>
 

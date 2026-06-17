@@ -1,17 +1,17 @@
 export class Variant<K extends string, V extends number> {
-    public readonly key  : K
-    public readonly value: V
+    public readonly Key  : K
+    public readonly Value: V
 
     public toJSON() {
         return ({
-            key  : this.key,
-            value: this.value
+            Key  : this.Key,
+            Value: this.Value
         })
     }
 
-    private constructor(key: K, value: V) {
-        this.key   = key
-        this.value = value
+    private constructor(Key: K, Value: V) {
+        this.Key   = Key
+        this.Value = Value
     }
 
     public static readonly Monochrome = new Variant('Monochrome', 0)

@@ -1,23 +1,23 @@
-import type { ICSSDeclaration } from '../types'
+import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
 
 type EasingDecolaration<K extends string, T extends Readonly<[number, number, number, number]>> = `${K}: cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]})${';' | ''}`
 
 export class Easing<K extends string, T extends Readonly<[number, number, number, number]>> implements ICSSDeclaration<K, T, EasingDecolaration<K, T>> {
-    public readonly key: K
-    public readonly value: T
+    public readonly Key: K
+    public readonly Value: T
 
-    public toJSON() { return ({ key: this.key, value: this.value }) }
-    public toCSSDeclaration({ semicolon: semicolin = false, wrapVariable = false }: { semicolon?: boolean, wrapVariable?: boolean } = {}): string {
-        const value = `cubic-bezier(${this.value[0]}, ${this.value[1]}, ${this.value[2]}, ${this.value[3]})`
-        return wrapVariable
-            ? `var(${this.key}, ${value})`
-            : `${this.key}: ${value}${semicolin ? ';' : ''}`
+    public toJSON() { return ({ Key: this.Key, Value: this.Value }) }
+    public ToCSSDeclaration({ Semicolon: semicolin = false, WrapVariable = false }: { Semicolon?: boolean, WrapVariable?: boolean } = {}): string {
+        const Value = `cubic-bezier(${this.Value[0]}, ${this.Value[1]}, ${this.Value[2]}, ${this.Value[3]})`
+        return WrapVariable
+            ? `var(${this.Key}, ${Value})`
+            : `${this.Key}: ${Value}${semicolin ? ';' : ''}`
     }
-    public toString() { return this.toCSSDeclaration() }
+    public toString() { return this.ToCSSDeclaration() }
 
-    private constructor(key: K, value: T) {
-        this.key = key
-        this.value = value
+    private constructor(Key: K, Value: T) {
+        this.Key = Key
+        this.Value = Value
     }
 
     public static readonly Standard                 = new Easing('--md-sys-motion-easing-standard',                   [0.20, 0.00, 0.00, 1.00] as const)

@@ -1,4 +1,4 @@
-import type { ICSSDeclaration } from '../types'
+import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
 
 type ShapeDeclaration<K extends string, V extends number | string, U extends string> = `${K}: ${V}${U}${';' | ''}`
 
@@ -7,22 +7,22 @@ export class Shape<
     V extends number | string,
     U extends string
 > implements ICSSDeclaration<K, V, ShapeDeclaration<K, V, U>> {
-    public readonly key  : K
-    public readonly value: V
-    public readonly unit : U
+    public readonly Key  : K
+    public readonly Value: V
+    public readonly Unit : U
 
-    public toJSON() { return ({ key: this.key, value: this.value, unit: this.unit }) }
-    public toCSSDeclaration({ semicolon = false, wrapVariable = false }: { semicolon?: boolean, wrapVariable?: boolean } = {}): string {
-        return wrapVariable
-            ? `var(${this.key}, ${this.value}${this.unit})`
-            : `${this.key}: ${this.value}${this.unit}${semicolon ? ';' : ''}`
+    public toJSON() { return ({ Key: this.Key, Value: this.Value, Unit: this.Unit }) }
+    public ToCSSDeclaration({ Semicolon = false, WrapVariable = false }: { Semicolon?: boolean, WrapVariable?: boolean } = {}): string {
+        return WrapVariable
+            ? `var(${this.Key}, ${this.Value}${this.Unit})`
+            : `${this.Key}: ${this.Value}${this.Unit}${Semicolon ? ';' : ''}`
     }
-    public toString() { return this.toCSSDeclaration() }
+    public toString() { return this.ToCSSDeclaration() }
 
-    private constructor(key: K, value: V, unit: U) {
-        this.key   = key
-        this.value = value
-        this.unit  = unit
+    private constructor(Key: K, Value: V, Unit: U) {
+        this.Key   = Key
+        this.Value = Value
+        this.Unit  = Unit
     }
 
     public static readonly None                = new Shape('--md-sys-shape-corner-none',                  0,                      'px')

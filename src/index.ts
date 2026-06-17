@@ -1,4 +1,4 @@
-export type { ICSSDeclaration } from './types'
+export type { ICSSDeclaration } from './interfaces/css-declaration.interface'
 export * from './domain/color'
 export * from './domain/contrast-level'
 export * from './domain/duration'
