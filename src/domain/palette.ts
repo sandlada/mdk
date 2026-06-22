@@ -38,7 +38,7 @@ type ToPaletteContract<T extends Record<PaletteNames, PaletteContract>> = { [K i
 
 /**
  * @example
- * Useage:
+ * Usage:
  * ```ts
  * const YourAppPalette = Palette.From({
  *     // Optionally, you can override the default palette contract by providing a partial contract object to the `From` method.
@@ -47,6 +47,8 @@ type ToPaletteContract<T extends Record<PaletteNames, PaletteContract>> = { [K i
  *
  * console.log(YourAppPalette.Primary40.Value) // #abcdef
  * console.log(YourAppPalette.Primary40.Key) // --custom-primary-40
+ * console.log(YourAppPalette.Primary40.ToCSSDeclaration()) // --custom-primary-40: #abcdef
+ * console.log(YourAppPalette.Primary40.ToCSSVariable()) // var(--custom-primary-40, #abcdef)
  * ```
  */
 export class Palette<

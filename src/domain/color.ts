@@ -42,7 +42,7 @@ type ToColorContract<T extends Record<SemanticColorNames, SemanticColorContract>
 
 /**
  * @example
- * Useage:
+ * Usage:
  * ```ts
  * const YourAppColor = Color.From({
  *     // Optionally, you can override the default color contract by providing a partial contract object to the `From` method.
@@ -51,6 +51,8 @@ type ToColorContract<T extends Record<SemanticColorNames, SemanticColorContract>
  *
  * console.log(YourAppColor.Primary.Value) // abcdefgHumHumHum
  * console.log(YourAppColor.Primary.Key) // --hum-hum
+ * console.log(YourAppColor.Primary.ToCSSDeclaration()) // --hum-hum: abcdefgHumHumHum
+ * console.log(YourAppColor.Primary.ToCSSVariable()) // var(--hum-hum, abcdefgHumHumHum)
  * ```
  */
 export class Color<

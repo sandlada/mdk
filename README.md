@@ -41,7 +41,7 @@ Including:
 ```typescript
 import { Color } from '@sandlada/mdk'
 
-const surface = Color.Surface
+const surface = Color.From().Surface
 
 /**
  * @output
@@ -73,10 +73,10 @@ console.log(surface.ToCSSDeclaration())
  * var(--md-sys-color-surface, light-dark(#f4fbf1, #0e150f))
  * ```
  */
-console.log(surface.ToCSSDeclaration({ WrapVariable: true }))
+console.log(surface.ToCSSVariable())
 
 const yourDiv = document.querySelector('body')
-yourDiv.style.setProperty('background-color', surface.ToCSSDeclaration({ WrapVariable: true }))
+yourDiv.style.setProperty('background-color', surface.ToCSSVariable())
 ```
 
 ### Use Shape
@@ -124,10 +124,10 @@ console.log(shapeLarge.ToCSSDeclaration())
  * var(--md-sys-shape-corner-large, 16px)
  * ```
  */
-console.log(shapeLarge.ToCSSDeclaration({ WrapVariable: true }))
+console.log(shapeLarge.ToCSSVariable())
 
 const myBox = document.querySelector('#my-box')
-myBox.style.setProperty('border-radius', shapeLarge.ToCSSDeclaration({ WrapVariable: true }))
+myBox.style.setProperty('border-radius', shapeLarge.ToCSSVariable())
 ```
 
 ### Use Typescale
@@ -177,23 +177,29 @@ console.log(fontSize.ToCSSDeclaration())
  * var(--md-sys-typescale-display-large-font-size, 57px)
  * ```
  */
-console.log(fontSize.ToCSSDeclaration({ WrapVariable: true }))
+console.log(fontSize.ToCSSVariable())
 ```
 
 ## API
 
 ### `ToCSSDeclaration(options?)`
 
-All token classes implement the `ICSSDeclaration` interface and provide the `ToCSSDeclaration` method.
+All token classes implement the `ICSSDeclaration` interface and provide the `ToCSSDeclaration` method, which outputs a CSS custom property declaration (`--key: value`).
 
-| Option         | Type      | Default | Description                                             |
-| -------------- | --------- | ------- | ------------------------------------------------------- |
-| `Semicolon`    | `boolean` | `false` | Append a Semicolon to the declaration                   |
-| `WrapVariable` | `boolean` | `false` | Output as `var(--key, value)` instead of `--key: value` |
-
-When `WrapVariable` is `true`, the output becomes a CSS `var()` function call suitable for direct use as a CSS property Value. The `Semicolon` option is ignored when `WrapVariable` is `true`.
+| Option      | Type      | Default | Description                           |
+| ----------- | --------- | ------- | ------------------------------------- |
+| `Semicolon` | `boolean` | `false` | Append a semicolon to the declaration |
 
 ```typescript
-Color.Primary.ToCSSDeclaration()                           // --md-sys-color-primary: light-dark(#006d38, #76f29e)
-Color.Primary.ToCSSDeclaration({ Semicolon: true })        // --md-sys-color-primary: light-dark(#006d38, #76f29e);
-Color.Primary.ToCSSDeclaration({ WrapVariable: true })     // var(--md-sys-color-primary, light-dark(#006d38, #76f29e))
+Color.Primary.ToCSSDeclaration()                    // --md-sys-color-primary: light-dark(#006d38, #76f29e)
+Color.Primary.ToCSSDeclaration({ Semicolon: true }) // --md-sys-color-primary: light-dark(#006d38, #76f29e);
+```
+
+### `ToCSSVariable()`
+
+All token classes also provide the `ToCSSVariable` method, which outputs a CSS `var()` function call (`var(--key, value)`) suitable for direct use as a CSS property value.
+
+```typescript
+Color.Primary.ToCSSVariable() // var(--md-sys-color-primary, light-dark(#006d38, #76f29e))
+Duration.Short1.ToCSSVariable() // var(--md-sys-motion-duration-short1, 50ms)
+Shape.Medium.ToCSSVariable() // var(--md-sys-shape-corner-medium, 12px)
