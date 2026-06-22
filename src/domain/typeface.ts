@@ -1,14 +1,19 @@
 import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
 
-export class Typeface<K extends string, V extends number | string> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`> {
+export class Typeface<K extends string, V extends number | string> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`, `var(${K}, ${V})`> {
     public readonly Key  : K
     public readonly Value: V
 
     public toJSON() { return ({ Key: this.Key, Value: this.Value }) }
-    public ToCSSDeclaration({ Semicolon = false, WrapVariable = false }: { Semicolon?: boolean, WrapVariable?: boolean } = {}): string {
-        return WrapVariable
-            ? `var(${this.Key}, ${this.Value})`
-            : `${this.Key}: ${this.Value}${Semicolon ? ';' : ''}`
+    public ToCSSDeclaration(): `${K}: ${V}`
+    public ToCSSDeclaration(options: { Semicolon: true }): `${K}: ${V};`
+    public ToCSSDeclaration(options?: { Semicolon?: boolean }): `${K}: ${V}${';' | ''}`
+    public ToCSSDeclaration({ Semicolon = false }: { Semicolon?: boolean } = {}): `${K}: ${V}${';' | ''}` {
+        return `${this.Key}: ${this.Value}${Semicolon ? ';' : ''}`
+    }
+    public ToCSSVariable(): `var(${K}, ${V})`
+    public ToCSSVariable(): `var(${K}, ${V})` {
+        return `var(${this.Key}, ${this.Value})`
     }
     public toString() { return this.ToCSSDeclaration() }
 

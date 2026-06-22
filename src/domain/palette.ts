@@ -3,20 +3,20 @@ import type { PaletteContract } from '../interfaces/palette-contract.interface'
 import type { PaletteNames } from '../interfaces/palette-names.interface'
 import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
 
-class _Palette<K extends string, V extends string> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`> {
+class _Palette<K extends string, V extends string> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`, `var(${K}, ${V})`> {
     public readonly Key  : K
     public readonly Value: V
 
     public toJSON() { return ({ Key: this.Key, Value: this.Value }) }
     public ToCSSDeclaration(): `${K}: ${V}`
-    public ToCSSDeclaration(options: { Semicolon: true, WrapVariable?: false }): `${K}: ${V};`
-    public ToCSSDeclaration(options?: { Semicolon?: false, WrapVariable?: false }): `${K}: ${V}`
-    public ToCSSDeclaration(options: { Semicolon: true, WrapVariable: true }): `var(${K}, ${V});`
-    public ToCSSDeclaration(options: { Semicolon?: false, WrapVariable: true }): `var(${K}, ${V})`
-    public ToCSSDeclaration({ Semicolon = false, WrapVariable = false }: { Semicolon?: boolean, WrapVariable?: boolean } = {}): `${K}: ${V}${';' | ''}` | `var(${K}, ${V})${';' | ''}` {
-        return WrapVariable
-            ? `var(${this.Key}, ${this.Value})${Semicolon ? ';' : ''}`
-            : `${this.Key}: ${this.Value}${Semicolon ? ';' : ''}`
+    public ToCSSDeclaration(options: { Semicolon: true }): `${K}: ${V};`
+    public ToCSSDeclaration(options?: { Semicolon?: boolean }): `${K}: ${V}${';' | ''}`
+    public ToCSSDeclaration({ Semicolon = false }: { Semicolon?: boolean } = {}): `${K}: ${V}${';' | ''}` {
+        return `${this.Key}: ${this.Value}${Semicolon ? ';' : ''}`
+    }
+    public ToCSSVariable(): `var(${K}, ${V})`
+    public ToCSSVariable(): `var(${K}, ${V})` {
+        return `var(${this.Key}, ${this.Value})`
     }
     public toString() { return this.ToCSSDeclaration() }
 

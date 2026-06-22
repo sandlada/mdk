@@ -3,7 +3,7 @@ import type { SemanticColorContract } from '../interfaces/semantic-color-contrac
 import type { SemanticColorNames } from '../interfaces/semantic-color-names.interface';
 import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
 
-class _Color<K extends string, V extends string> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`> {
+class _Color<K extends string, V extends string> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`, `var(${K}, ${V})`> {
 
     public readonly Key: K
     public readonly Value: V
@@ -12,14 +12,15 @@ class _Color<K extends string, V extends string> implements ICSSDeclaration<K, V
     public toString() { return this.Value }
 
     public ToCSSDeclaration(): `${K}: ${V}`
-    public ToCSSDeclaration(options: { Semicolon: true, WrapVariable?: false }): `${K}: ${V};`
-    public ToCSSDeclaration(options?: { Semicolon?: false, WrapVariable?: false }): `${K}: ${V}`
-    public ToCSSDeclaration(options: { Semicolon: true, WrapVariable: true }): `var(${K}, ${V});`
-    public ToCSSDeclaration(options: { Semicolon?: false, WrapVariable: true }): `var(${K}, ${V})`
-    public ToCSSDeclaration({ Semicolon = false, WrapVariable = false }: { Semicolon?: boolean, WrapVariable?: boolean } = {}): `${K}: ${V}${';' | ''}` | `var(${K}, ${V})${';' | ''}` {
-        return WrapVariable
-            ? `var(${this.Key}, ${this.Value})${Semicolon ? ';' : ''}`
-            : `${this.Key}: ${this.Value}${Semicolon ? ';' : ''}`
+    public ToCSSDeclaration(options: { Semicolon: true }): `${K}: ${V};`
+    public ToCSSDeclaration(options?: { Semicolon?: boolean }): `${K}: ${V}${';' | ''}`
+    public ToCSSDeclaration({ Semicolon = false }: { Semicolon?: boolean } = {}): `${K}: ${V}${';' | ''}` {
+        return `${this.Key}: ${this.Value}${Semicolon ? ';' : ''}`
+    }
+
+    public ToCSSVariable(): `var(${K}, ${V})`
+    public ToCSSVariable(): `var(${K}, ${V})` {
+        return `var(${this.Key}, ${this.Value})`
     }
 
     public constructor(Key: K, Value: V) {
@@ -146,6 +147,7 @@ export class Color<
     public get TertiaryDim()            : CONTRACT['TertiaryDim'] { return this.contract.TertiaryDim }
     public get TertiaryFixed()          : CONTRACT['TertiaryFixed'] { return this.contract.TertiaryFixed }
     public get TertiaryFixedDim()       : CONTRACT['TertiaryFixedDim'] { return this.contract.TertiaryFixedDim }
+
 
     public get AllEnums() {
         return {

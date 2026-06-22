@@ -99,12 +99,8 @@ describe('Palette', () => {
             expect(token.ToCSSDeclaration({ Semicolon: true })).toBe('--md-ref-palette-primary-40: #006d38;');
         });
 
-        it('should return var() wrapper when WrapVariable is true', () => {
-            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-ref-palette-primary-40, #006d38)');
-        });
-
-        it('should return var() wrapper with Semicolon when both options are true', () => {
-            expect(token.ToCSSDeclaration({ WrapVariable: true, Semicolon: true })).toBe('var(--md-ref-palette-primary-40, #006d38);');
+        it('should return var() wrapper via ToCSSVariable', () => {
+            expect(token.ToCSSVariable()).toBe('var(--md-ref-palette-primary-40, #006d38)');
         });
     });
 

@@ -1,21 +1,27 @@
 import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
 
 type SpaceDeclaration<K extends string, V extends number | string, U extends string> = `${K}: ${V}${U}${';' | ''}`
+type SpaceVariable<K extends string, V extends number | string, U extends string> = `var(${K}, ${V}${U})`
 
 export class Space<
     K extends string,
     V extends number | string,
     U extends string
-> implements ICSSDeclaration<K, V, SpaceDeclaration<K, V, U>> {
+> implements ICSSDeclaration<K, V, SpaceDeclaration<K, V, U>, SpaceVariable<K, V, U>> {
     public readonly Key  : K
     public readonly Value: V
     public readonly Unit : U
 
     public toJSON() { return ({ Key: this.Key, Value: this.Value, Unit: this.Unit }) }
-    public ToCSSDeclaration({ Semicolon = false, WrapVariable = false }: { Semicolon?: boolean, WrapVariable?: boolean } = {}): string {
-        return WrapVariable
-            ? `var(${this.Key}, ${this.Value}${this.Unit})`
-            : `${this.Key}: ${this.Value}${this.Unit}${Semicolon ? ';' : ''}`
+    public ToCSSDeclaration(): `${K}: ${V}${U}`
+    public ToCSSDeclaration(options: { Semicolon: true }): `${K}: ${V}${U};`
+    public ToCSSDeclaration(options?: { Semicolon?: boolean }): `${K}: ${V}${U}${';' | ''}`
+    public ToCSSDeclaration({ Semicolon = false }: { Semicolon?: boolean } = {}): `${K}: ${V}${U}${';' | ''}` {
+        return `${this.Key}: ${this.Value}${this.Unit}${Semicolon ? ';' : ''}`
+    }
+    public ToCSSVariable(): `var(${K}, ${V}${U})`
+    public ToCSSVariable(): `var(${K}, ${V}${U})` {
+        return `var(${this.Key}, ${this.Value}${this.Unit})`
     }
     public toString() { return this.ToCSSDeclaration() }
 

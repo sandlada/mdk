@@ -1,17 +1,24 @@
 import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
 
-type EasingDecolaration<K extends string, T extends Readonly<[number, number, number, number]>> = `${K}: cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]})${';' | ''}`
+type EasingDeclaration<K extends string, T extends Readonly<[number, number, number, number]>> = `${K}: cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]})${';' | ''}`
+type EasingVariable<K extends string, T extends Readonly<[number, number, number, number]>> = `var(${K}, cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]}))`
 
-export class Easing<K extends string, T extends Readonly<[number, number, number, number]>> implements ICSSDeclaration<K, T, EasingDecolaration<K, T>> {
+export class Easing<K extends string, T extends Readonly<[number, number, number, number]>> implements ICSSDeclaration<K, T, EasingDeclaration<K, T>, EasingVariable<K, T>> {
     public readonly Key: K
     public readonly Value: T
 
     public toJSON() { return ({ Key: this.Key, Value: this.Value }) }
-    public ToCSSDeclaration({ Semicolon: semicolin = false, WrapVariable = false }: { Semicolon?: boolean, WrapVariable?: boolean } = {}): string {
+    public ToCSSDeclaration(): `${K}: cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]})`
+    public ToCSSDeclaration(options: { Semicolon: true }): `${K}: cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]});`
+    public ToCSSDeclaration(options?: { Semicolon?: boolean }): `${K}: cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]})${';' | ''}`
+    public ToCSSDeclaration({ Semicolon = false }: { Semicolon?: boolean } = {}): `${K}: cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]})${';' | ''}` {
         const Value = `cubic-bezier(${this.Value[0]}, ${this.Value[1]}, ${this.Value[2]}, ${this.Value[3]})`
-        return WrapVariable
-            ? `var(${this.Key}, ${Value})`
-            : `${this.Key}: ${Value}${semicolin ? ';' : ''}`
+        return `${this.Key}: ${Value}${Semicolon ? ';' : ''}` as `${K}: cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]})${';' | ''}`
+    }
+    public ToCSSVariable(): `var(${K}, cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]}))`
+    public ToCSSVariable(): `var(${K}, cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]}))` {
+        const Value = `cubic-bezier(${this.Value[0]}, ${this.Value[1]}, ${this.Value[2]}, ${this.Value[3]})`
+        return `var(${this.Key}, ${Value})` as `var(${K}, cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]}))`
     }
     public toString() { return this.ToCSSDeclaration() }
 

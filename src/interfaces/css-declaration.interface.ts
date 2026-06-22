@@ -1,15 +1,16 @@
 export interface ICSSDeclaration<
     KEY extends string = string,
     VALUE = unknown,
-    CSSDECELARATION extends string = string
+    CSSDECLARATION extends string = string,
+    CSSVARIABLE extends string = string
 > {
     readonly Key: KEY
     readonly Value: VALUE
 
     ToCSSDeclaration(options?: {
         Semicolon?: boolean
-        WrapVariable?: boolean
-    }): CSSDECELARATION | string
+    }): CSSDECLARATION | string
+    ToCSSVariable(): CSSVARIABLE | string
     toString(): string
     toJSON(): Record<string, unknown>
 }

@@ -89,12 +89,8 @@ describe('Color', () => {
             expect(token.ToCSSDeclaration({ Semicolon: true })).toBe('--md-sys-color-primary: light-dark(#006d38, #76f29e);');
         });
 
-        it('should return var() wrapper when WrapVariable is true', () => {
-            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-sys-color-primary, light-dark(#006d38, #76f29e))');
-        });
-
-        it('should ignore Semicolon when WrapVariable is true', () => {
-            expect(token.ToCSSDeclaration({ WrapVariable: true })).toBe('var(--md-sys-color-primary, light-dark(#006d38, #76f29e))');
+        it('should return var() wrapper via ToCSSVariable', () => {
+            expect(token.ToCSSVariable()).toBe('var(--md-sys-color-primary, light-dark(#006d38, #76f29e))');
         });
     });
 
