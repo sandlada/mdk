@@ -20,6 +20,9 @@ export class Easing<K extends string, T extends Readonly<[number, number, number
         const Value = `cubic-bezier(${this.Value[0]}, ${this.Value[1]}, ${this.Value[2]}, ${this.Value[3]})`
         return `var(${this.Key}, ${Value})` as `var(${K}, cubic-bezier(${T[0]}, ${T[1]}, ${T[2]}, ${T[3]}))`
     }
+    public ToCSSValue() {
+        return `cubic-bezier(${this.Value})`
+    }
     public toString() { return this.ToCSSDeclaration() }
 
     private constructor(Key: K, Value: T) {

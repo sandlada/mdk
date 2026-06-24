@@ -23,6 +23,9 @@ export class Space<
     public ToCSSVariable(): `var(${K}, ${V}${U})` {
         return `var(${this.Key}, ${this.Value}${this.Unit})`
     }
+    public ToCSSValue() {
+        return `${this.Value}${this.Unit}`
+    }
     public toString() { return this.ToCSSDeclaration() }
 
     private constructor(Key: K, Value: V, Unit: U) {
