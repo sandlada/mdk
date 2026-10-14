@@ -1,22 +1,26 @@
-import { DefaultPaletteContract } from '../consts/default-palette-contract.const'
-import type { PaletteContract } from '../interfaces/palette-contract.interface'
-import type { PaletteNames } from '../interfaces/palette-names.interface'
-import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
+import { DefaultPaletteContract } from '../consts/default-palette-contract.const.js'
+import type { PaletteContract } from '../interfaces/palette-contract.interface.js'
+import type { PaletteNames } from '../interfaces/palette-names.interface.js'
+import { toCSSDeclaration, toCSSValue, toCSSVariable } from './css-token.js'
+import type { CSSTokenDeclaration, CSSTokenValue, CSSTokenVariable } from './css-token.js'
+import type { ICSSDeclaration } from '../interfaces/css-declaration.interface.js'
 
-class _Palette<K extends string, V extends string> implements ICSSDeclaration<K, V, `${K}: ${V}${';' | ''}`, `var(${K}, ${V})`> {
+class _Palette<K extends string, V extends string> implements ICSSDeclaration<K, V, CSSTokenDeclaration<K, V, ''>, CSSTokenVariable<K, V, ''>> {
     public readonly Key  : K
     public readonly Value: V
 
     public toJSON() { return ({ Key: this.Key, Value: this.Value }) }
     public ToCSSDeclaration(): `${K}: ${V}`
     public ToCSSDeclaration(options: { Semicolon: true }): `${K}: ${V};`
-    public ToCSSDeclaration(options?: { Semicolon?: boolean }): `${K}: ${V}${';' | ''}`
-    public ToCSSDeclaration({ Semicolon = false }: { Semicolon?: boolean } = {}): `${K}: ${V}${';' | ''}` {
-        return `${this.Key}: ${this.Value}${Semicolon ? ';' : ''}`
+    public ToCSSDeclaration(options?: { Semicolon?: boolean }): CSSTokenDeclaration<K, V, ''>
+    public ToCSSDeclaration({ Semicolon = false }: { Semicolon?: boolean } = {}): CSSTokenDeclaration<K, V, ''> {
+        return toCSSDeclaration(this.Key, this.Value, '', Semicolon)
     }
-    public ToCSSVariable(): `var(${K}, ${V})`
-    public ToCSSVariable(): `var(${K}, ${V})` {
-        return `var(${this.Key}, ${this.Value})`
+    public ToCSSVariable(): CSSTokenVariable<K, V, ''> {
+        return toCSSVariable(this.Key, this.Value, '')
+    }
+    public ToCSSValue(): CSSTokenValue<V, ''> {
+        return toCSSValue(this.Value, '')
     }
     public toString() { return this.ToCSSDeclaration() }
 

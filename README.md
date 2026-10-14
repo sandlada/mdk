@@ -2,21 +2,23 @@
 
 `@sandlada/mdk`, Material Design Kit, a JavaScript library based on Material Design 3, providing data such as color, shape, shadow level, etc:
 
-+ Palette
-+ Color
-+ ElevationLevel
-+ Duration
-+ Easing
-+ Shape
-+ State
-+ Space
-+ Typeface
-+ Typescale
+- Palette
+- Color
+- ElevationLevel
+- Duration
+- Easing
+- Shape
+- State
+- Space
+- Typeface
+- Typescale
 
 ## Installation
 
 ```shell
 npm i @sandlada/mdk
+# or
+pnpm add @sandlada/mdk
 ```
 
 ## Usage
@@ -27,7 +29,7 @@ Including:
 - `Palette`
 - `Duration`
 - `Easing`
-- `Elevation`
+- `ElevationLevel`
 - `Shape`
 - `Space`
 - `State`
@@ -38,7 +40,7 @@ Including:
 
 ### Use Color
 
-```typescript
+````typescript
 import { Color } from '@sandlada/mdk'
 
 const surface = Color.From().Surface
@@ -77,11 +79,11 @@ console.log(surface.ToCSSVariable())
 
 const yourDiv = document.querySelector('body')
 yourDiv.style.setProperty('background-color', surface.ToCSSVariable())
-```
+````
 
 ### Use Shape
 
-```typescript
+````typescript
 import { Shape } from '@sandlada/mdk'
 
 const shapeLarge = Shape.Large
@@ -128,11 +130,11 @@ console.log(shapeLarge.ToCSSVariable())
 
 const myBox = document.querySelector('#my-box')
 myBox.style.setProperty('border-radius', shapeLarge.ToCSSVariable())
-```
+````
 
 ### Use Typescale
 
-```typescript
+````typescript
 import { Typescale } from '@sandlada/mdk'
 
 const displayLarge = Typescale.DisplayLarge
@@ -178,7 +180,7 @@ console.log(fontSize.ToCSSDeclaration())
  * ```
  */
 console.log(fontSize.ToCSSVariable())
-```
+````
 
 ## API
 
@@ -191,8 +193,8 @@ All token classes implement the `ICSSDeclaration` interface and provide the `ToC
 | `Semicolon` | `boolean` | `false` | Append a semicolon to the declaration |
 
 ```typescript
-Color.Primary.ToCSSDeclaration()                    // --md-sys-color-primary: light-dark(#006d38, #76f29e)
-Color.Primary.ToCSSDeclaration({ Semicolon: true }) // --md-sys-color-primary: light-dark(#006d38, #76f29e);
+Color.From().Primary.ToCSSDeclaration() // --md-sys-color-primary: light-dark(#006d38, #76f29e)
+Color.From().Primary.ToCSSDeclaration({ Semicolon: true }) // --md-sys-color-primary: light-dark(#006d38, #76f29e);
 ```
 
 ### `ToCSSVariable()`
@@ -200,6 +202,22 @@ Color.Primary.ToCSSDeclaration({ Semicolon: true }) // --md-sys-color-primary: l
 All token classes also provide the `ToCSSVariable` method, which outputs a CSS `var()` function call (`var(--key, value)`) suitable for direct use as a CSS property value.
 
 ```typescript
-Color.Primary.ToCSSVariable() // var(--md-sys-color-primary, light-dark(#006d38, #76f29e))
+Color.From().Primary.ToCSSVariable() // var(--md-sys-color-primary, light-dark(#006d38, #76f29e))
 Duration.Short1.ToCSSVariable() // var(--md-sys-motion-duration-short1, 50ms)
 Shape.Medium.ToCSSVariable() // var(--md-sys-shape-corner-medium, 12px)
+```
+
+### `ToCSSValue()`
+
+All token classes provide the `ToCSSValue` method, which outputs the bare value (including its unit when applicable), without the custom property name or `var()` wrapper.
+
+```typescript
+Color.From().Primary.ToCSSValue() // light-dark(#006d38, #76f29e)
+Duration.Short1.ToCSSValue() // 50ms
+Shape.Medium.ToCSSValue() // 12px
+Easing.Standard.ToCSSValue() // cubic-bezier(0.2, 0, 0, 1)
+```
+
+### `Variant` and `ContrastLevel`
+
+`Variant` and `ContrastLevel` are enum-like helpers used when generating a color scheme. They do not implement `ICSSDeclaration` because they are not CSS custom property tokens.

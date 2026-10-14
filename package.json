@@ -1,6 +1,6 @@
 {
     "name": "@sandlada/mdk",
-    "version": "3.0.0-20260624.c",
+    "version": "3.0.1-20261014.a",
     "type": "module",
     "keywords": [
         "material-design",
@@ -11,33 +11,59 @@
     "author": "Kai-Orion & Sandlada",
     "license": "MIT",
     "description": "A JavaScript library based on Material Design 3, providing data such as color, shape, shadow level, etc.",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/glare-labs/mdk.git"
+    },
+    "homepage": "https://github.com/glare-labs/mdk#readme",
+    "bugs": {
+        "url": "https://github.com/glare-labs/mdk/issues"
+    },
+    "sideEffects": false,
+    "engines": {
+        "node": ">=20"
+    },
+    "packageManager": "pnpm@12.11.2",
     "publishConfig": {
         "access": "public"
     },
     "main": "./build/index.js",
-    "module": "./build/index.js",
     "types": "./build/index.d.ts",
     "exports": {
         ".": {
-            "default": "./build/index.js",
-            "import": "./build/index.js",
-            "require": "./build/index.js",
-            "types": "./build/index.d.ts"
-        }
+            "types": "./build/index.d.ts",
+            "default": "./build/index.js"
+        },
+        "./package.json": "./package.json"
     },
     "scripts": {
+        "build": "tsc -p tsconfig.build.json",
+        "clean": "node -e \"require('node:fs').rmSync('build', { recursive: true, force: true })\"",
+        "typecheck": "tsc --noEmit",
         "test": "vitest",
         "test:ui": "vitest --ui",
-        "test:run": "vitest run"
+        "test:run": "vitest run",
+        "test:coverage": "vitest run --coverage",
+        "lint": "eslint .",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
+        "prepublishOnly": "pnpm clean && pnpm typecheck && pnpm test:run && pnpm build"
     },
     "files": [
-        "./build/**/*"
+        "build",
+        "README.md",
+        "LICENSE"
     ],
     "devDependencies": {
-        "@typescript/native-preview": "^7.0.0-dev.20260613.1",
+        "@eslint/js": "^10.0.1",
+        "@typescript/native": "npm:typescript@^7.0.2",
+        "@vitest/coverage-v8": "^5.0.4",
+        "eslint": "^10.12.0",
+        "prettier": "^3.9.10",
         "tslib": "^2.8.1",
-        "typescript": "^6.0.3",
-        "vite": "^8.0.16",
-        "vitest": "^4.1.8"
+        "typescript": "npm:@typescript/typescript6@^6.0.2",
+        "typescript-eslint": "^8.71.2",
+        "vite": "^8.3.4",
+        "vitest": "^5.0.4"
     }
 }

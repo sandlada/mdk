@@ -1,4 +1,4 @@
-import type { SemanticColorNames } from "../interfaces/semantic-color-names.interface";
+import type { SemanticColorNames } from '../interfaces/semantic-color-names.interface.js'
 
 export const DefaultColorContract = {
     PrimaryKeyColor        : { Key: `--md-sys-color-primary-key-color`,          Value: `#039d54`},

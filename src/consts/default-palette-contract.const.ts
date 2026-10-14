@@ -1,4 +1,4 @@
-import type { PaletteNames } from "../interfaces/palette-names.interface";
+import type { PaletteNames } from '../interfaces/palette-names.interface.js'
 
 export const DefaultPaletteContract = {
     Primary0: { Key: `--md-ref-palette-primary-0`, Value: `#000000` },

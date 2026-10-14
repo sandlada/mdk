@@ -1,52 +1,23 @@
-import { Typeface } from './typeface'
-import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
+import { CSSToken } from './css-token.js'
+import { Typeface } from './typeface.js'
 
-class FontCSSDeclaration<K extends string, V extends number, U extends string> implements ICSSDeclaration<K, V, `${K}: ${V}${U}${';' | ''}`, `var(${K}, ${V}${U})`> {
-    public readonly Key: K
-    public readonly Value: V
-    public readonly Unit: U
-
-    public toJSON() { return { Key: this.Key, Value: this.Value, Unit: this.Unit } }
-    public ToCSSDeclaration(): `${K}: ${V}${U}`
-    public ToCSSDeclaration(options: { Semicolon: true }): `${K}: ${V}${U};`
-    public ToCSSDeclaration(options?: { Semicolon?: boolean }): `${K}: ${V}${U}${';' | ''}`
-    public ToCSSDeclaration({ Semicolon = false }: { Semicolon?: boolean } = {}): `${K}: ${V}${U}${';' | ''}` {
-        return `${this.Key}: ${this.Value}${this.Unit}${Semicolon ? ';' : ''}`
-    }
-    public ToCSSVariable(): `var(${K}, ${V}${U})`
-    public ToCSSVariable(): `var(${K}, ${V}${U})` {
-        return `var(${this.Key}, ${this.Value}${this.Unit})`
-    }
-    public ToCSSValue() {
-        return `${this.Value}${this.Unit}`
-    }
-    public toString() { return this.ToCSSDeclaration() }
-
+class FontCSSDeclaration<K extends string, V extends number, U extends string> extends CSSToken<K, V, U> {
     public constructor(Key: K, Value: V, Unit: U) {
-        this.Key = Key
-        this.Value = Value
-        this.Unit = Unit
+        super(Key, Value, Unit)
     }
-
 }
 
 export class Typescale<F, S, T, L, W> {
-    public readonly Font      : F
-    public readonly FontSize  : S
-    public readonly Tracking  : T
+    public readonly Font: F
+    public readonly FontSize: S
+    public readonly Tracking: T
     public readonly LineHeight: L
     public readonly FontWeight: W
 
-    private constructor(
-        font      : F,
-        fontSize  : S,
-        tracking  : T,
-        lineHeight: L,
-        fontWeight: W
-    ) {
-        this.Font       = font
-        this.FontSize   = fontSize
-        this.Tracking   = tracking
+    private constructor(font: F, fontSize: S, tracking: T, lineHeight: L, fontWeight: W) {
+        this.Font = font
+        this.FontSize = fontSize
+        this.Tracking = tracking
         this.LineHeight = lineHeight
         this.FontWeight = fontWeight
     }
@@ -272,36 +243,35 @@ export class Typescale<F, S, T, L, W> {
     )
 
     public static readonly AllEnums = {
-        DisplayLarge            : Typescale.DisplayLarge,
-        DisplayMedium           : Typescale.DisplayMedium,
-        DisplaySmall            : Typescale.DisplaySmall,
-        HeadlineLarge           : Typescale.HeadlineLarge,
-        HeadlineMedium          : Typescale.HeadlineMedium,
-        HeadlineSmall           : Typescale.HeadlineSmall,
-        TitleLarge              : Typescale.TitleLarge,
-        TitleMedium             : Typescale.TitleMedium,
-        TitleSmall              : Typescale.TitleSmall,
-        BodyLarge               : Typescale.BodyLarge,
-        BodyMedium              : Typescale.BodyMedium,
-        BodySmall               : Typescale.BodySmall,
-        LabelLarge              : Typescale.LabelLarge,
-        LabelMedium             : Typescale.LabelMedium,
-        LabelSmall              : Typescale.LabelSmall,
-        EmphasizedDisplayLarge  : Typescale.EmphasizedDisplayLarge,
-        EmphasizedDisplayMedium : Typescale.EmphasizedDisplayMedium,
-        EmphasizedDisplaySmall  : Typescale.EmphasizedDisplaySmall,
-        EmphasizedHeadlineLarge : Typescale.EmphasizedHeadlineLarge,
+        DisplayLarge: Typescale.DisplayLarge,
+        DisplayMedium: Typescale.DisplayMedium,
+        DisplaySmall: Typescale.DisplaySmall,
+        HeadlineLarge: Typescale.HeadlineLarge,
+        HeadlineMedium: Typescale.HeadlineMedium,
+        HeadlineSmall: Typescale.HeadlineSmall,
+        TitleLarge: Typescale.TitleLarge,
+        TitleMedium: Typescale.TitleMedium,
+        TitleSmall: Typescale.TitleSmall,
+        BodyLarge: Typescale.BodyLarge,
+        BodyMedium: Typescale.BodyMedium,
+        BodySmall: Typescale.BodySmall,
+        LabelLarge: Typescale.LabelLarge,
+        LabelMedium: Typescale.LabelMedium,
+        LabelSmall: Typescale.LabelSmall,
+        EmphasizedDisplayLarge: Typescale.EmphasizedDisplayLarge,
+        EmphasizedDisplayMedium: Typescale.EmphasizedDisplayMedium,
+        EmphasizedDisplaySmall: Typescale.EmphasizedDisplaySmall,
+        EmphasizedHeadlineLarge: Typescale.EmphasizedHeadlineLarge,
         EmphasizedHeadlineMedium: Typescale.EmphasizedHeadlineMedium,
-        EmphasizedHeadlineSmall : Typescale.EmphasizedHeadlineSmall,
-        EmphasizedTitleLarge    : Typescale.EmphasizedTitleLarge,
-        EmphasizedTitleMedium   : Typescale.EmphasizedTitleMedium,
-        EmphasizedTitleSmall    : Typescale.EmphasizedTitleSmall,
-        EmphasizedBodyLarge     : Typescale.EmphasizedBodyLarge,
-        EmphasizedBodyMedium    : Typescale.EmphasizedBodyMedium,
-        EmphasizedBodySmall     : Typescale.EmphasizedBodySmall,
-        EmphasizedLabelLarge    : Typescale.EmphasizedLabelLarge,
-        EmphasizedLabelMedium   : Typescale.EmphasizedLabelMedium,
-        EmphasizedLabelSmall    : Typescale.EmphasizedLabelSmall
+        EmphasizedHeadlineSmall: Typescale.EmphasizedHeadlineSmall,
+        EmphasizedTitleLarge: Typescale.EmphasizedTitleLarge,
+        EmphasizedTitleMedium: Typescale.EmphasizedTitleMedium,
+        EmphasizedTitleSmall: Typescale.EmphasizedTitleSmall,
+        EmphasizedBodyLarge: Typescale.EmphasizedBodyLarge,
+        EmphasizedBodyMedium: Typescale.EmphasizedBodyMedium,
+        EmphasizedBodySmall: Typescale.EmphasizedBodySmall,
+        EmphasizedLabelLarge: Typescale.EmphasizedLabelLarge,
+        EmphasizedLabelMedium: Typescale.EmphasizedLabelMedium,
+        EmphasizedLabelSmall: Typescale.EmphasizedLabelSmall
     } as const
-
 }

@@ -1,44 +1,11 @@
-import type { ICSSDeclaration } from '../interfaces/css-declaration.interface'
+import { CSSToken } from './css-token.js'
 
-type SpaceDeclaration<K extends string, V extends number | string, U extends string> = `${K}: ${V}${U}${';' | ''}`
-type SpaceVariable<K extends string, V extends number | string, U extends string> = `var(${K}, ${V}${U})`
-
-export class Space<
-    K extends string,
-    V extends number | string,
-    U extends string
-> implements ICSSDeclaration<K, V, SpaceDeclaration<K, V, U>, SpaceVariable<K, V, U>> {
-    public readonly Key  : K
-    public readonly Value: V
-    public readonly Unit : U
-
-    public toJSON() { return ({ Key: this.Key, Value: this.Value, Unit: this.Unit }) }
-    public ToCSSDeclaration(): `${K}: ${V}${U}`
-    public ToCSSDeclaration(options: { Semicolon: true }): `${K}: ${V}${U};`
-    public ToCSSDeclaration(options?: { Semicolon?: boolean }): `${K}: ${V}${U}${';' | ''}`
-    public ToCSSDeclaration({ Semicolon = false }: { Semicolon?: boolean } = {}): `${K}: ${V}${U}${';' | ''}` {
-        return `${this.Key}: ${this.Value}${this.Unit}${Semicolon ? ';' : ''}`
-    }
-    public ToCSSVariable(): `var(${K}, ${V}${U})`
-    public ToCSSVariable(): `var(${K}, ${V}${U})` {
-        return `var(${this.Key}, ${this.Value}${this.Unit})`
-    }
-    public ToCSSValue() {
-        return `${this.Value}${this.Unit}`
-    }
-    public toString() { return this.ToCSSDeclaration() }
-
-    private constructor(Key: K, Value: V, Unit: U) {
-        this.Key   = Key
-        this.Value = Value
-        this.Unit  = Unit
-    }
-
-    public static readonly Space0   = new Space('--md-sys-measurement-space0',   0,  'px')
-    public static readonly Space25  = new Space('--md-sys-measurement-space25',  2,  'px')
-    public static readonly Space50  = new Space('--md-sys-measurement-space50',  4,  'px')
-    public static readonly Space75  = new Space('--md-sys-measurement-space75',  6,  'px')
-    public static readonly Space100 = new Space('--md-sys-measurement-space100', 8,  'px')
+export class Space<K extends string, V extends number | string, U extends string> extends CSSToken<K, V, U> {
+    public static readonly Space0 = new Space('--md-sys-measurement-space0', 0, 'px')
+    public static readonly Space25 = new Space('--md-sys-measurement-space25', 2, 'px')
+    public static readonly Space50 = new Space('--md-sys-measurement-space50', 4, 'px')
+    public static readonly Space75 = new Space('--md-sys-measurement-space75', 6, 'px')
+    public static readonly Space100 = new Space('--md-sys-measurement-space100', 8, 'px')
     public static readonly Space125 = new Space('--md-sys-measurement-space125', 10, 'px')
     public static readonly Space150 = new Space('--md-sys-measurement-space150', 12, 'px')
     public static readonly Space175 = new Space('--md-sys-measurement-space175', 14, 'px')
@@ -54,10 +21,10 @@ export class Space<
     public static readonly Space900 = new Space('--md-sys-measurement-space900', 72, 'px')
 
     public static readonly AllEnums = {
-        Space0  : Space.Space0,
-        Space25 : Space.Space25,
-        Space50 : Space.Space50,
-        Space75 : Space.Space75,
+        Space0: Space.Space0,
+        Space25: Space.Space25,
+        Space50: Space.Space50,
+        Space75: Space.Space75,
         Space100: Space.Space100,
         Space125: Space.Space125,
         Space150: Space.Space150,
@@ -73,5 +40,4 @@ export class Space<
         Space800: Space.Space800,
         Space900: Space.Space900
     } as const
-
 }

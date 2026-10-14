@@ -1,5 +1,5 @@
-export type SemanticColorNames
-    = 'PrimaryKeyColor'
+export type SemanticColorNames =
+    | 'PrimaryKeyColor'
     | 'SecondaryKeyColor'
     | 'TertiaryKeyColor'
     | 'ErrorKeyColor'

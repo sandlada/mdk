@@ -1,0 +1,10 @@
+# Build & tooling output
+build
+coverage
+node_modules
+pnpm-lock.yaml
+
+# Hand-aligned data tables (column alignment is intentional)
+src/consts
+src/domain/palette.ts
+src/interfaces/palette-names.interface.ts
